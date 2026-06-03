@@ -9,8 +9,13 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed = 10.0f;
     // The Player's acceleration
     public float acceleration = 7.0f;
+
+    [Header("Jumping")]
+    public float jumpForce = 10.0f;
+
+    [Header("Movement Physics")]
     public float moveActionDeadzone = 0.2f;
-    public float moveDiffThreshold = 0.11f;
+    public float moveDiffThreshold = 0.1f;
     public float moveForceResistance = 0.4f;
     public float stopSpeedThreshold = 0.1f;
     public float stopDiffThreshold = 0.1f;
@@ -22,8 +27,6 @@ public class PlayerController : MonoBehaviour {
     }
     public MoveControlState moveControlState = MoveControlState.Stationary;
 
-    [Header("Jumping")]
-    public float jumpForce = 10.0f;
 
     // Components
     public static PlayerController Instance { get; private set; }
@@ -148,8 +151,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         stopLastVelocityX = rb.linearVelocityX;
-
-        Debug.LogFormat("rb.linearVelocityX: {0}", rb.linearVelocityX);
 
         // Jumping
         if (processJump) {
