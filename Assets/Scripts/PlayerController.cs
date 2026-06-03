@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Jumping")]
     public float jumpForce = 10.0f;
+    public LayerMask groundLayers;
 
     [Header("Movement Physics")]
     public float moveActionDeadzone = 0.2f;
@@ -81,6 +82,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        CheckGrounded();
         HandlePlayerMovement();
     }
 
@@ -157,5 +159,11 @@ public class PlayerController : MonoBehaviour {
             rb.AddForceY(jumpForce, ForceMode2D.Impulse);
         }
         processJump = false;
+    }
+
+    bool CheckGrounded() {
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
+        print((bool)hit);
+        return (bool)hit;
     }
 }
