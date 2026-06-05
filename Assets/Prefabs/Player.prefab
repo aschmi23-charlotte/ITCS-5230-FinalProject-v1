@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2328208411587516553}
   - component: {fileID: 5648137612112461351}
   - component: {fileID: 8593220286814493283}
-  - component: {fileID: 3406446176630013494}
   - component: {fileID: 2142149526206280050}
+  - component: {fileID: 3557371597647632524}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -111,8 +111,35 @@ MonoBehaviour:
       to Airborne","summary":"Jump ended.","pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":-23.0,"y":-17.0},"guid":"19680776-0336-439c-ba2f-108e4890328b","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"140"},{"coroutine":false,"defaultValues":{},"position":{"x":-411.0,"y":-18.0},"guid":"d2814503-2eec-45f3-8aac-54512695b33e","$version":"A","$type":"Unity.VisualScripting.FixedUpdate","$id":"142"},{"defaultValues":{},"position":{"x":-172.0,"y":-17.0},"guid":"e341d8d8-48c8-4c81-9ced-63e07dd2d55a","$version":"A","$type":"Unity.VisualScripting.If","$id":"144"},{"member":{"name":"isFalling","parameterTypes":null,"targetType":"PlatformerMovementHandler","targetTypeName":"PlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":-413.0,"y":127.0},"guid":"a0862efb-8fe2-4047-b130-95c93dcf0400","$version":"A","$type":"Unity.VisualScripting.GetMember","$id":"146"},{"sourceUnit":{"$ref":"142"},"sourceKey":"trigger","destinationUnit":{"$ref":"144"},"destinationKey":"enter","guid":"23f7e92f-ded0-4fcd-895e-a7ad7d791699","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"144"},"sourceKey":"ifTrue","destinationUnit":{"$ref":"140"},"destinationKey":"trigger","guid":"579f17d8-4434-4d92-8e80-e44c643535bc","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"146"},"sourceKey":"value","destinationUnit":{"$ref":"144"},"destinationKey":"condition","guid":"eaaa7d2f-a056-4d50-94b1-d8b38891e1df","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}},"source":{"$ref":"26"},"destination":{"$ref":"58"},"guid":"9fd9bfb1-4c67-41f1-bb14-05e008525b6d","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Airborne
       To Grounded","summary":"Player has landed.","pan":{"x":111.0,"y":-48.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":193.0,"y":-109.0},"guid":"62fa2748-d575-45fe-871b-7055914eccbd","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"162"},{"coroutine":false,"defaultValues":{},"position":{"x":-321.0,"y":-108.0},"guid":"b6769bc7-7223-48ca-a071-562c6b07cd94","$version":"A","$type":"Unity.VisualScripting.FixedUpdate","$id":"164"},{"defaultValues":{},"position":{"x":-36.0,"y":-109.0},"guid":"2f720381-fe10-48c2-a837-b5a77d74c7d0","$version":"A","$type":"Unity.VisualScripting.If","$id":"166"},{"member":{"name":"isGrounded","parameterTypes":null,"targetType":"PlatformerMovementHandler","targetTypeName":"PlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":-348.0,"y":30.0},"guid":"df12daa5-f0f5-42f7-8d2f-3239afc47903","$version":"A","$type":"Unity.VisualScripting.GetMember","$id":"168"},{"sourceUnit":{"$ref":"164"},"sourceKey":"trigger","destinationUnit":{"$ref":"166"},"destinationKey":"enter","guid":"c62871f0-bed3-4fc0-80d3-6663f2b033b2","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"166"},"sourceKey":"ifTrue","destinationUnit":{"$ref":"162"},"destinationKey":"trigger","guid":"6e92948a-78a4-44d0-b898-023f29fa6f88","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"168"},"sourceKey":"value","destinationUnit":{"$ref":"166"},"destinationKey":"condition","guid":"57cb752b-d8e6-4695-b6ca-9c69a13036b5","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}},"source":{"$ref":"58"},"destination":{"$ref":"4"},"guid":"f862c231-c585-4b48-a551-4ea42fff1f65","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"}],"$version":"A"}}}'
     _objectReferences: []
---- !u!61 &3406446176630013494
-BoxCollider2D:
+--- !u!50 &2142149526206280050
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 1d64cb364804b1944bd04091168b08e0, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!70 &3557371597647632524
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -146,44 +173,8 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 1}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
---- !u!50 &2142149526206280050
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4275876245608857341}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 1d64cb364804b1944bd04091168b08e0, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Direction: 0
 --- !u!1 &7176052509329605302
 GameObject:
   m_ObjectHideFlags: 0
