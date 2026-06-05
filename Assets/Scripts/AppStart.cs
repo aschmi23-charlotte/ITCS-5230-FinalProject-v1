@@ -11,11 +11,23 @@ public static class AppStart {
     private static void OnBeforeSceneLoad() {
         Debug.Log("Engine Started!");
 
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.buildIndex != 0) {
+#if UNITY_EDITOR
+        // If we're running in the editor, we need to load the global scene if it isn't already.
+        // In a build, however, it will be the first scene loaded.
+        bool globalSceneLoaded = false;
+        for (int i = 0; i < SceneManager.sceneCount; i++) {
+            Scene currentScene = SceneManager.GetSceneAt(i);
+            if (currentScene.buildIndex == 0) {
+                Debug.Log("Global Scene Already Loaded");
+                globalSceneLoaded = true;
+            }
+        }
+
+        if (!globalSceneLoaded) {
             Debug.Log("Loading Global Scene");
             SceneManager.LoadScene(0, LoadSceneMode.Additive);
         }
-        
+#endif
+
     }
 }

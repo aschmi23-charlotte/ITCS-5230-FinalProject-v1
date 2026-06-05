@@ -51,7 +51,7 @@ public class PlayerInputReader : MonoBehaviour {
         }
     }
 
-    // Fields
+    // Attributes
     public InputAction MoveInput { get; private set; }
     public InputAction JumpInput { get; private set; }
     public ButtonScanner JumpScanner { get; private set; }

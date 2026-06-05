@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &508697474590624770
+--- !u!1001 &1312479634
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -127,17 +127,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603061175739112130, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
+      propertyPath: field of view
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 603061175739112130, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
+      propertyPath: orthographic size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5985755602284182098, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 6849110496427726474, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6849110496427726474, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849110496427726474, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -176,6 +184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
+--- !u!1 &1935109677 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5985755602284182098, guid: c6a51227a25b6a74face6aadf9617d8e, type: 3}
+  m_PrefabInstance: {fileID: 1312479634}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6352809596194797745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228,6 +241,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1935109677}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: StartingSpawn.MapScene._name
+      value: SampleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: StartingSpawn.MapScene._path
+      value: Assets/Scenes/Levels/SampleScene.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: StartingSpawn.MapScene._sceneOB
+      value: 
+      objectReference: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: StartingSpawn.MapScene._buildIndex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -238,4 +271,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 6352809596194797745}
-  - {fileID: 508697474590624770}
+  - {fileID: 1312479634}
