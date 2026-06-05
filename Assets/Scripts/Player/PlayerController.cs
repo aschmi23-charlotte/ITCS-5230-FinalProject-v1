@@ -1,7 +1,5 @@
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour {
     [Header("Horizontal Movement")]
@@ -96,7 +94,7 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate() {
         CheckGrounded();
         HandleHorizontalMovement();
-        HandleJumping();
+	    HandleJumping();
     }
 
     void CheckGrounded() {
