@@ -254,11 +254,27 @@ PrefabInstance:
       value: Assets/Scenes/Levels/SampleScene.unity
       objectReference: {fileID: 0}
     - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: startingSpawn.MapScene._name
+      value: SampleScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: startingSpawn.MapScene._path
+      value: Assets/Scenes/Levels/SampleScene.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
       propertyPath: StartingSpawn.MapScene._sceneOB
       value: 
       objectReference: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
     - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: startingSpawn.MapScene._sceneOB
+      value: 
+      objectReference: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
       propertyPath: StartingSpawn.MapScene._buildIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457235792587929343, guid: 64d403771aac56e4e92d9f180096b4b2, type: 3}
+      propertyPath: startingSpawn.MapScene._buildIndex
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

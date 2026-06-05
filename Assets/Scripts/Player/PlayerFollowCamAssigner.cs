@@ -10,7 +10,7 @@ public class PlayerFollowCamAssigner : MonoBehaviour
     }
 
     IEnumerator WaitForPlayer() {
-        while(GlobalController.Instance.Player == null) {
+        while(GlobalController.Instance == null || GlobalController.Instance.Player == null) {
             yield return null;
         }
 
@@ -18,6 +18,7 @@ public class PlayerFollowCamAssigner : MonoBehaviour
         Debug.Assert(followCam != null, "PlayerFollowCamAssigner is attached to a CinemachineCamera");
 
         followCam.Target.TrackingTarget = GlobalController.Instance.Player.transform;
+        
         Debug.Log("PlayerFollowCamAssigner finished.");
     }
 }

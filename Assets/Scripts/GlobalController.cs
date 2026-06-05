@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Udar.SceneManager;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GlobalController : MonoBehaviour {
@@ -24,7 +23,7 @@ public class GlobalController : MonoBehaviour {
     public Scene CurrentMapScene { get; protected set; }
     public GameObject Player { get; protected set; }
 
-    void Awake() {
+    void Start() {
         Debug.Assert(Instance == null, "Multiple instances of GlobalController present!");
         if (Instance == null) {
             Instance = this;
@@ -45,8 +44,14 @@ public class GlobalController : MonoBehaviour {
 #endif
     }
 
-    public void InitWithMapScene(SpawnReference spawn) {
-        SceneManager.LoadScene(spawn.MapScene.BuildIndex, LoadSceneMode.Additive);
+    void InitWithMapScene(SpawnReference spawn) {
+        StartCoroutine(InitWithMapSceneCoroutine(spawn));
+    }
+
+    IEnumerator InitWithMapSceneCoroutine(SpawnReference spawn) {
+        AsyncOperation load = SceneManager.LoadSceneAsync(spawn.MapScene.BuildIndex, LoadSceneMode.Additive);
+        yield return load;
+        yield return null;
         InitPlayerInCurrentScene(spawn.SpawnPointId);
     }
 

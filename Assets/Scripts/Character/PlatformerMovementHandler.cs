@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static PlayerController;
 
 public class PlatformerMovementHandler : MonoBehaviour {
     // Editor Fields
