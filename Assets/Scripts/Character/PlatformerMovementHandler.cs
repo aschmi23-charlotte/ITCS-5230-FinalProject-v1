@@ -78,6 +78,16 @@ public class PlatformerMovementHandler : MonoBehaviour {
         }
     }
 
+    public Vector2 GetFacingAsVector() {
+        switch (facingDirection) {
+            case FacingDirection.Left:
+                return Vector2.left;
+            case FacingDirection.Right:
+            default:
+                return Vector2.right;
+        }
+    }
+
     public void HandleGroundedMovement(Vector2 move) {
         // Movement uses rb.AddForce so that environmental physics effects can still work.
 

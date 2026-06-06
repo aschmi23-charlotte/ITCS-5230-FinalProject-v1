@@ -7,11 +7,11 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
 
 
     // Jugggernaut Logic
-    public void JuggernautStart() {
+    public void JuggernautMovementStart() {
         rb.mass *= juggernautMassMultiplier;
     }
 
-    public void JuggernautUpdateGrounded() {
+    public void JuggernautMovementUpdateGrounded() {
         switch(facingDirection) {
             case FacingDirection.Left:
                 HandleGroundedMovement(Vector2.left * juggernautSpeedMultiplier);
@@ -23,7 +23,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
         }
     }
 
-    public void JuggernautUpdateAirborne() {
+    public void JuggernautMovementUpdateAirborne() {
         switch (facingDirection) {
             case FacingDirection.Left:
                 HandleAirborneMovement(Vector2.left * juggernautSpeedMultiplier);
@@ -35,7 +35,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
         }
     }
 
-    public void JuggernautEnd() {
+    public void JuggernautMovementEnd() {
         rb.mass /= juggernautMassMultiplier;
     }
 
