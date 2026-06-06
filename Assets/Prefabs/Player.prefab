@@ -64,6 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementHandler
   moveSpeed: 15
   acceleration: 12
+  facingDirection: 1
   jumpAcceleration: 18
   groundLayers:
     serializedVersion: 2
@@ -74,6 +75,8 @@ MonoBehaviour:
   stopSpeedTarget: 0
   stopCutoffTime: 0.5
   moveControlState: 0
+  juggernautMassMultiplier: 2
+  juggernautSpeedMultiplier: 2
 --- !u!114 &5648137612112461351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +133,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &3557371597647632524
 CapsuleCollider2D:

@@ -34,18 +34,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Juggernaut",
+                    "name": "Distortion",
                     "type": "Button",
-                    "id": "cb78b2dd-c6ac-417f-ac39-262bbbf59dc9",
+                    "id": "a8dfa050-f4ab-4201-acfd-c0ec346e032b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Distortion",
+                    "name": "Juggernaut",
                     "type": "Button",
-                    "id": "a8dfa050-f4ab-4201-acfd-c0ec346e032b",
+                    "id": "cb78b2dd-c6ac-417f-ac39-262bbbf59dc9",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -88,7 +88,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select Kinetic Laser",
+                    "name": "Select Weapon 1",
                     "type": "Button",
                     "id": "89a2e8b0-8d18-4cc9-bf0e-6695cff3061e",
                     "expectedControlType": "",
@@ -97,7 +97,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select Electron Projector",
+                    "name": "Select Weapon 2",
                     "type": "Button",
                     "id": "b930153a-5fb0-47a6-a7d1-21c73d9e188b",
                     "expectedControlType": "",
@@ -106,7 +106,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select Imploder-Exploder Assembly",
+                    "name": "Select Weapon 3",
                     "type": "Button",
                     "id": "04d10926-bc70-4afc-88be-3d47a3b44b68",
                     "expectedControlType": "",
@@ -115,7 +115,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select Magnetic Energy Chain",
+                    "name": "Select Weapon 4",
                     "type": "Button",
                     "id": "31514dcf-c8b3-4499-80ae-0f5b674a92da",
                     "expectedControlType": "",
@@ -363,7 +363,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Select Kinetic Laser",
+                    "action": "Select Weapon 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -374,7 +374,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Select Kinetic Laser",
+                    "action": "Select Weapon 1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -385,7 +385,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Select Electron Projector",
+                    "action": "Select Weapon 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -396,7 +396,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Select Electron Projector",
+                    "action": "Select Weapon 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -407,7 +407,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Select Imploder-Exploder Assembly",
+                    "action": "Select Weapon 3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -418,7 +418,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Select Imploder-Exploder Assembly",
+                    "action": "Select Weapon 3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -429,7 +429,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Select Magnetic Energy Chain",
+                    "action": "Select Weapon 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -440,7 +440,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Select Magnetic Energy Chain",
+                    "action": "Select Weapon 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

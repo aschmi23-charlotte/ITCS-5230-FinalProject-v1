@@ -2,8 +2,8 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerFollowCamAssigner : MonoBehaviour
-{
+[RequireComponent(typeof(CinemachineCamera))]
+public class PlayerFollowCamAssigner : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         StartCoroutine(WaitForPlayer());

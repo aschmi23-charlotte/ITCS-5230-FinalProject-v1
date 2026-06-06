@@ -1,6 +1,7 @@
 ﻿<Solution>
-  <Project Path="Udar.SceneManager.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Udar.SceneManager.csproj" />
   <Project Path="Udar.SceneManager.Examples.csproj" />
   <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
 </Solution>

@@ -8,6 +8,13 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public float moveSpeed = 10.0f;
     // The Player's acceleration
     public float acceleration = 7.0f;
+    
+    [System.Serializable]
+    public enum FacingDirection {
+        Left,
+        Right,
+    }
+    public FacingDirection facingDirection = FacingDirection.Right;
 
     [Header("Jumping")]
     public float jumpAcceleration = 10.0f;
@@ -31,8 +38,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // Attributes
     public Rigidbody2D rb { get; protected set; }
     public Collider2D col { get; protected set; }
-    public bool isGrounded { get; protected set; }
-    public bool isFalling { get; protected set; }
+    public bool IsGrounded { get; protected set; }
+    public bool IsFalling { get; protected set; }
 
     // Internal values
     protected float nextExpectedVelocityX = 0.0f;
@@ -42,8 +49,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
     // === Methods ===
     void Awake() {
-        isGrounded = false;
-        isFalling = false;
+        IsGrounded = false;
+        IsFalling = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -58,9 +65,17 @@ public class PlatformerMovementHandler : MonoBehaviour {
     void FixedUpdate() {
         //RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
         int hit = col.Cast(Vector2.down, ContactFilter2D.noFilter, groundedResults, 0.2f);
-        isGrounded = hit > 0;
+        IsGrounded = hit > 0;
 
-        isFalling = rb.linearVelocityY < 0.0f;
+        IsFalling = rb.linearVelocityY < 0.0f;
+    }
+
+    public void UpdateFacing(Vector2 direction) {
+        if (direction.x > 0f) {
+            facingDirection = FacingDirection.Right;
+        } else if (direction.x < 0f) {
+            facingDirection = FacingDirection.Left;
+        }
     }
 
     public void HandleGroundedMovement(Vector2 move) {
@@ -145,6 +160,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
         }
     }
 
+    // I keep going back and forth on whether this and the grounded version.
+    // I keep telling myself I might end up needing significant differences between the two,
+    // and it keeps not happening.
     public void HandleAirborneMovement(Vector2 move) {
         // Movement uses rb.AddForce so that environmental physics effects can still work.
 
