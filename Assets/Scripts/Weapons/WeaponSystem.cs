@@ -31,7 +31,6 @@ public class WeaponSystem : MonoBehaviour {
         AimDirection = direction.normalized;
 
         float angle = Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x);
-        Debug.Log(angle);
         aimOrigin.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
