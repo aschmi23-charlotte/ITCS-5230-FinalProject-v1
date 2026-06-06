@@ -5,6 +5,8 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
     public float juggernautMassMultiplier = 3f;
     public float juggernautSpeedMultiplier = 2f;
 
+
+    // Jugggernaut Logic
     public void JuggernautStart() {
         rb.mass *= juggernautMassMultiplier;
     }
