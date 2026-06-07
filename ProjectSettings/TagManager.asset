@@ -11,10 +11,10 @@ TagManager:
   - Terrain
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemies
+  - Physics Objects
+  - Projectiles
   - 
   - 
   - 
@@ -46,6 +46,21 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2733841037
+    locked: 0
+  - name: Terrain
+    uniqueID: 1957141169
+    locked: 0
+  - name: Player
+    uniqueID: 378838575
+    locked: 0
+  - name: Enemies
+    uniqueID: 3839913191
+    locked: 0
+  - name: Physics Objects
+    uniqueID: 1427703869
+    locked: 0
+  - name: Projectiles
+    uniqueID: 2428450857
     locked: 0
   m_RenderingLayers:
   - Default

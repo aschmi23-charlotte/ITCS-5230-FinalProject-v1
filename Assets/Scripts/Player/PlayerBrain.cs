@@ -1,6 +1,5 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using static PlatformerMovementHandler;
 
 [RequireComponent(typeof(PlayerInputReader))]
 [RequireComponent(typeof(PlayerMovementHandler))]
@@ -21,7 +20,7 @@ public class PlayerBrain : MonoBehaviour {
     public PlayerMovementHandler Movement { get; private set; }
     public WeaponSystem Weapons { get; private set; }
     public Variables StateVariables { get; private set; }
-    public StateMachine StateMachine { get; private set; }
+    public StateMachine StateHandler { get; private set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
@@ -29,12 +28,12 @@ public class PlayerBrain : MonoBehaviour {
         Movement = GetComponent<PlayerMovementHandler>();
         Weapons = GetComponent<WeaponSystem>();
         StateVariables = GetComponent<Variables>();
-        StateMachine = GetComponent<StateMachine>();
+        StateHandler = GetComponent<StateMachine>();
     }
 
-    void Update() { }
-
-
+    void FixedUpdate() {
+        
+    }
 
     // Movement and Aiming Inputs
     public Vector2 GetGamepadAimDirection() {
@@ -53,7 +52,34 @@ public class PlayerBrain : MonoBehaviour {
             Weapons.SetAimByPosition(InputReader.MouseAimPos);
         }
     }
+    public void UpdateWeapons() {
+        if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
+            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Pressed);
 
+        } else if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Held)) {
+            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Held);
+
+        } else if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Released)) {
+            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Released);
+
+        } else {
+            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.NoInput);
+
+        }
+
+        if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
+            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Pressed);
+
+        } else if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Held)) {
+            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Held);
+
+        } else if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Released)) {
+            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Released);
+
+        } else {
+            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.NoInput);
+        }
+    }
 
     public Vector2 GetMovementDirection(bool considerFreeAim) {
 

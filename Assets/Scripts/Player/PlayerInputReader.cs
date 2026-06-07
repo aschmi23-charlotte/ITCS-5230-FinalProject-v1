@@ -177,7 +177,7 @@ public class PlayerInputReader : MonoBehaviour {
     public bool CheckPrimaryFireInput(ButtonCheckType checkType) {
         return PrimaryFireScanner.Check(checkType);
     }
-    public bool CheckSecondaryFirInput(ButtonCheckType checkType) {
+    public bool CheckSecondaryFireInput(ButtonCheckType checkType) {
         return SecondaryFireScanner.Check(checkType);
     }
     public bool CheckFreeAimInput(ButtonCheckType checkType) {

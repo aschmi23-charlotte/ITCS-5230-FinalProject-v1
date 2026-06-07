@@ -1,5 +1,87 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3487145886468699236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2740332506504320077}
+  - component: {fileID: 5714286712236871125}
+  m_Layer: 6
+  m_Name: KineticLaser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2740332506504320077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487145886468699236}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6378039403252393834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5714286712236871125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487145886468699236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37297eb42023d3e4488d2d8f6ecc0390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KineticLaser
+  primaryInputStatus: 0
+  secondaryInputStatus: 0
+  infiniteAmmo: 0
+  ammoCount: 10
+  ammoCapacity: 10
+  firePoint: {fileID: 2740332506504320077}
+  impactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 393
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  basicVisualPrefab: {fileID: 7644675783242524350, guid: 90046f7e95a692c44a655561c0fc6a85, type: 3}
+  superVisualPrefab: {fileID: 7644675783242524350, guid: ef1a16825dc4d354ca13fb8df4e5c4a7, type: 3}
+  tractorVisualPrefab: {fileID: 7644675783242524350, guid: 5f64191a336c08443b4ec27b2da3e010, type: 3}
+  basicForce: 25
+  superForce: 65
+  tractorForce: 50
+  basicPrimaryFireTime: 0.05
+  basicPrimaryCooldownTime: 0.05
+  superChargeTime: 0.5
+  superFireTime: 0.1
+  superCooldownTime: 1
+  basicSecondaryCooldownTime: 0.1
+  comboChargeTime: 1.5
+  comboFireTime: 0.1
+  comboCooldownTime: 1
+  weaponState: 0
+  cooldownTarget: 0
+  stateLifeTimer: 0
 --- !u!1 &4275876245608857341
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +99,7 @@ GameObject:
   - component: {fileID: 8593220286814493283}
   - component: {fileID: 2142149526206280050}
   - component: {fileID: 3557371597647632524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +204,10 @@ MonoBehaviour:
   aimType: 0
   aimOrigin: {fileID: 853192373890036255}
   aimGraphic: {fileID: 4046904004998446222}
-  weapons: []
+  directionalAimingAutoDistance: 10
+  activeWeaponIndex: 0
+  weapons:
+  - {fileID: 5714286712236871125}
 --- !u!114 &5648137612112461351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7664335773323201695}
   - component: {fileID: 1789102991692004335}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,8 +380,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 378838575
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -318,7 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 853192373890036255}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AimOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +436,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6378039403252393834}
   - component: {fileID: 4046904004998446222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AimGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +455,8 @@ Transform:
   m_LocalPosition: {x: 0.75, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2740332506504320077}
   m_Father: {fileID: 853192373890036255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4046904004998446222
@@ -418,8 +504,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 378838575
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}

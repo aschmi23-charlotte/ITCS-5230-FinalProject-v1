@@ -1,19 +1,27 @@
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour {
+public abstract class WeaponBase : MonoBehaviour {
+
+    [SerializeField]
+    protected WeaponSystem.InputStatus primaryInputStatus = WeaponSystem.InputStatus.NoInput;
+
+    [SerializeField]
+    protected WeaponSystem.InputStatus secondaryInputStatus = WeaponSystem.InputStatus.NoInput;
 
 
+    public WeaponSystem ParentWeaponSystem { get; private set; }
 
+    protected void Awake() {
+        ParentWeaponSystem = GetComponentInParent<WeaponSystem>();
+    }
 
-    public virtual void PrimaryFirePress() {}
+    public virtual void ForceStateReset() { }
 
-    public virtual void PrimaryFireHold() {}
+    public void SetPrimaryInputStatus(WeaponSystem.InputStatus status) {
+        primaryInputStatus = status;
+    }
 
-    public virtual void PrimaryFireRelease() {}
-
-    public virtual void SecondaryFirePress() {}
-
-    public virtual void SecondaryFireHold() {}
-
-    public virtual void SecondaryFireRelease() {}
+    public void SetSecondaryInputStatus(WeaponSystem.InputStatus status) {
+        secondaryInputStatus = status;
+    }
 }
