@@ -35,6 +35,7 @@ public class PlayerBrain : MonoBehaviour {
     void Update() { }
 
 
+
     // Movement and Aiming Inputs
     public Vector2 GetAimDirection() {
         Vector2 direction = InputReader.ReadMoveInput();
@@ -45,7 +46,12 @@ public class PlayerBrain : MonoBehaviour {
     }
 
     public void UpdateAim() {
-        Weapons.SetAimByDirection(GetAimDirection());
+        if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.Gamepad) {
+            Weapons.SetAimByDirection(GetAimDirection());
+        }
+        else if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.KeyboardAndMouse) {
+            Weapons.SetAimByDirection(InputReader.MouseAimPos);
+        }
     }
 
 
@@ -58,22 +64,54 @@ public class PlayerBrain : MonoBehaviour {
         return InputReader.ReadMoveInput();
     }
 
-    // === Abilities ===
+    // === State Functions ===
+    // All of these functions are called by the Visual Scripting State machine.
+    // Normal Behavior
+    public void State_NormalUpdateGrounded() {
+        Vector2 dir = GetMovementDirection(true);
+        Movement.UpdateFacing(dir);
+        Movement.HandleGroundedMovement(dir);
+    }
+
+    public void State_NormalUpdateJumping() {
+        bool shouldCancel = InputReader.CheckJumpInput(PlayerInputReader.ButtonCheckType.Released);
+        Movement.HandleJumping(shouldCancel);
+
+        State_NormalUpdateAirborne();
+    }
+
+    public void State_NormalUpdateAirborne() {
+        Vector2 dir = GetMovementDirection(true);
+        Movement.UpdateFacing(dir);
+        Movement.HandleAirborneMovement(dir);
+    }
+
     // Juggernaut
-    public void JuggernautStart() {
+    public void State_JuggernautStart() {
         spriteRenderer.color = juggernautColor;
         Movement.JuggernautMovementStart();
     }
 
-    public void JuggernautUpdateGrounded() {
+    public void State_JuggernautUpdateGrounded() {
+        Vector2 dir = InputReader.ReadMoveInput();
+        Movement.UpdateFacing(dir);
         Movement.JuggernautMovementUpdateGrounded();
     }
 
-    public void JuggernautUpdateAirborne() {
+    public void State_JuggernautUpdateJumping() {
+        bool shouldCancel = InputReader.CheckJumpInput(PlayerInputReader.ButtonCheckType.Released);
+        Movement.HandleJumping(shouldCancel);
+
+        State_JuggernautUpdateAirborne();
+    }
+
+    public void State_JuggernautUpdateAirborne() {
+        Vector2 dir = InputReader.ReadMoveInput();
+        Movement.UpdateFacing(dir);
         Movement.JuggernautMovementUpdateAirborne();
     }
 
-    public void JuggernautEnd() {
+    public void State_JuggernautEnd() {
         spriteRenderer.color = baseColor;
         Movement.JuggernautMovementEnd();
     }

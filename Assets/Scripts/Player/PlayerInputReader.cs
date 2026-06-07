@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputReader : MonoBehaviour {
 
+    public GameObject crosshairPrefab;
+
     [System.Serializable]
     public enum ButtonCheckType {
         Pressed,
@@ -59,7 +61,7 @@ public class PlayerInputReader : MonoBehaviour {
         KeyboardAndMouse,
         Gamepad
     }
-    public ControlScheme CurrentScheme { get; private set; } = ControlScheme.KeyboardAndMouse;
+    public ControlScheme CurrentScheme { get; private set; } = ControlScheme.Gamepad;
 
     // Attributes
     // Is this particularly DRY? No. But it should be performant, especially
@@ -92,6 +94,8 @@ public class PlayerInputReader : MonoBehaviour {
     public ButtonScanner SelectWeapon3Scanner { get; private set; }
     public ButtonScanner SelectWeapon4Scanner { get; private set; }
 
+    public Vector2 MouseAimPos { get; private set; }
+    public GameObject Crosshair { get; private set; }
 
     void Awake() {
         MoveInput = InputSystem.actions.FindAction("Move");
@@ -120,6 +124,9 @@ public class PlayerInputReader : MonoBehaviour {
         SelectWeapon2Scanner = new ButtonScanner(SelectWeapon2Input);
         SelectWeapon3Scanner = new ButtonScanner(SelectWeapon3Input);
         SelectWeapon4Scanner = new ButtonScanner(SelectWeapon4Input);
+
+        Crosshair = null;
+        MouseAimPos = Vector2.zero;
     }
 
     void FixedUpdate() {
@@ -135,6 +142,20 @@ public class PlayerInputReader : MonoBehaviour {
         SelectWeapon2Scanner.Poll();
         SelectWeapon3Scanner.Poll();
         SelectWeapon4Scanner.Poll();
+
+        if (CurrentScheme == ControlScheme.KeyboardAndMouse && Crosshair != null) {
+            if (Mouse.current != null) {
+                //Read Vector2 screen coordinates from the active mouse
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+                //Convert to world position using the main camera
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+                mouseWorldPos.z = 0f;
+
+                MouseAimPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
+                Crosshair.transform.position = mouseWorldPos;
+            }
+        }
     }
 
     public Vector2 ReadMoveInput() {
@@ -188,6 +209,7 @@ public class PlayerInputReader : MonoBehaviour {
         InputSystem.onActionChange -= OnGlobalActionChange;
     }
 
+    // Here we handle switching between KB+M and Gamepad input stuff.
     private void OnGlobalActionChange(object actionOrMapOrAsset, InputActionChange change) {
         // We only care when an action is actively performed
         if (change != InputActionChange.ActionStarted && change != InputActionChange.ActionPerformed)
@@ -198,24 +220,37 @@ public class PlayerInputReader : MonoBehaviour {
             InputDevice device = action.activeControl?.device;
             if (device == null) return;
 
-            EvaluateDevice(device);
+            ControlScheme detectedScheme = CurrentScheme;
+
+            // Check the device type using standard Input System classes
+            if (device is Keyboard || device is Mouse) {
+                detectedScheme = ControlScheme.KeyboardAndMouse;
+            } else if (device is Gamepad) {
+                detectedScheme = ControlScheme.Gamepad;
+            }
+
+            // Only trigger updates if the control scheme actually switched
+            if (detectedScheme != CurrentScheme) {
+                CurrentScheme = detectedScheme;
+                Debug.Log($"[GlobalInput] Control scheme switched to: {CurrentScheme}");
+                if (CurrentScheme == ControlScheme.KeyboardAndMouse) {
+                    SwitchToKeyboardAndMouse();
+                } else if (CurrentScheme == ControlScheme.Gamepad) {
+                    SwitchToGamepad();
+                }
+            }
         }
     }
 
-    private void EvaluateDevice(InputDevice device) {
-        ControlScheme detectedScheme = CurrentScheme;
-
-        // Check the device type using standard Input System classes
-        if (device is Keyboard || device is Mouse) {
-            detectedScheme = ControlScheme.KeyboardAndMouse;
-        } else if (device is Gamepad) {
-            detectedScheme = ControlScheme.Gamepad;
-        }
-
-        // Only trigger updates if the control scheme actually switched
-        if (detectedScheme != CurrentScheme) {
-            CurrentScheme = detectedScheme;
-            Debug.Log($"[GlobalInput] Control scheme switched to: {CurrentScheme}");
-        }
+    private void SwitchToKeyboardAndMouse() {
+        Crosshair = Instantiate(crosshairPrefab);
+        Cursor.visible = false;
     }
+
+    private void SwitchToGamepad() {
+        Destroy(Crosshair);
+        Crosshair = null;
+        Cursor.visible = true;
+    }
+
 }

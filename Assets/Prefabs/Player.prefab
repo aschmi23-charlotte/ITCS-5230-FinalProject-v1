@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae6ad913adf6504eb8fba26866508c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputReader
+  crosshairPrefab: {fileID: 6043994151902968942, guid: b5e125c99f0d5774eb1d1a632fa69b55, type: 3}
 --- !u!114 &8161912056733663540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,9 +85,20 @@ MonoBehaviour:
   acceleration: 12
   facingDirection: 1
   jumpAcceleration: 25
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 0
+  groundFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 9
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   moveActionDeadzone: 0.2
   moveForceDifference: 0.3
   moveForceResistance: 0.3

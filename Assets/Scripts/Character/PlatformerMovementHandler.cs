@@ -18,7 +18,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
     [Header("Jumping")]
     public float jumpAcceleration = 10.0f;
-    public LayerMask groundLayers;
+    //public LayerMask groundLayers;
+    public ContactFilter2D groundFilter;
 
     [Header("Physics Values")]
     public float moveActionDeadzone = 0.2f;
@@ -64,7 +65,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
     void FixedUpdate() {
         //RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
-        int hit = col.Cast(Vector2.down, ContactFilter2D.noFilter, groundedResults, 0.2f);
+        int hit = col.Cast(Vector2.down, groundFilter, groundedResults, 0.2f);
         IsGrounded = hit > 0;
 
         IsFalling = rb.linearVelocityY < 0.0f;

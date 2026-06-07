@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+public class WeaponBase : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
+
+    public virtual void PrimaryFirePress() {}
+
+    public virtual void PrimaryFireHold() {}
+
+    public virtual void PrimaryFireRelease() {}
+
+    public virtual void SecondaryFirePress() {}
+
+    public virtual void SecondaryFireHold() {}
+
+    public virtual void SecondaryFireRelease() {}
 }
