@@ -16882,6 +16882,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Graybox_16px_637
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36754bdc94eeed7429c184c98c3081d7
+      internalID: -2030798500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -17496,6 +17518,7 @@ TextureImporter:
       Graybox_16px_634: 1380464008
       Graybox_16px_635: 1114079682
       Graybox_16px_636: 460466
+      Graybox_16px_637: -2030798500
       Graybox_16px_64: -1522320678
       Graybox_16px_65: 2099362995
       Graybox_16px_66: 2084216552
