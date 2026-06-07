@@ -37,7 +37,7 @@ public class PlayerBrain : MonoBehaviour {
 
 
     // Movement and Aiming Inputs
-    public Vector2 GetAimDirection() {
+    public Vector2 GetGamepadAimDirection() {
         Vector2 direction = InputReader.ReadMoveInput();
         if (direction == Vector2.zero) {
             return Movement.GetFacingAsVector();
@@ -47,10 +47,10 @@ public class PlayerBrain : MonoBehaviour {
 
     public void UpdateAim() {
         if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.Gamepad) {
-            Weapons.SetAimByDirection(GetAimDirection());
+            Weapons.SetAimByDirection(GetGamepadAimDirection());
         }
         else if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.KeyboardAndMouse) {
-            Weapons.SetAimByDirection(InputReader.MouseAimPos);
+            Weapons.SetAimByPosition(InputReader.MouseAimPos);
         }
     }
 
@@ -68,9 +68,16 @@ public class PlayerBrain : MonoBehaviour {
     // All of these functions are called by the Visual Scripting State machine.
     // Normal Behavior
     public void State_NormalUpdateGrounded() {
-        Vector2 dir = GetMovementDirection(true);
-        Movement.UpdateFacing(dir);
-        Movement.HandleGroundedMovement(dir);
+        if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.Gamepad) {
+            Vector2 dir = GetMovementDirection(true);
+            Movement.UpdateFacing(dir);
+            Movement.HandleGroundedMovement(dir);
+
+        } else if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.KeyboardAndMouse) {
+            Vector2 dir = GetMovementDirection(false);
+            Movement.UpdateFacing(InputReader.MouseAimPos - (Vector2)transform.position);
+            Movement.HandleGroundedMovement(dir);
+        }
     }
 
     public void State_NormalUpdateJumping() {
@@ -81,9 +88,16 @@ public class PlayerBrain : MonoBehaviour {
     }
 
     public void State_NormalUpdateAirborne() {
-        Vector2 dir = GetMovementDirection(true);
-        Movement.UpdateFacing(dir);
-        Movement.HandleAirborneMovement(dir);
+        if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.Gamepad) {
+            Vector2 dir = GetMovementDirection(true);
+            Movement.UpdateFacing(dir);
+            Movement.HandleAirborneMovement(dir);
+        
+        } else if (InputReader.CurrentScheme == PlayerInputReader.ControlScheme.KeyboardAndMouse) {
+            Vector2 dir = GetMovementDirection(false);
+            Movement.UpdateFacing(InputReader.MouseAimPos - (Vector2)transform.position);
+            Movement.HandleAirborneMovement(dir);
+        }
     }
 
     // Juggernaut

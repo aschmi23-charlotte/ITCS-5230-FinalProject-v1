@@ -32,18 +32,16 @@ public class WeaponSystem : MonoBehaviour {
     public void SetAimByDirection(Vector2 direction) {
         aimType = AimType.Direction;
         AimDirection = direction.normalized;
-        Vector3 aimOriginGlobalPos = transform.TransformPoint(aimOrigin.position);
-        AimPosition = new Vector2(aimOriginGlobalPos.x, aimOriginGlobalPos.y) + AimDirection;
+        AimPosition = new Vector2(aimOrigin.position.x, aimOrigin.position.y) + AimDirection;
 
-        float angle = Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x);
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(AimDirection.y, AimDirection.x);
         aimOrigin.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     public void SetAimByPosition(Vector2 position) {
         aimType = AimType.Position;
         AimPosition = position;
-        Vector3 aimOriginGlobalPos = transform.TransformPoint(aimOrigin.position);
-        AimDirection = (position - new Vector2(aimOriginGlobalPos.x, aimOriginGlobalPos.y)).normalized;
+        AimDirection = (position - new Vector2(aimOrigin.position.x, aimOrigin.position.y)).normalized;
 
         float angle = Mathf.Rad2Deg * Mathf.Atan2(AimDirection.y, AimDirection.x);
         aimOrigin.rotation = Quaternion.Euler(0, 0, angle);
