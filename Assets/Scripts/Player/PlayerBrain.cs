@@ -35,7 +35,7 @@ public class PlayerBrain : MonoBehaviour {
         
     }
 
-    // Movement and Aiming Inputs
+    // Weapons and Aiming Inputs
     public Vector2 GetGamepadAimDirection() {
         Vector2 direction = InputReader.ReadMoveInput();
         if (direction == Vector2.zero) {
@@ -79,6 +79,11 @@ public class PlayerBrain : MonoBehaviour {
         } else {
             Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.NoInput);
         }
+    }
+
+    public void UpdateWeaponsIgnoreInput() {
+        Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.NoInput);
+        Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.NoInput);
     }
 
     public Vector2 GetMovementDirection(bool considerFreeAim) {
