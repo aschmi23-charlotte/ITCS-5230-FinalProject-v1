@@ -46,9 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KineticLaser
   primaryInputStatus: 0
   secondaryInputStatus: 0
-  infiniteAmmo: 0
-  ammoCount: 10
-  ammoCapacity: 10
   firePoint: {fileID: 2740332506504320077}
   impactFilter:
     useTriggers: 0
@@ -182,6 +179,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  coyoteTime: 0.05
   moveActionDeadzone: 0.2
   moveForceDifference: 0.3
   moveForceResistance: 0.3
@@ -222,7 +220,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
   _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"DoubleJumpAvailable","value":{"$content":true,"$type":"System.Boolean"},"typeHandle":{"Identification":"System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
 --- !u!114 &8593220286814493283
 MonoBehaviour:

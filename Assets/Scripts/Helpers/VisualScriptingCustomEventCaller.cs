@@ -9,10 +9,11 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 public class VisualScriptingCustomEventCaller : MonoBehaviour {
     [System.Serializable]
     public class CustomEventCall {
-        public string eventName = "CustomEventName";
+        public GameObject target;
+        public string eventName = "CustomEventName";        
         public string[] argumentVariableNames;
 
-        public void Invoke(GameObject target, Variables vars) {
+        public void Invoke(Variables vars) {
             object[] args = new object[argumentVariableNames.Length];
 
             for (int i = 0; i < args.Length; i++) {
@@ -31,6 +32,6 @@ public class VisualScriptingCustomEventCaller : MonoBehaviour {
     }
 
     public void TriggerByIndex(int index) {
-        customEventCalls[index].Invoke(gameObject, variables);
+        customEventCalls[index].Invoke(variables);
     }
 }

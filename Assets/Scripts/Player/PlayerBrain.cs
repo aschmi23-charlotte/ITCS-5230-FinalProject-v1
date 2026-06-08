@@ -15,6 +15,10 @@ public class PlayerBrain : MonoBehaviour {
     [SerializeField] Color baseColor = new Color(1f, 1f, 1f, 1f);
     [SerializeField] Color juggernautColor = new Color(1f, 0f, 0f, 1f);
 
+    [Header("Player Abilities")]
+    public bool hasPulseJump = false;
+    public bool hasJuggernaut = false;
+
     // Attributes
     public PlayerInputReader InputReader { get; private set; }
     public PlayerMovementHandler Movement { get; private set; }

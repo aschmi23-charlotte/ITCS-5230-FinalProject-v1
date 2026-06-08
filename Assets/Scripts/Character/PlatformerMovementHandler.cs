@@ -20,6 +20,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
     [SerializeField] protected float jumpAcceleration = 10.0f;
     //public LayerMask groundLayers;
     [SerializeField] protected ContactFilter2D groundFilter;
+    [SerializeField] protected float coyoteTime = 0.2f;
 
     [Header("Physics Values")]
     [SerializeField] protected float moveActionDeadzone = 0.2f;
@@ -40,7 +41,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public Rigidbody2D rb { get; protected set; }
     public Collider2D col { get; protected set; }
     public bool IsGrounded { get; protected set; }
+    public float CoyoteTimer { get; protected set; }
     public bool IsFalling { get; protected set; }
+    public bool DoubleJumpAvailable { get; protected set; }
 
     // Internal values
     protected float nextExpectedVelocityX = 0.0f;
@@ -52,6 +55,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
     void Awake() {
         IsGrounded = false;
         IsFalling = false;
+        DoubleJumpAvailable = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -67,6 +71,13 @@ public class PlatformerMovementHandler : MonoBehaviour {
         //RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
         int hit = col.Cast(Vector2.down, groundFilter, groundedResults, 0.2f);
         IsGrounded = hit > 0;
+
+        if (IsGrounded) {
+            DoubleJumpAvailable = true;
+            CoyoteTimer = 0f;
+        } else {
+            CoyoteTimer += Time.fixedDeltaTime;
+        }
 
         IsFalling = rb.linearVelocityY < 0.0f;
     }
@@ -163,8 +174,13 @@ public class PlatformerMovementHandler : MonoBehaviour {
         stopLastVelocityX = rb.linearVelocityX;
     }
 
+    public bool IsCoyoteTimeGrounded() {
+        return CoyoteTimer <= coyoteTime;
+    }
+
     public void InitiateJump() {
         rb.AddForceY(jumpAcceleration * rb.mass, ForceMode2D.Impulse);
+
     }
 
     public void HandleJumping(bool shouldCancel) {
