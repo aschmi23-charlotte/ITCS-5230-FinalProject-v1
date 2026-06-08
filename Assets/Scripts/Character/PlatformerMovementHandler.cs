@@ -16,9 +16,14 @@ public class PlatformerMovementHandler : MonoBehaviour {
     }
     public FacingDirection facingDirection = FacingDirection.Right;
 
+    [System.Serializable]
+    public enum JumpMethod {
+        SetVelocity,
+        AddForce,
+    }
     [Header("Jumping")]
+    [SerializeField] protected JumpMethod jumpMethod = JumpMethod.SetVelocity;
     [SerializeField] protected float jumpAcceleration = 10.0f;
-    //public LayerMask groundLayers;
     [SerializeField] protected ContactFilter2D groundFilter;
     [SerializeField] protected float coyoteTime = 0.2f;
 
@@ -102,8 +107,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
     }
 
     public void HandleGroundedMovement(Vector2 move) {
-        // Movement uses rb.AddForce so that environmental physics effects can still work.
-
+        // Using rb.MovePosition or setting rb.linearVelocity every frame results in the player not being affected by in-world physics very much.
+        // This movement code uses special physics calulations so that environmental physics effects can still work on the player.
+        // In hindsight, I could probably modify this to operate on the velocity only and not AddForce. But why fix what ain't broken?
         // Horizontal Movement
         float external_forces_x = (rb.linearVelocityX - nextExpectedVelocityX) * rb.mass;
 
@@ -176,8 +182,15 @@ public class PlatformerMovementHandler : MonoBehaviour {
     }
 
     public void InitiateJump() {
-        rb.AddForceY(jumpAcceleration * rb.mass, ForceMode2D.Impulse);
-
+        switch(jumpMethod) {
+            case JumpMethod.SetVelocity:
+                rb.linearVelocityY = jumpAcceleration;
+                break;
+            case JumpMethod.AddForce:
+            default:
+                rb.AddForceY(jumpAcceleration * rb.mass, ForceMode2D.Impulse);
+                break;
+        }
     }
 
     public void HandleJumping(bool shouldCancel) {
@@ -193,7 +206,6 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // and it keeps not happening.
     public void HandleAirborneMovement(Vector2 move) {
         // Movement uses rb.AddForce so that environmental physics effects can still work.
-
         // Horizontal Movement
         float external_forces_x = (rb.linearVelocityX - nextExpectedVelocityX) * rb.mass;
 
