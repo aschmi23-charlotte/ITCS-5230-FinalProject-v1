@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerSpawnPoint : MonoBehaviour {
 
-    public int SpawnPointId = 0;
+    public int spawnPointId = 0;
 
 #if UNITY_EDITOR
     void OnDrawGizmos() {
@@ -14,7 +14,7 @@ public class PlayerSpawnPoint : MonoBehaviour {
 
         Vector3 topPos = transform.position + Vector3.up * 2f;
         Gizmos.DrawLine(transform.position, topPos);
-        UnityEditor.Handles.Label(topPos + Vector3.right * 0.5f, "Player Spawn Point " + SpawnPointId);
+        UnityEditor.Handles.Label(topPos + Vector3.right * 0.5f, "Player Spawn Point " + spawnPointId);
     }
 #endif
 }

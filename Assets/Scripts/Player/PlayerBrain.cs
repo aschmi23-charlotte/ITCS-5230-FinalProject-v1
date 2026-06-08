@@ -11,9 +11,9 @@ public class PlayerBrain : MonoBehaviour {
 
     // Editor Fields
     [Header("Player Sprite")]
-    public SpriteRenderer spriteRenderer = null;
-    public Color baseColor = new Color(1f, 1f, 1f, 1f);
-    public Color juggernautColor = new Color(1f, 0f, 0f, 1f);
+    [SerializeField] SpriteRenderer spriteRenderer = null;
+    [SerializeField] Color baseColor = new Color(1f, 1f, 1f, 1f);
+    [SerializeField] Color juggernautColor = new Color(1f, 0f, 0f, 1f);
 
     // Attributes
     public PlayerInputReader InputReader { get; private set; }

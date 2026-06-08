@@ -3,10 +3,10 @@ using UnityEngine;
 public class ProjectileWeaponBase : WeaponBase {
 
     [Header("Projectile Weapon Common")]
-    public bool infiniteAmmo = false;
-    public int ammoCount = 10;
-    public int ammoCapacity = 10;
+    [SerializeField] bool infiniteAmmo = false;
+    [SerializeField] int ammoCount = 10;
+    [SerializeField] int ammoCapacity = 10;
 
-    public Transform firePoint;
+    [SerializeField] Transform firePoint;
 
 }

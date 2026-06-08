@@ -2,11 +2,8 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour {
 
-    [SerializeField]
-    protected WeaponSystem.InputStatus primaryInputStatus = WeaponSystem.InputStatus.NoInput;
-
-    [SerializeField]
-    protected WeaponSystem.InputStatus secondaryInputStatus = WeaponSystem.InputStatus.NoInput;
+    [SerializeField] protected WeaponSystem.InputStatus primaryInputStatus = WeaponSystem.InputStatus.NoInput;
+    [SerializeField] protected WeaponSystem.InputStatus secondaryInputStatus = WeaponSystem.InputStatus.NoInput;
 
 
     public WeaponSystem ParentWeaponSystem { get; private set; }

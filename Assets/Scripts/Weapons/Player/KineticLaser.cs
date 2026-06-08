@@ -19,36 +19,48 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     [Header("Kinetic Laser Config")]
-    public ContactFilter2D impactFilter;
-    public GameObject basicVisualPrefab;
-    public GameObject superVisualPrefab;
-    public GameObject tractorVisualPrefab;
-    public float basicForce = 25f;
-    public float superForce = 45f;
-    public float tractorForce = 50f;
+    [SerializeField] ContactFilter2D impactFilter;
+    [SerializeField] GameObject basicVisualPrefab;
+    [SerializeField] GameObject superVisualPrefab;
+    [SerializeField] GameObject tractorVisualPrefab;
+    [SerializeField] float basicForce = 25f;
+    [SerializeField] float superForce = 45f;
+    [SerializeField] float tractorForce = 50f;
 
     [Header("Kinetic Laser Timings")]
-    public float basicPrimaryFireTime = 0.1f;
-    public float basicPrimaryCooldownTime = 0.1f;
-    public float superChargeTime = 1.5f;
-    public float superFireTime = 0.1f;
-    public float superCooldownTime = 1f;
+    [SerializeField] float basicPrimaryFireTime = 0.1f;
+    [SerializeField] float basicPrimaryCooldownTime = 0.1f;
+    [SerializeField] float superChargeTime = 1.5f;
+    [SerializeField] float superFireTime = 0.1f;
+    [SerializeField] float superCooldownTime = 1f;
 
-    public float basicSecondaryCooldownTime = 0.1f;
-    public float comboChargeTime = 1.5f;
-    public float comboFireTime = 0.1f;
-    public float comboCooldownTime = 1f;
+    [SerializeField] float basicSecondaryCooldownTime = 0.1f;
+    [SerializeField] float comboChargeTime = 1.5f;
+    [SerializeField] float comboFireTime = 0.1f;
+    [SerializeField] float comboCooldownTime = 1f;
 
     // Internals
     [Header("Internals")]
-    public WeaponState weaponState = WeaponState.Idle;
-    public float cooldownTarget = 0f;
-    public float stateLifeTimer = 0f;
+    [SerializeField] WeaponState weaponState = WeaponState.Idle;
+    [SerializeField] float cooldownTarget = 0f;
+    [SerializeField] float stateLifeTimer = 0f;
 
     protected LineRenderer laserVisual = null;
     protected RaycastHit2D[] impactResults = new RaycastHit2D[5];
 
     // Primary State Management Loop:
+
+    void Update() {
+        if (weaponState == WeaponState.PrimaryFireBasic) {
+            UpdateBasicLaserShot();
+        } else if (weaponState == WeaponState.PrimaryFireSuper) {
+            UpdateSuperLaserShot();
+        } else if (weaponState == WeaponState.SecondaryFireActive || weaponState == WeaponState.SecondaryFireComboReady) {
+            UpdateTractorBeam();
+        }
+    }
+
+
     void FixedUpdate() {
         stateLifeTimer += Time.fixedDeltaTime;
         
@@ -74,10 +86,7 @@ public class KineticLaser : ProjectileWeaponBase {
                     // No Charging
                     StartCooldown(basicPrimaryCooldownTime);
                 }
-            } else {
-                UpdateBasicLaserShot();
             }
-
         } else if (weaponState == WeaponState.PrimaryFireChargingSuper) {
             if (primaryInputStatus == WeaponSystem.InputStatus.Released) {
                 // End Charging Early
@@ -101,8 +110,6 @@ public class KineticLaser : ProjectileWeaponBase {
                 // Fire Complete
                 EndSuperLaserShot();
                 StartCooldown(superCooldownTime);    
-            } else {
-                UpdateSuperLaserShot();
             }
 
         } else if (weaponState == WeaponState.SecondaryFireActive) {
@@ -113,8 +120,6 @@ public class KineticLaser : ProjectileWeaponBase {
                 EndTractorBeam();
                 // End Secondary
                 StartCooldown(basicSecondaryCooldownTime);
-            } else {
-                UpdateTractorBeam();
             }
 
         } else if (weaponState == WeaponState.SecondaryFireComboReady) {
@@ -125,8 +130,6 @@ public class KineticLaser : ProjectileWeaponBase {
             } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
                 EndTractorBeam();
                 ChangeWeaponState(WeaponState.ComboFire);
-            } else {
-                UpdateTractorBeam();
             }
 
         } else if (weaponState == WeaponState.ComboFire) {

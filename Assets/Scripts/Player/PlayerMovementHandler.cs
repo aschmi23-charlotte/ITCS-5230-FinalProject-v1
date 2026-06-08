@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerMovementHandler : PlatformerMovementHandler {
     [Header("Player Specific Physics Values")]
-    public float juggernautMassMultiplier = 3f;
-    public float juggernautSpeedMultiplier = 2f;
+    [SerializeField] float juggernautMassMultiplier = 3f;
+    [SerializeField] float juggernautSpeedMultiplier = 2f;
 
 
     // Jugggernaut Logic

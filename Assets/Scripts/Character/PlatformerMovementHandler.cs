@@ -5,9 +5,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // Editor Fields
     [Header("Horizontal Movement")]
     // Target move speed for the player.
-    public float moveSpeed = 10.0f;
+    [SerializeField] float moveSpeed = 10.0f;
     // The Player's acceleration
-    public float acceleration = 7.0f;
+    [SerializeField] float acceleration = 7.0f;
     
     [System.Serializable]
     public enum FacingDirection {
@@ -17,16 +17,16 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public FacingDirection facingDirection = FacingDirection.Right;
 
     [Header("Jumping")]
-    public float jumpAcceleration = 10.0f;
+    [SerializeField] float jumpAcceleration = 10.0f;
     //public LayerMask groundLayers;
-    public ContactFilter2D groundFilter;
+    [SerializeField] ContactFilter2D groundFilter;
 
     [Header("Physics Values")]
-    public float moveActionDeadzone = 0.2f;
-    public float moveForceDifference = 0.3f;
-    public float moveForceResistance = 0.3f;
-    public float stopSpeedTarget = 0.0f;
-    public float stopCutoffTime = 0.5f;
+    [SerializeField] float moveActionDeadzone = 0.2f;
+    [SerializeField] float moveForceDifference = 0.3f;
+    [SerializeField] float moveForceResistance = 0.3f;
+    [SerializeField] float stopSpeedTarget = 0.0f;
+    [SerializeField] float stopCutoffTime = 0.5f;
 
     [System.Serializable]
     public enum MoveControlState {
@@ -34,7 +34,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
         Moving,
         Stopping,
     }
-    public MoveControlState moveControlState = MoveControlState.Stationary;
+    [SerializeField] MoveControlState moveControlState = MoveControlState.Stationary;
 
     // Attributes
     public Rigidbody2D rb { get; protected set; }

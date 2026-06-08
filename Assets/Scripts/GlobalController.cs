@@ -62,7 +62,7 @@ public class GlobalController : MonoBehaviour {
         Debug.Assert(spawnPoints.Length > 0, "At least one PlayerSpawnPoint exists");
 
         foreach (PlayerSpawnPoint spawnPoint in spawnPoints) {
-            if (spawnPoint.SpawnPointId == spawnPointId) {
+            if (spawnPoint.spawnPointId == spawnPointId) {
                 Player.transform.position = spawnPoint.transform.position;
                 return;
             }
