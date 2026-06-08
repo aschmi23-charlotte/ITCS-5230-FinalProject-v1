@@ -25,7 +25,8 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] GameObject tractorVisualPrefab;
     [SerializeField] float basicForce = 25f;
     [SerializeField] float superForce = 45f;
-    [SerializeField] float tractorForce = 50f;
+    [SerializeField] float tractorStartForce = 50f;
+    [SerializeField] float tractorHoldForce = 30f;
 
     [Header("Kinetic Laser Timings")]
     [SerializeField] float basicPrimaryFireTime = 0.1f;
@@ -49,6 +50,10 @@ public class KineticLaser : ProjectileWeaponBase {
     protected RaycastHit2D[] impactResults = new RaycastHit2D[5];
 
     // Primary State Management Loop:
+    private PlayerMovementHandler playerMovementHandler;
+    void Start() {
+        playerMovementHandler = GetComponentInParent<PlayerMovementHandler>();
+    }
 
     void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
@@ -196,6 +201,10 @@ public class KineticLaser : ProjectileWeaponBase {
         Destroy(laserVisual.gameObject);
     }
 
+    bool isTractoredObjectHittingSelf() {
+        return impactResults[1].collider == playerMovementHandler.GetGroundedCast();
+    }
+
     protected void StartTractorBeam() {
         int hitscan = Physics2D.Raycast((Vector2)ParentWeaponSystem.aimOrigin.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
@@ -206,8 +215,8 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(0, Vector2.zero);
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
 
-        if (impactResults[1].rigidbody != null) {
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorForce, ForceMode2D.Force);
+        if (impactResults[1].rigidbody != null && !isTractoredObjectHittingSelf()) {
+            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorStartForce, ForceMode2D.Force);
         }
 
     }
@@ -218,7 +227,7 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
         if (impactResults[1].rigidbody != null) {
 
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorForce, ForceMode2D.Force);
+            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorHoldForce, ForceMode2D.Force);
         }
     }
 

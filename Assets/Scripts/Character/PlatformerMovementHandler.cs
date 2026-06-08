@@ -5,9 +5,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // Editor Fields
     [Header("Horizontal Movement")]
     // Target move speed for the player.
-    [SerializeField] float moveSpeed = 10.0f;
+    [SerializeField] protected float moveSpeed = 10.0f;
     // The Player's acceleration
-    [SerializeField] float acceleration = 7.0f;
+    [SerializeField] protected float acceleration = 7.0f;
     
     [System.Serializable]
     public enum FacingDirection {
@@ -17,16 +17,16 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public FacingDirection facingDirection = FacingDirection.Right;
 
     [Header("Jumping")]
-    [SerializeField] float jumpAcceleration = 10.0f;
+    [SerializeField] protected float jumpAcceleration = 10.0f;
     //public LayerMask groundLayers;
-    [SerializeField] ContactFilter2D groundFilter;
+    [SerializeField] protected ContactFilter2D groundFilter;
 
     [Header("Physics Values")]
-    [SerializeField] float moveActionDeadzone = 0.2f;
-    [SerializeField] float moveForceDifference = 0.3f;
-    [SerializeField] float moveForceResistance = 0.3f;
-    [SerializeField] float stopSpeedTarget = 0.0f;
-    [SerializeField] float stopCutoffTime = 0.5f;
+    [SerializeField] protected float moveActionDeadzone = 0.2f;
+    [SerializeField] protected float moveForceDifference = 0.3f;
+    [SerializeField] protected float moveForceResistance = 0.3f;
+    [SerializeField] protected float stopSpeedTarget = 0.0f;
+    [SerializeField] protected float stopCutoffTime = 0.5f;
 
     [System.Serializable]
     public enum MoveControlState {
@@ -87,6 +87,10 @@ public class PlatformerMovementHandler : MonoBehaviour {
             default:
                 return Vector2.right;
         }
+    }
+
+    public RaycastHit2D GetGroundedCast() {
+        return groundedResults[0];
     }
 
     public void HandleGroundedMovement(Vector2 move) {

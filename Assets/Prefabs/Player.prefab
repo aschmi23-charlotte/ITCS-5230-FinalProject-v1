@@ -69,7 +69,8 @@ MonoBehaviour:
   tractorVisualPrefab: {fileID: 7644675783242524350, guid: 5f64191a336c08443b4ec27b2da3e010, type: 3}
   basicForce: 25
   superForce: 65
-  tractorForce: 50
+  tractorStartForce: 50
+  tractorHoldForce: 25
   basicPrimaryFireTime: 0.05
   basicPrimaryCooldownTime: 0.05
   superChargeTime: 0.5
