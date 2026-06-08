@@ -27,6 +27,7 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float superForce = 45f;
     [SerializeField] float tractorStartForce = 50f;
     [SerializeField] float tractorHoldForce = 30f;
+    [SerializeField] bool applyForcesAtImpactPoint = true;
 
     [Header("Kinetic Laser Timings")]
     [SerializeField] float basicPrimaryFireTime = 0.1f;
@@ -166,7 +167,11 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
 
         if (impactResults[1].rigidbody != null) {
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * basicForce, ForceMode2D.Impulse);
+            if (applyForcesAtImpactPoint) {
+                impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * basicForce, impactResults[1].point, ForceMode2D.Impulse);
+            } else {
+                impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * basicForce, ForceMode2D.Impulse);
+            }
         }
         
     }
@@ -191,7 +196,11 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
 
         if (impactResults[1].rigidbody != null) {
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * superForce, ForceMode2D.Impulse);
+            if (applyForcesAtImpactPoint) {
+                impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * superForce, impactResults[1].point, ForceMode2D.Impulse);
+            } else {
+                impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * superForce, ForceMode2D.Impulse);
+            }
         }
 
     }
@@ -220,7 +229,11 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
 
         if (impactResults[1].rigidbody != null && !isTractoredObjectHittingSelf()) {
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorStartForce, ForceMode2D.Force);
+            if (applyForcesAtImpactPoint) {
+                impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * -tractorStartForce, impactResults[1].point, ForceMode2D.Force);
+            } else {
+                impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorStartForce, ForceMode2D.Force);
+            }
         }
 
     }
@@ -230,8 +243,11 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
         if (impactResults[1].rigidbody != null) {
-
-            impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorHoldForce, ForceMode2D.Force);
+            if (applyForcesAtImpactPoint) {
+                impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * -tractorHoldForce, impactResults[1].point, ForceMode2D.Force);
+            } else {
+                impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorHoldForce, ForceMode2D.Force);
+            }
         }
     }
 
