@@ -58,7 +58,7 @@ public class KineticLaser : ProjectileWeaponBase {
     void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
             UpdateBasicLaserShot();
-        } else if (weaponState == WeaponState.PrimaryFireSuper) {
+        } else if (weaponState == WeaponState.PrimaryFireSuper || weaponState == WeaponState.ComboFire) {
             UpdateSuperLaserShot();
         } else if (weaponState == WeaponState.SecondaryFireActive || weaponState == WeaponState.SecondaryFireComboReady) {
             UpdateTractorBeam();
@@ -75,7 +75,7 @@ public class KineticLaser : ProjectileWeaponBase {
                 StartBasicLaserShot();
                 ChangeWeaponState(WeaponState.PrimaryFireBasic);
 
-            } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+            } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed || secondaryInputStatus == WeaponSystem.InputStatus.Held) {
                 StartTractorBeam();
                 ChangeWeaponState(WeaponState.SecondaryFireActive);
             }
@@ -93,7 +93,7 @@ public class KineticLaser : ProjectileWeaponBase {
                 }
             }
         } else if (weaponState == WeaponState.PrimaryFireChargingSuper) {
-            if (primaryInputStatus == WeaponSystem.InputStatus.Released) {
+            if (primaryInputStatus == WeaponSystem.InputStatus.Released || primaryInputStatus == WeaponSystem.InputStatus.NoInput) {
                 // End Charging Early
                 StartCooldown(basicPrimaryCooldownTime);
             } else if (stateLifeTimer >= superChargeTime) {
@@ -107,6 +107,8 @@ public class KineticLaser : ProjectileWeaponBase {
                 // Fire Super
                 StartSuperLaserShot();
                 ChangeWeaponState(WeaponState.PrimaryFireSuper);
+            } else if (primaryInputStatus == WeaponSystem.InputStatus.NoInput) {
+                StartCooldown(basicPrimaryCooldownTime);
             }
 
         } else if (weaponState == WeaponState.PrimaryFireSuper) {
@@ -121,25 +123,27 @@ public class KineticLaser : ProjectileWeaponBase {
             if (stateLifeTimer >= comboChargeTime && secondaryInputStatus == WeaponSystem.InputStatus.Held) {
                 // Combo Ready
                 ChangeWeaponState(WeaponState.SecondaryFireComboReady);
-            } else if (secondaryInputStatus == WeaponSystem.InputStatus.Released) {
+            } else if (secondaryInputStatus == WeaponSystem.InputStatus.Released || secondaryInputStatus == WeaponSystem.InputStatus.NoInput) {
                 EndTractorBeam();
                 // End Secondary
                 StartCooldown(basicSecondaryCooldownTime);
             }
 
         } else if (weaponState == WeaponState.SecondaryFireComboReady) {
-            if (secondaryInputStatus == WeaponSystem.InputStatus.Released) {
+            if (secondaryInputStatus == WeaponSystem.InputStatus.Released || secondaryInputStatus == WeaponSystem.InputStatus.NoInput) {
                 EndTractorBeam();
                 // End Secondary
                 StartCooldown(basicSecondaryCooldownTime);
             } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
                 EndTractorBeam();
+                StartSuperLaserShot();
                 ChangeWeaponState(WeaponState.ComboFire);
             }
 
         } else if (weaponState == WeaponState.ComboFire) {
             // Fire Combo
             if (stateLifeTimer >= comboFireTime) {
+                EndSuperLaserShot();
                 StartCooldown(comboCooldownTime);
             }
 

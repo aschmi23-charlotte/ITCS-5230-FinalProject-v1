@@ -43,7 +43,6 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public bool IsGrounded { get; protected set; }
     public float CoyoteTimer { get; protected set; }
     public bool IsFalling { get; protected set; }
-    public bool DoubleJumpAvailable { get; protected set; }
 
     // Internal values
     protected float nextExpectedVelocityX = 0.0f;
@@ -55,7 +54,6 @@ public class PlatformerMovementHandler : MonoBehaviour {
     void Awake() {
         IsGrounded = false;
         IsFalling = false;
-        DoubleJumpAvailable = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -73,7 +71,6 @@ public class PlatformerMovementHandler : MonoBehaviour {
         IsGrounded = hit > 0;
 
         if (IsGrounded) {
-            DoubleJumpAvailable = true;
             CoyoteTimer = 0f;
         } else {
             CoyoteTimer += Time.fixedDeltaTime;
