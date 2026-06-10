@@ -105,3 +105,8 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Script Inspector 3 is a paid asset requiring a license. I'd rather not commit that to the repo.
+# AFAIK, this shouldn't cause problems for other users trying to use this repo.
+/[Aa]ssets/Plugins/Editor/ScriptInspector3
+/[Aa]ssets/Plugins/Editor/ScriptInspector3.meta
