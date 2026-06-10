@@ -8,7 +8,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
 
     // Jugggernaut Logic
     public void JuggernautMovementStart() {
-        rb.mass *= juggernautMassMultiplier;
+        Body.mass *= juggernautMassMultiplier;
     }
 
     public void JuggernautMovementUpdateGrounded() {
@@ -36,7 +36,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
     }
 
     public void JuggernautMovementEnd() {
-        rb.mass /= juggernautMassMultiplier;
+        Body.mass /= juggernautMassMultiplier;
     }
 
 }

@@ -7,6 +7,6 @@ public class ProjectileWeaponBase : WeaponBase {
     //[SerializeField] int ammoCount = 10;
     //[SerializeField] int ammoCapacity = 10;
 
-    [SerializeField] Transform firePoint;
+    [SerializeField] protected Transform firePoint;
 
 }

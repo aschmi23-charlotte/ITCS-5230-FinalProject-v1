@@ -46,7 +46,7 @@ public class KinematicTransposer : MonoBehaviour {
         Vector2 moveDirection = (navVector).normalized;
         float remainingDistance = navVector.magnitude;
 
-        float speedThisTick = Mathf.Min(remainingDistance, speed);
+        float speedThisTick = Mathf.Min(remainingDistance, speed * Time.fixedDeltaTime);
 
         RBody.MovePosition(GetPosition() + moveDirection * speedThisTick);
     }

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KineticLaser
   primaryInputStatus: 0
   secondaryInputStatus: 0
-  firePoint: {fileID: 2740332506504320077}
+  firePoint: {fileID: 6784871918638541573}
   impactFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   superForce: 65
   tractorStartForce: 50
   tractorHoldForce: 25
+  applyForcesAtImpactPoint: 1
   basicPrimaryFireTime: 0.05
   basicPrimaryCooldownTime: 0.05
   superChargeTime: 0.5
@@ -136,6 +137,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1789102991692004335}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   juggernautColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  hasPulseJump: 0
+  hasJuggernaut: 0
 --- !u!114 &1210118162769235196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +167,7 @@ MonoBehaviour:
   moveSpeed: 15
   acceleration: 12
   facingDirection: 1
+  jumpMethod: 0
   jumpAcceleration: 25
   groundFilter:
     useTriggers: 0
@@ -204,9 +208,10 @@ MonoBehaviour:
   aimOrigin: {fileID: 853192373890036255}
   aimGraphic: {fileID: 4046904004998446222}
   directionalAimingAutoDistance: 10
-  activeWeaponIndex: 0
+  activeWeaponIndex: 1
   weapons:
   - {fileID: 5714286712236871125}
+  - {fileID: 7626000316682719256}
 --- !u!114 &5648137612112461351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +308,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!1 &5874083868282543056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6784871918638541573}
+  m_Layer: 6
+  m_Name: AimTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6784871918638541573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874083868282543056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 853192373890036255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7176052509329605302
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +430,54 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8257336854170893891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 621425954356170917}
+  - component: {fileID: 7626000316682719256}
+  m_Layer: 6
+  m_Name: ImploderExploderAssembly
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &621425954356170917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8257336854170893891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6378039403252393834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7626000316682719256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8257336854170893891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906952faa483e474f9b0f075d7aac9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImploderExploderAssembly
+  primaryInputStatus: 0
+  secondaryInputStatus: 0
+  firePoint: {fileID: 853192373890036255}
+  projectilePrefab: {fileID: 5584188851844816648, guid: a3f38d6a123193241ac2de8ae22085e5, type: 3}
 --- !u!1 &8607886323341442350
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +508,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6378039403252393834}
+  - {fileID: 6784871918638541573}
   m_Father: {fileID: 8141829378044027366}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8627116741571669215
@@ -457,6 +542,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2740332506504320077}
+  - {fileID: 621425954356170917}
   m_Father: {fileID: 853192373890036255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4046904004998446222

@@ -43,8 +43,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
     [SerializeField] MoveControlState moveControlState = MoveControlState.Stationary;
 
     // Attributes
-    public Rigidbody2D rb { get; protected set; }
-    public Collider2D col { get; protected set; }
+    public Rigidbody2D Body { get; protected set; }
+    public Collider2D Col { get; protected set; }
     public bool IsGrounded { get; protected set; }
     public float CoyoteTimer { get; protected set; }
     public bool IsFalling { get; protected set; }
@@ -63,8 +63,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
+        Body = GetComponent<Rigidbody2D>();
+        Col = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -72,7 +72,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
     void FixedUpdate() {
         //RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
-        int hit = col.Cast(Vector2.down, groundFilter, groundedResults, 0.2f);
+        int hit = Col.Cast(Vector2.down, groundFilter, groundedResults, 0.2f);
         IsGrounded = hit > 0;
 
         if (IsGrounded) {
@@ -81,7 +81,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
             CoyoteTimer += Time.fixedDeltaTime;
         }
 
-        IsFalling = rb.linearVelocityY < 0.0f;
+        IsFalling = Body.linearVelocityY < 0.0f;
     }
 
     public void UpdateFacing(Vector2 direction) {
@@ -111,7 +111,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
         // This movement code uses special physics calulations so that environmental physics effects can still work on the player.
         // In hindsight, I could probably modify this to operate on the velocity only and not AddForce. But why fix what ain't broken?
         // Horizontal Movement
-        float external_forces_x = (rb.linearVelocityX - nextExpectedVelocityX) * rb.mass;
+        float external_forces_x = (Body.linearVelocityX - nextExpectedVelocityX) * Body.mass;
 
         if (moveControlState == MoveControlState.Stationary || moveControlState == MoveControlState.Stopping) {
             nextExpectedVelocityX = 0.0f;
@@ -130,26 +130,26 @@ public class PlatformerMovementHandler : MonoBehaviour {
             } else {
                 float strength = 1.0f;
                 // We're being acted on by an external force. Allow it to have more noticable effect.
-                if (Mathf.Abs(external_forces_x / rb.mass) >= moveForceDifference * rb.mass) {
+                if (Mathf.Abs(external_forces_x / Body.mass) >= moveForceDifference * Body.mass) {
                     strength = moveForceResistance;
                 }
 
                 float desiredX = move.x * moveSpeed;
                 // Don't want slow ourselves down in a tailwind. Use it to go faster.
                 if (
-                    rb.linearVelocityX != 0.0f
-                    && Mathf.Sign(desiredX) == Mathf.Sign(rb.linearVelocityX)
-                    && Mathf.Abs(rb.linearVelocityX) > Mathf.Abs(desiredX)
+                    Body.linearVelocityX != 0.0f
+                    && Mathf.Sign(desiredX) == Mathf.Sign(Body.linearVelocityX)
+                    && Mathf.Abs(Body.linearVelocityX) > Mathf.Abs(desiredX)
                 ) {
                     // Obviously, this will result in the delta being zero. Whatever.
-                    desiredX = rb.linearVelocityX;
+                    desiredX = Body.linearVelocityX;
                 }
 
-                float deltaX = desiredX - rb.linearVelocityX;
-                float addedForce = acceleration * deltaX * rb.mass * strength;
+                float deltaX = desiredX - Body.linearVelocityX;
+                float addedForce = acceleration * deltaX * Body.mass * strength;
                 //Debug.LogFormat("addedForce: {0}", addedForce);
-                rb.AddForceX(addedForce, ForceMode2D.Force);
-                nextExpectedVelocityX = rb.linearVelocityX + ((addedForce / rb.mass) * Time.fixedDeltaTime);
+                Body.AddForceX(addedForce, ForceMode2D.Force);
+                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
 
             }
         }
@@ -157,24 +157,24 @@ public class PlatformerMovementHandler : MonoBehaviour {
         // We were moving, but no longer getting movement direction from the player.
         else if (moveControlState == MoveControlState.Stopping) {
             if (
-                Mathf.Abs(rb.linearVelocityX) <= stopSpeedTarget // Speed at which we're done stopping.
-                || Mathf.Sign(stopLastVelocityX) != Mathf.Sign(rb.linearVelocityX) // Edge case, we overshot stopSpeedThreshold in a single tick. 
-                || Mathf.Abs(stopLastVelocityX) < Mathf.Abs(rb.linearVelocityX) //Not slowing down. Must be some some outside force.
+                Mathf.Abs(Body.linearVelocityX) <= stopSpeedTarget // Speed at which we're done stopping.
+                || Mathf.Sign(stopLastVelocityX) != Mathf.Sign(Body.linearVelocityX) // Edge case, we overshot stopSpeedThreshold in a single tick. 
+                || Mathf.Abs(stopLastVelocityX) < Mathf.Abs(Body.linearVelocityX) //Not slowing down. Must be some some outside force.
                 || stopFailTimer >= stopCutoffTime
             ) {
                 moveControlState = MoveControlState.Stationary;
             } else {
                 float desiredX = 0.0f;
-                float deltaX = desiredX - rb.linearVelocityX;
-                float addedForce = acceleration * deltaX * rb.mass;
+                float deltaX = desiredX - Body.linearVelocityX;
+                float addedForce = acceleration * deltaX * Body.mass;
 
-                rb.AddForceX(addedForce);
-                nextExpectedVelocityX = rb.linearVelocityX + ((addedForce / rb.mass) * Time.fixedDeltaTime);
+                Body.AddForceX(addedForce);
+                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
                 stopFailTimer += Time.fixedDeltaTime;
             }
         }
 
-        stopLastVelocityX = rb.linearVelocityX;
+        stopLastVelocityX = Body.linearVelocityX;
     }
 
     public bool IsCoyoteTimeGrounded() {
@@ -184,20 +184,20 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public void InitiateJump() {
         switch(jumpMethod) {
             case JumpMethod.SetVelocity:
-                rb.linearVelocityY = jumpAcceleration;
+                Body.linearVelocityY = jumpAcceleration;
                 break;
             case JumpMethod.AddForce:
             default:
-                rb.AddForceY(jumpAcceleration * rb.mass, ForceMode2D.Impulse);
+                Body.AddForceY(jumpAcceleration * Body.mass, ForceMode2D.Impulse);
                 break;
         }
     }
 
     public void HandleJumping(bool shouldCancel) {
-        if (shouldCancel && rb.linearVelocityY > 0.0f) {
+        if (shouldCancel && Body.linearVelocityY > 0.0f) {
             // Apply force necessary to arrest
             //rb.AddForceY(jumpAcceleration * rb.mass, ForceMode2D.Impulse);
-            rb.linearVelocityY = 0.1f;
+            Body.linearVelocityY = 0.1f;
         }
     }
 
@@ -207,7 +207,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
     public void HandleAirborneMovement(Vector2 move) {
         // Movement uses rb.AddForce so that environmental physics effects can still work.
         // Horizontal Movement
-        float external_forces_x = (rb.linearVelocityX - nextExpectedVelocityX) * rb.mass;
+        float external_forces_x = (Body.linearVelocityX - nextExpectedVelocityX) * Body.mass;
 
         if (moveControlState == MoveControlState.Stationary || moveControlState == MoveControlState.Stopping) {
             nextExpectedVelocityX = 0.0f;
@@ -226,33 +226,33 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
                 // While airborne, prevents the stop code from seeing acceleration from
                 // the movement state and bailing out incorrectly from that.
-                stopLastVelocityX = rb.linearVelocityX;
+                stopLastVelocityX = Body.linearVelocityX;
                 // Honestly, not entirely sure why this causes problems while grounded. 
 
 
             } else {
                 float strength = 1.0f;
                 // We're being acted on by an external force. Allow it to have more noticable effect.
-                if (Mathf.Abs(external_forces_x / rb.mass) >= moveForceDifference * rb.mass) {
+                if (Mathf.Abs(external_forces_x / Body.mass) >= moveForceDifference * Body.mass) {
                     strength = moveForceResistance;
                 }
 
                 float desiredX = move.x * moveSpeed;
                 // Don't want slow ourselves down in a tailwind. Use it to go faster.
                 if (
-                    rb.linearVelocityX != 0.0f
-                    && Mathf.Sign(desiredX) == Mathf.Sign(rb.linearVelocityX)
-                    && Mathf.Abs(rb.linearVelocityX) > Mathf.Abs(desiredX)
+                    Body.linearVelocityX != 0.0f
+                    && Mathf.Sign(desiredX) == Mathf.Sign(Body.linearVelocityX)
+                    && Mathf.Abs(Body.linearVelocityX) > Mathf.Abs(desiredX)
                 ) {
                     // Obviously, this will result in the delta being zero. Whatever.
-                    desiredX = rb.linearVelocityX;
+                    desiredX = Body.linearVelocityX;
                 }
 
-                float deltaX = desiredX - rb.linearVelocityX;
-                float addedForce = acceleration * deltaX * rb.mass * strength;
+                float deltaX = desiredX - Body.linearVelocityX;
+                float addedForce = acceleration * deltaX * Body.mass * strength;
                 //Debug.LogFormat("addedForce: {0}", addedForce);
-                rb.AddForceX(addedForce, ForceMode2D.Force);
-                nextExpectedVelocityX = rb.linearVelocityX + ((addedForce / rb.mass) * Time.fixedDeltaTime);
+                Body.AddForceX(addedForce, ForceMode2D.Force);
+                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
 
             }
         }
@@ -260,23 +260,23 @@ public class PlatformerMovementHandler : MonoBehaviour {
         // We were moving, but no longer getting movement direction from the player.
         else if (moveControlState == MoveControlState.Stopping) {
             if (
-                Mathf.Abs(rb.linearVelocityX) <= stopSpeedTarget // Speed at which we're done stopping.
-                || Mathf.Sign(stopLastVelocityX) != Mathf.Sign(rb.linearVelocityX) // Edge case, we overshot stopSpeedThreshold in a single tick. 
-                || Mathf.Abs(stopLastVelocityX) < Mathf.Abs(rb.linearVelocityX) //Not slowing down. Must be some some outside force.
+                Mathf.Abs(Body.linearVelocityX) <= stopSpeedTarget // Speed at which we're done stopping.
+                || Mathf.Sign(stopLastVelocityX) != Mathf.Sign(Body.linearVelocityX) // Edge case, we overshot stopSpeedThreshold in a single tick. 
+                || Mathf.Abs(stopLastVelocityX) < Mathf.Abs(Body.linearVelocityX) //Not slowing down. Must be some some outside force.
                 || stopFailTimer >= stopCutoffTime
             ) {
                 moveControlState = MoveControlState.Stationary;
             } else {
                 float desiredX = 0.0f;
-                float deltaX = desiredX - rb.linearVelocityX;
-                float addedForce = acceleration * deltaX * rb.mass;
+                float deltaX = desiredX - Body.linearVelocityX;
+                float addedForce = acceleration * deltaX * Body.mass;
 
-                rb.AddForceX(addedForce);
-                nextExpectedVelocityX = rb.linearVelocityX + ((addedForce / rb.mass) * Time.fixedDeltaTime);
+                Body.AddForceX(addedForce);
+                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
                 stopFailTimer += Time.fixedDeltaTime;
             }
         }
 
-        stopLastVelocityX = rb.linearVelocityX;
+        stopLastVelocityX = Body.linearVelocityX;
     }
 }
