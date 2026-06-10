@@ -110,3 +110,5 @@ InitTestScene*.unity*
 # AFAIK, this shouldn't cause problems for other users trying to use this repo.
 /[Aa]ssets/Plugins/Editor/ScriptInspector3
 /[Aa]ssets/Plugins/Editor/ScriptInspector3.meta
+/[Pp]ackages/nuget-packages/InstalledPackages
+/[Pp]ackages/nuget-packages/InstalledPackages.meta
