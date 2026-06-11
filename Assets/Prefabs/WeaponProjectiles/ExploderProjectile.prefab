@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1866516439
-  m_SortingLayer: 6
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionExecutor
   immediate: 0
   <Offset>k__BackingField: {x: 0, y: 0}
-  <BlastForce>k__BackingField: 24
+  <BlastForce>k__BackingField: 22
   <BlastRadius>k__BackingField: 8
   <HitMask>k__BackingField:
     serializedVersion: 2
