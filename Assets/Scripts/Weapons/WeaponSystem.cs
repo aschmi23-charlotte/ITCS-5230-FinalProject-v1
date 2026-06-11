@@ -1,3 +1,4 @@
+using Ink.Runtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -25,18 +26,25 @@ public class WeaponSystem : MonoBehaviour {
     public float directionalAimingAutoDistance = 10f;
 
     [Header("Weapon Instances")]
-    public int activeWeaponIndex = 0;
+    [SerializeField] private int activeWeaponIndex = 0;
     public List<WeaponBase> weapons;
-
-
-
+    
     public Vector2 AimDirection { get; private set; }
     public Vector2 AimPosition { get; private set; }
 
+    public int ActiveWeaponIndex {
+        get {
+            return activeWeaponIndex;
+        }
+        set {
+            activeWeaponIndex = value;
+            UpdateActiveWeapon();
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
-        
+    void Awake() {
+        UpdateActiveWeapon();
     }
     
     // Mostly used with Gamepad control
@@ -65,5 +73,11 @@ public class WeaponSystem : MonoBehaviour {
 
     public void SetSecondaryInputStatus(InputStatus status) {
         weapons[activeWeaponIndex].SetSecondaryInputStatus(status);
+    }
+
+    private void UpdateActiveWeapon() {
+        for (int i = 0; i < weapons.Count; i++) {
+            weapons[i].gameObject.SetActive(i == activeWeaponIndex);
+        }
     }
 }

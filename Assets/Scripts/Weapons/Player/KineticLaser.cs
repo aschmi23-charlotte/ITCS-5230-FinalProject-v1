@@ -18,11 +18,23 @@ public class KineticLaser : ProjectileWeaponBase {
         Cooldown,
     }
 
-    [Header("Kinetic Laser Config")]
-    [SerializeField] ContactFilter2D impactFilter;
+    [System.Serializable]
+    protected class WeaponColors {
+        public Color idleColor;
+        public Color shotColor;
+        public Gradient chargeColorGradient;
+        public Gradient cooldownColorGradient;
+    }
+
+    [Header("Kinetic Laser Visuals")]
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject basicVisualPrefab;
     [SerializeField] GameObject superVisualPrefab;
     [SerializeField] GameObject tractorVisualPrefab;
+
+    [Header("Kinetic Laser Impacts")]
+    [SerializeField] ContactFilter2D impactFilter;
     [SerializeField] float basicForce = 25f;
     [SerializeField] float superForce = 45f;
     [SerializeField] float tractorStartForce = 50f;
@@ -31,12 +43,13 @@ public class KineticLaser : ProjectileWeaponBase {
 
     [Header("Kinetic Laser Timings")]
     [SerializeField] float basicPrimaryFireTime = 0.1f;
-    [SerializeField] float basicPrimaryCooldownTime = 0.1f;
+    [SerializeField] float basicPrimaryCooldownTime = 0.1f;    
     [SerializeField] float superChargeTime = 1.5f;
     [SerializeField] float superFireTime = 0.1f;
     [SerializeField] float superCooldownTime = 1f;
 
     [SerializeField] float basicSecondaryCooldownTime = 0.1f;
+    [SerializeField] float basicSecondaryCollisionPauseTime = 0.5f;
     [SerializeField] float comboChargeTime = 1.5f;
     [SerializeField] float comboFireTime = 0.1f;
     [SerializeField] float comboCooldownTime = 1f;
@@ -49,11 +62,11 @@ public class KineticLaser : ProjectileWeaponBase {
 
     protected LineRenderer laserVisual = null;
     protected RaycastHit2D[] impactResults = new RaycastHit2D[5];
+    protected Collider2D wielderCollider;
+    protected float secondaryShortoutTimer = 0.0f;
 
-    // Primary State Management Loop:
-    private PlayerMovementHandler playerMovementHandler;
     void Start() {
-        playerMovementHandler = GetComponentInParent<PlayerMovementHandler>();
+        wielderCollider = GetComponentInParent<Collider2D>();
     }
 
     void Update() {
@@ -66,9 +79,16 @@ public class KineticLaser : ProjectileWeaponBase {
         }
     }
 
-
     void FixedUpdate() {
+        UpdateWeaponState();
+        UpdateWeaponColor();
+    }
+
+    void UpdateWeaponState() {
         stateLifeTimer += Time.fixedDeltaTime;
+        if (secondaryShortoutTimer > 0f) {
+            secondaryShortoutTimer -= Time.fixedDeltaTime;
+        }
         
         if (weaponState == WeaponState.Idle) {
             // Weapon is ready
@@ -121,19 +141,26 @@ public class KineticLaser : ProjectileWeaponBase {
             }
 
         } else if (weaponState == WeaponState.SecondaryFireActive) {
+            SetChargeVisual(stateLifeTimer / comboChargeTime);
             if (stateLifeTimer >= comboChargeTime && secondaryInputStatus == WeaponSystem.InputStatus.Held) {
                 // Combo Ready
                 ChangeWeaponState(WeaponState.SecondaryFireComboReady);
-            } else if (secondaryInputStatus == WeaponSystem.InputStatus.Released || secondaryInputStatus == WeaponSystem.InputStatus.NoInput) {
+            } else if (
+                secondaryInputStatus == WeaponSystem.InputStatus.Released
+                || secondaryInputStatus == WeaponSystem.InputStatus.NoInput
+            ) {
+                // End Secondary (User Input)
                 EndTractorBeam();
-                // End Secondary
                 StartCooldown(basicSecondaryCooldownTime);
             }
 
         } else if (weaponState == WeaponState.SecondaryFireComboReady) {
-            if (secondaryInputStatus == WeaponSystem.InputStatus.Released || secondaryInputStatus == WeaponSystem.InputStatus.NoInput) {
+            if (
+                secondaryInputStatus == WeaponSystem.InputStatus.Released
+                || secondaryInputStatus == WeaponSystem.InputStatus.NoInput
+            ) {
+                // End Secondary (User Input)
                 EndTractorBeam();
-                // End Secondary
                 StartCooldown(basicSecondaryCooldownTime);
             } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
                 EndTractorBeam();
@@ -156,15 +183,53 @@ public class KineticLaser : ProjectileWeaponBase {
         }
     }
 
+    void UpdateWeaponColor() {
+        if (weaponState == WeaponState.Idle) {
+            spriteRenderer.color = weaponColors.idleColor;
+
+        } else if (weaponState == WeaponState.PrimaryFireBasic) {
+            spriteRenderer.color = weaponColors.shotColor;
+
+        } else if (weaponState == WeaponState.PrimaryFireChargingSuper) {
+            SetChargeVisual(stateLifeTimer / superChargeTime);
+
+        } else if (weaponState == WeaponState.PrimaryFireSuperReady) {
+            SetChargeVisual(1f);
+
+        } else if (weaponState == WeaponState.PrimaryFireSuper) {
+            spriteRenderer.color = weaponColors.shotColor;
+
+        } else if (weaponState == WeaponState.SecondaryFireActive) {
+            SetChargeVisual(stateLifeTimer / comboChargeTime);
+
+        } else if (weaponState == WeaponState.SecondaryFireComboReady) {
+            SetChargeVisual(1f);
+
+        } else if (weaponState == WeaponState.ComboFire) {
+            spriteRenderer.color = weaponColors.shotColor;
+
+        } else if (weaponState == WeaponState.Cooldown) {
+            SetCooldownVisual(1f - (stateLifeTimer / cooldownTarget));
+        }
+    }
+
+    protected void SetChargeVisual(float chargePercent) {
+        spriteRenderer.color = weaponColors.chargeColorGradient.Evaluate(chargePercent);
+    }
+
+    protected void SetCooldownVisual(float coolPercent) {
+        spriteRenderer.color = weaponColors.cooldownColorGradient.Evaluate(coolPercent);
+    }
+
     protected void StartBasicLaserShot() {
-        int hitscan = Physics2D.Raycast((Vector2)ParentWeaponSystem.aimOrigin.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
+        int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
         // Pooling would be more efficient, but w/e.
         laserVisual = Instantiate(basicVisualPrefab).GetComponent<LineRenderer>();
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
+        laserVisual.transform.position = firePoint.position;
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
 
         if (impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
@@ -177,8 +242,8 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void UpdateBasicLaserShot() {
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
+        laserVisual.transform.position = firePoint.position;
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
     }
 
     protected void EndBasicLaserShot() {
@@ -186,14 +251,14 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void StartSuperLaserShot() {
-        int hitscan = Physics2D.Raycast((Vector2)ParentWeaponSystem.aimOrigin.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
+        int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
         // Pooling would be more efficient, but w/e.
         laserVisual = Instantiate(superVisualPrefab).GetComponent<LineRenderer>();
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
+        laserVisual.transform.position = firePoint.position;
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
 
         if (impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
@@ -206,29 +271,32 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void UpdateSuperLaserShot() {
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
+        laserVisual.transform.position = firePoint.position;
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
     }
 
     protected void EndSuperLaserShot() {
         Destroy(laserVisual.gameObject);
     }
 
-    bool isTractoredObjectHittingSelf() {
-        return impactResults[1].collider == playerMovementHandler.GetGroundedCast();
+    bool IsTractoredObjectHittingSelf() {
+        return Physics2D.IsTouching(impactResults[1].collider, wielderCollider);
     }
 
     protected void StartTractorBeam() {
-        int hitscan = Physics2D.Raycast((Vector2)ParentWeaponSystem.aimOrigin.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
+        int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
         // Pooling would be more efficient, but w/e.
         laserVisual = Instantiate(tractorVisualPrefab).GetComponent<LineRenderer>();
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
+        laserVisual.transform.position = firePoint.position;
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
+        if (IsTractoredObjectHittingSelf()) {
+            secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
+        }
 
-        if (impactResults[1].rigidbody != null && !isTractoredObjectHittingSelf()) {
+        if (secondaryShortoutTimer <= 0f && impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
                 impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * -tractorStartForce, impactResults[1].point, ForceMode2D.Force);
             } else {
@@ -239,10 +307,15 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void UpdateTractorBeam() {
-        int hitscan = Physics2D.Raycast((Vector2)ParentWeaponSystem.aimOrigin.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
-        laserVisual.transform.position = ParentWeaponSystem.aimOrigin.position;
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)ParentWeaponSystem.aimOrigin.position);
-        if (impactResults[1].rigidbody != null) {
+        int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
+        laserVisual.transform.position = firePoint.position;
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
+
+        if (IsTractoredObjectHittingSelf()) {
+            secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
+        }
+
+        if (secondaryShortoutTimer <= 0f && impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
                 impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * -tractorHoldForce, impactResults[1].point, ForceMode2D.Force);
             } else {
