@@ -45,6 +45,7 @@ MonoBehaviour:
     m_Name: package.openupm.com
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.dbrizov.naughtyattributes
     - com.github-glitchenzo.nugetforunity
     - com.github.kurotu.unity-terminal-launcher
     - com.inkle.ink-unity-integration

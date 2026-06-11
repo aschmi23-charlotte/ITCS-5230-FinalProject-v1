@@ -50,17 +50,20 @@ TagManager:
   - name: Terrain
     uniqueID: 1957141169
     locked: 0
-  - name: Player
-    uniqueID: 378838575
+  - name: Environment
+    uniqueID: 3658996669
     locked: 0
-  - name: Enemies
-    uniqueID: 3839913191
+  - name: Projectiles
+    uniqueID: 2428450857
     locked: 0
   - name: Physics Objects
     uniqueID: 1427703869
     locked: 0
-  - name: Projectiles
-    uniqueID: 2428450857
+  - name: Enemies
+    uniqueID: 3839913191
+    locked: 0
+  - name: Player
+    uniqueID: 378838575
     locked: 0
   m_RenderingLayers:
   - Default
