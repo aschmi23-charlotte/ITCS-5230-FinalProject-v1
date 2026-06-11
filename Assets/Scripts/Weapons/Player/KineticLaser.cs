@@ -40,6 +40,7 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float tractorStartForce = 50f;
     [SerializeField] float tractorHoldForce = 30f;
     [SerializeField] bool applyForcesAtImpactPoint = true;
+    [SerializeField] float tractorBeamMinimumDistance = 1f;
 
     [Header("Kinetic Laser Timings")]
     [SerializeField] float basicPrimaryFireTime = 0.1f;
@@ -279,8 +280,8 @@ public class KineticLaser : ProjectileWeaponBase {
         Destroy(laserVisual.gameObject);
     }
 
-    bool IsTractoredObjectHittingSelf() {
-        return Physics2D.IsTouching(impactResults[1].collider, wielderCollider);
+    bool ShouldTractorBeamPause() {
+        return impactResults[1].distance < tractorBeamMinimumDistance || Physics2D.IsTouching(impactResults[1].collider, wielderCollider);
     }
 
     protected void StartTractorBeam() {
@@ -292,7 +293,7 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
-        if (IsTractoredObjectHittingSelf()) {
+        if (ShouldTractorBeamPause()) {
             secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
         }
 
@@ -311,7 +312,7 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.transform.position = firePoint.position;
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
 
-        if (IsTractoredObjectHittingSelf()) {
+        if (ShouldTractorBeamPause()) {
             secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
         }
 

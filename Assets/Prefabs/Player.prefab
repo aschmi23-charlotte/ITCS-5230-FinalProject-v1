@@ -225,6 +225,7 @@ MonoBehaviour:
   tractorStartForce: 50
   tractorHoldForce: 25
   applyForcesAtImpactPoint: 1
+  tractorBeamMinimumDistance: 1
   basicPrimaryFireTime: 0.05
   basicPrimaryCooldownTime: 0.05
   superChargeTime: 0.5
