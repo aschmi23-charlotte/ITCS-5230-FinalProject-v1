@@ -34,7 +34,7 @@ public class PlayerBrain : MonoBehaviour {
         StateVariables = GetComponent<Variables>();
         StateHandler = GetComponent<StateMachine>();
     }
-
+    
     void FixedUpdate() {
         
     }
@@ -57,6 +57,14 @@ public class PlayerBrain : MonoBehaviour {
         }
     }
     public void UpdateWeapons() {
+        // Weapon Selection:
+        if (InputReader.CheckSelectWeapon1Input(PlayerInputReader.ButtonCheckType.Pressed)) {
+            Weapons.ActiveWeaponIndex = 0;
+        } else if (InputReader.CheckSelectWeapon2Input(PlayerInputReader.ButtonCheckType.Pressed)) {
+            Weapons.ActiveWeaponIndex = 1;
+        }
+
+        // Set Primary Firing Input:
         if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
             Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Pressed);
 
@@ -71,6 +79,7 @@ public class PlayerBrain : MonoBehaviour {
 
         }
 
+        // Set Secondary Firing Input:
         if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
             Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Pressed);
 

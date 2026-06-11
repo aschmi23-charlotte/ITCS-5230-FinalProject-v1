@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class ImploderExploderAssembly : ProjectileWeaponBase {
 
+    [System.Serializable]
+    protected class WeaponColors {
+        public Color idleColor;
+        public Color shotColor;
+        public Gradient chargeColorGradient;
+        public Gradient cooldownColorGradient;
+    }
+
     // Fortunately, the IEA state management should be a LOT simpler than the Kinetic Laser.
-    [Header("ImploderExploderAssembly")]
+    [Header("IEA Visuals")]
+    [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject projectilePrefab;
 
     void FixedUpdate() {

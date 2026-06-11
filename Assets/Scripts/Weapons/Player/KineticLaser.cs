@@ -27,7 +27,6 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     [Header("Kinetic Laser Visuals")]
-    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject basicVisualPrefab;
     [SerializeField] GameObject superVisualPrefab;
@@ -70,6 +69,10 @@ public class KineticLaser : ProjectileWeaponBase {
         wielderCollider = GetComponentInParent<Collider2D>();
     }
 
+    void OnDisable() {
+            
+    }
+
     void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
             UpdateBasicLaserShot();
@@ -83,6 +86,14 @@ public class KineticLaser : ProjectileWeaponBase {
     void FixedUpdate() {
         UpdateWeaponState();
         UpdateWeaponColor();
+    }
+
+    public override void OnSwitchTo() {
+        base.OnSwitchTo();
+    }
+
+    public override void OnSwitchFrom() {
+        base.OnSwitchFrom();
     }
 
     void UpdateWeaponState() {
@@ -186,10 +197,10 @@ public class KineticLaser : ProjectileWeaponBase {
 
     void UpdateWeaponColor() {
         if (weaponState == WeaponState.Idle) {
-            spriteRenderer.color = weaponColors.idleColor;
+            mainSpriteRenderer.color = weaponColors.idleColor;
 
         } else if (weaponState == WeaponState.PrimaryFireBasic) {
-            spriteRenderer.color = weaponColors.shotColor;
+            mainSpriteRenderer.color = weaponColors.shotColor;
 
         } else if (weaponState == WeaponState.PrimaryFireChargingSuper) {
             SetChargeVisual(stateLifeTimer / superChargeTime);
@@ -198,7 +209,7 @@ public class KineticLaser : ProjectileWeaponBase {
             SetChargeVisual(1f);
 
         } else if (weaponState == WeaponState.PrimaryFireSuper) {
-            spriteRenderer.color = weaponColors.shotColor;
+            mainSpriteRenderer.color = weaponColors.shotColor;
 
         } else if (weaponState == WeaponState.SecondaryFireActive) {
             SetChargeVisual(stateLifeTimer / comboChargeTime);
@@ -207,7 +218,7 @@ public class KineticLaser : ProjectileWeaponBase {
             SetChargeVisual(1f);
 
         } else if (weaponState == WeaponState.ComboFire) {
-            spriteRenderer.color = weaponColors.shotColor;
+            mainSpriteRenderer.color = weaponColors.shotColor;
 
         } else if (weaponState == WeaponState.Cooldown) {
             SetCooldownVisual(1f - (stateLifeTimer / cooldownTarget));
@@ -215,11 +226,11 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void SetChargeVisual(float chargePercent) {
-        spriteRenderer.color = weaponColors.chargeColorGradient.Evaluate(chargePercent);
+        mainSpriteRenderer.color = weaponColors.chargeColorGradient.Evaluate(chargePercent);
     }
 
     protected void SetCooldownVisual(float coolPercent) {
-        spriteRenderer.color = weaponColors.cooldownColorGradient.Evaluate(coolPercent);
+        mainSpriteRenderer.color = weaponColors.cooldownColorGradient.Evaluate(coolPercent);
     }
 
     protected void StartBasicLaserShot() {

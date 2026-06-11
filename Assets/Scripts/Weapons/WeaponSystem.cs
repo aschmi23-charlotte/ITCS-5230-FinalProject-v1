@@ -27,7 +27,7 @@ public class WeaponSystem : MonoBehaviour {
 
     [Header("Weapon Instances")]
     [SerializeField] private int activeWeaponIndex = 0;
-    public List<WeaponBase> weapons;
+    [SerializeField] private List<WeaponBase> weapons;
     
     public Vector2 AimDirection { get; private set; }
     public Vector2 AimPosition { get; private set; }
@@ -37,16 +37,33 @@ public class WeaponSystem : MonoBehaviour {
             return activeWeaponIndex;
         }
         set {
+            weapons[activeWeaponIndex].OnSwitchFrom();
             activeWeaponIndex = value;
-            UpdateActiveWeapon();
+            weapons[activeWeaponIndex].OnSwitchTo();
         }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
-        UpdateActiveWeapon();
+        ResetWeapons();
     }
-    
+
+    void ResetWeapons() {
+        foreach (WeaponBase weapon in weapons) {
+            weapon.OnSwitchFrom();
+        }
+
+        weapons[activeWeaponIndex].OnSwitchTo();
+    }
+
+    public WeaponBase GetWeapon(int index) {
+        return weapons[index];
+    }
+
+    public WeaponBase GetActiveWeapon() {
+        return GetWeapon(activeWeaponIndex);
+    }
+
     // Mostly used with Gamepad control
     public void SetAimByDirection(Vector2 direction) {
         aimType = AimType.Direction;
@@ -73,11 +90,5 @@ public class WeaponSystem : MonoBehaviour {
 
     public void SetSecondaryInputStatus(InputStatus status) {
         weapons[activeWeaponIndex].SetSecondaryInputStatus(status);
-    }
-
-    private void UpdateActiveWeapon() {
-        for (int i = 0; i < weapons.Count; i++) {
-            weapons[i].gameObject.SetActive(i == activeWeaponIndex);
-        }
     }
 }
