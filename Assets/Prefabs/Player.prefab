@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -326,7 +326,7 @@ MonoBehaviour:
   acceleration: 12
   facingDirection: 1
   jumpMethod: 0
-  jumpAcceleration: 14
+  jumpAcceleration: 25
   groundFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
   stopSpeedTarget: 0
   stopCutoffTime: 0.5
   moveControlState: 0
-  juggernautMassMultiplier: 2
+  juggernautMassMultiplier: 3
   juggernautSpeedMultiplier: 2
 --- !u!114 &5519955083893365927
 MonoBehaviour:
@@ -575,7 +575,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -669,7 +669,7 @@ MonoBehaviour:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
   primaryProjectilePrefab: {fileID: 5584188851844816648, guid: a3f38d6a123193241ac2de8ae22085e5, type: 3}
-  secondaryProjectilePrefab: {fileID: 0}
+  secondaryProjectilePrefab: {fileID: 5584188851844816648, guid: 8b59a7f13cd6c3b40b20be0d51061fb9, type: 3}
   fireCooldown: 0.4
 --- !u!1 &8607886323341442350
 GameObject:
@@ -783,7 +783,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}

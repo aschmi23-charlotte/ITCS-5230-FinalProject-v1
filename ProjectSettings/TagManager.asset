@@ -15,7 +15,7 @@ TagManager:
   - Enemies
   - Physics Objects
   - Projectiles
-  - 
+  - Physics Effects
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Environment
     uniqueID: 3658996669
+    locked: 0
+  - name: Physics Effects
+    uniqueID: 2347067615
     locked: 0
   - name: Projectiles
     uniqueID: 2428450857

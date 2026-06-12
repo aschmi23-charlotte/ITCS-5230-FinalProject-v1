@@ -17,19 +17,18 @@ public static class ExplosionForce2D {
         return retVal;
     }
 
-    public static void AddExplosionForce(Rigidbody2D body, Vector2 blastPos, float blastRadius, float blastForce) {
-        body.AddForce(CalculateExplosionForce(body.worldCenterOfMass, blastPos, blastRadius, blastForce * 100f));
+    public static void AddExplosionForce(Rigidbody2D body, Vector2 blastPos, float blastRadius, float blastForce, ForceMode2D forceMode = ForceMode2D.Impulse) {
+        body.AddForce(CalculateExplosionForce(body.worldCenterOfMass, blastPos, blastRadius, blastForce * 100f), forceMode);
     }
 
-    public static void PerformExplosion(Vector2 blastPos, float blastRadius, float blastForce, LayerMask layerMask) {
+    public static void PerformExplosion(Vector2 blastPos, float blastRadius, float blastForce, LayerMask layerMask, ForceMode2D forceMode = ForceMode2D.Impulse) {
         Collider2D[] hits = Physics2D.OverlapCircleAll(blastPos, blastRadius, layerMask);
 
         foreach (Collider2D hit in hits) {
             Rigidbody2D rb = hit.GetComponent<Rigidbody2D>();
             if (rb != null) {
-                AddExplosionForce(rb, blastPos, blastRadius, blastForce);
+                AddExplosionForce(rb, blastPos, blastRadius, blastForce, forceMode);
             }
         }
     }
-    
 }
