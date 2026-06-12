@@ -52,10 +52,11 @@ MonoBehaviour:
   <BlastForce>k__BackingField: 0.5
   <BlastRadius>k__BackingField: 8
   <ForceMode>k__BackingField: 1
+  <Continuous>k__BackingField: 0
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 968
-  destroyOnDetonate: 0
+  <destroyOnDetonate>k__BackingField: 0
   onDetonate:
     m_PersistentCalls:
       m_Calls:
@@ -71,6 +72,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onUpdateContinuous:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeactivateContinuous:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1233070926034779060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +198,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1947899681
-  m_SortingLayer: 4
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}

@@ -13,29 +13,35 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
     [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject primaryProjectilePrefab;
     [SerializeField] GameObject secondaryProjectilePrefab;
-    [SerializeField] float fireCooldown = 0.6f;
+    [SerializeField] float primaryFireCooldown = 0.6f;
+    [SerializeField] float secondaryFireCooldown = 5f;
 
-    private float fireCooldownTimer = 0f;
+    private float primaryFireCooldownTimer = 0f;
+    private float secondaryireCooldownTimer = 0f;
 
     // This one is a LOT simpler than the Kinetic Laser.
     // Also, a charge attack on this thing may be... too strong.
     void FixedUpdate() {
         SetCooldownVisual();
-        if (fireCooldownTimer > 0f) {
-            fireCooldownTimer -= Time.fixedDeltaTime;
-            return;
+        // Handle primary fire:
+        if (primaryFireCooldownTimer > 0f) {
+            primaryFireCooldownTimer -= Time.fixedDeltaTime;
+        } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+            FireProjectile(primaryProjectilePrefab);
+            primaryFireCooldownTimer = primaryFireCooldown;
         }
 
-        if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
-            FireProjectile(primaryProjectilePrefab);
-
+        // Handle secondary fire:
+        if (secondaryireCooldownTimer > 0f) {
+            secondaryireCooldownTimer -= Time.fixedDeltaTime;
+            return;
         } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed) {
-
             FireProjectile(secondaryProjectilePrefab);
+            secondaryireCooldownTimer = secondaryFireCooldown;
         }
     }
 
-    private void FireProjectile(GameObject projectilePrefab) {
+    private GameObject FireProjectile(GameObject projectilePrefab) {
         RaycastProjectile newProjectile = Instantiate(projectilePrefab).GetComponent<RaycastProjectile>();
         newProjectile.transform.position = firePoint.position;
         newProjectile.Direction = ParentWeaponSystem.AimDirection;
@@ -43,10 +49,12 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
         if (rb != null) {
             newProjectile.InheritedVelocity = rb.linearVelocity;
         }
-        fireCooldownTimer = fireCooldown;
+
+        return newProjectile.gameObject;
     }
 
     protected void SetCooldownVisual() {
-        mainSpriteRenderer.color = weaponColors.cooldownColorGradient.Evaluate(fireCooldownTimer / fireCooldown);
+        // The disappearance of the singularity will indicate when it's ready to fire again.
+        mainSpriteRenderer.color = weaponColors.cooldownColorGradient.Evaluate(primaryFireCooldownTimer / primaryFireCooldown);
     }
 }
