@@ -51,4 +51,6 @@ MonoBehaviour:
       _path: 
       _buildIndex: 0
     SpawnPointId: 0
+  mainCamera: {fileID: 0}
   playerPrefab: {fileID: 4275876245608857341, guid: 72f9a1cc07c87f742b21b1ae74108e6b, type: 3}
+  spawnPointIdForMapScene: 0

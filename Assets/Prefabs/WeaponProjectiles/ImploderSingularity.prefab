@@ -52,6 +52,39 @@ MonoBehaviour:
   <BlastForce>k__BackingField: -2.5
   <BlastRadius>k__BackingField: 8
   <ForceMode>k__BackingField: 0
+  <ForceCurve>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.084908046
+      value: 0.2914515
+      inSlope: 2.418344
+      outSlope: 2.418344
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.27142158
+      outWeight: 0.049050223
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   <Continuous>k__BackingField: 1
   <HitMask>k__BackingField:
     serializedVersion: 2
@@ -198,7 +231,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1947899681
-  m_SortingLayer: 4
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}

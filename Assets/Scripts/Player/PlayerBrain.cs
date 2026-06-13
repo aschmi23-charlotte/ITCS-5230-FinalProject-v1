@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(HealthManager))]
+[RequireComponent(typeof(Hurtbox))]
 [RequireComponent(typeof(PlayerInputReader))]
 [RequireComponent(typeof(PlayerMovementHandler))]
 [RequireComponent(typeof(WeaponSystem))]
@@ -8,6 +10,14 @@ using UnityEngine;
 [RequireComponent(typeof(StateMachine))]
 public class PlayerBrain : MonoBehaviour {
     // This file is mostly here to tie all the discrete pieces of the player together.
+    [System.Serializable]
+    public class PlayerUpgrades {
+        public bool hasPulseJump = false;
+        public bool hasJuggernaut = false;
+        public bool hasIEA = false;
+    }
+    [Header("Player Abilities")]
+    public PlayerUpgrades upgrades;
 
     // Editor Fields
     [Header("Player Sprite")]
@@ -15,11 +25,9 @@ public class PlayerBrain : MonoBehaviour {
     [SerializeField] Color baseColor = new Color(1f, 1f, 1f, 1f);
     [SerializeField] Color juggernautColor = new Color(1f, 0f, 0f, 1f);
 
-    [Header("Player Abilities")]
-    public bool hasPulseJump = false;
-    public bool hasJuggernaut = false;
-
     // Attributes
+    public HealthManager Health { get; private set; }
+    public Hurtbox Hurt { get; private set; }
     public PlayerInputReader InputReader { get; private set; }
     public PlayerMovementHandler Movement { get; private set; }
     public WeaponSystem Weapons { get; private set; }
@@ -28,6 +36,8 @@ public class PlayerBrain : MonoBehaviour {
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
+        Health = GetComponent<HealthManager>();
+        Hurt = GetComponent<Hurtbox>();
         InputReader = GetComponent<PlayerInputReader>();
         Movement = GetComponent<PlayerMovementHandler>();
         Weapons = GetComponent<WeaponSystem>();
@@ -60,7 +70,7 @@ public class PlayerBrain : MonoBehaviour {
         // Weapon Selection:
         if (InputReader.CheckSelectWeapon1Input(PlayerInputReader.ButtonCheckType.Pressed)) {
             Weapons.ActiveWeaponIndex = 0;
-        } else if (InputReader.CheckSelectWeapon2Input(PlayerInputReader.ButtonCheckType.Pressed)) {
+        } else if (upgrades.hasIEA && InputReader.CheckSelectWeapon2Input(PlayerInputReader.ButtonCheckType.Pressed)) {
             Weapons.ActiveWeaponIndex = 1;
         }
 
@@ -106,6 +116,15 @@ public class PlayerBrain : MonoBehaviour {
         }
 
         return InputReader.ReadMoveInput();
+    }
+
+    // Upgrade Handling 
+    public bool IsPulseJumpUnlocked() {
+        return upgrades.hasPulseJump;
+    }
+
+    public bool IsJuggernautUnlocked() {
+        return upgrades.hasJuggernaut;
     }
 
     // === State Functions ===

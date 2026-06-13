@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 8
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -230,12 +230,12 @@ MonoBehaviour:
   basicPrimaryCooldownTime: 0.05
   superChargeTime: 0.5
   superFireTime: 0.1
-  superCooldownTime: 1
+  superCooldownTime: 0.5
   basicSecondaryCooldownTime: 0.1
   basicSecondaryCollisionPauseTime: 0.5
   comboChargeTime: 0.5
   comboFireTime: 0.1
-  comboCooldownTime: 1
+  comboCooldownTime: 0.5
   weaponState: 0
   cooldownTarget: 0
   stateLifeTimer: 0
@@ -249,11 +249,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8141829378044027366}
   - component: {fileID: 8563904339444996234}
+  - component: {fileID: 5648137612112461351}
+  - component: {fileID: 8593220286814493283}
+  - component: {fileID: 4574145899804002135}
+  - component: {fileID: 4894761157089387852}
   - component: {fileID: 1210118162769235196}
   - component: {fileID: 8161912056733663540}
   - component: {fileID: 5519955083893365927}
-  - component: {fileID: 5648137612112461351}
-  - component: {fileID: 8593220286814493283}
   - component: {fileID: 2142149526206280050}
   - component: {fileID: 3557371597647632524}
   m_Layer: 6
@@ -292,11 +294,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b9b40247ad0f64aa866c2e22e69ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBrain
+  upgrades:
+    hasPulseJump: 0
+    hasJuggernaut: 0
+    hasIEA: 0
   spriteRenderer: {fileID: 1789102991692004335}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   juggernautColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-  hasPulseJump: 0
-  hasJuggernaut: 0
+--- !u!114 &5648137612112461351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"DoubleJumpAvailable","value":{"$content":true,"$type":"System.Boolean"},"typeHandle":{"Identification":"System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &8593220286814493283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe58df89b5b74a97a123b5ed2b70422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.VisualScripting.State::Unity.VisualScripting.StateMachine
+  _data:
+    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: b6b802f4fe86db144a669a9ed2facbfc, type: 2}
+--- !u!114 &4574145899804002135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e118a963d56b9f64db942858fe3a3d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthManager
+  maxHealth: 100
+  currentHealth: 100
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8593220286814493283}
+        m_TargetAssemblyTypeName: Unity.VisualScripting.StateMachine, Unity.VisualScripting.State
+        m_MethodName: TriggerUnityEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: OnTakeDamage
+          m_BoolArgument: 0
+        m_CallState: 2
+  onNotDeadYet:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4894761157089387852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a47973fe6b23ca42bad9e1f774d16ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
+  healthManager: {fileID: 4574145899804002135}
 --- !u!114 &1210118162769235196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,8 +406,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffee4813e1ea1de478cd7ab38bdd3c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementHandler
-  moveSpeed: 15
-  acceleration: 12
+  moveSpeed: 16
+  acceleration: 13
   facingDirection: 1
   jumpMethod: 0
   jumpAcceleration: 25
@@ -370,38 +454,6 @@ MonoBehaviour:
   weapons:
   - {fileID: 5714286712236871125}
   - {fileID: 7626000316682719256}
---- !u!114 &5648137612112461351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4275876245608857341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"DoubleJumpAvailable","value":{"$content":true,"$type":"System.Boolean"},"typeHandle":{"Identification":"System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!114 &8593220286814493283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4275876245608857341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efe58df89b5b74a97a123b5ed2b70422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.VisualScripting.State::Unity.VisualScripting.StateMachine
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: b6b802f4fe86db144a669a9ed2facbfc, type: 2}
 --- !u!50 &2142149526206280050
 Rigidbody2D:
   serializedVersion: 5
@@ -575,7 +627,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 8
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -670,7 +722,8 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
   primaryProjectilePrefab: {fileID: 5584188851844816648, guid: a3f38d6a123193241ac2de8ae22085e5, type: 3}
   secondaryProjectilePrefab: {fileID: 5584188851844816648, guid: 8b59a7f13cd6c3b40b20be0d51061fb9, type: 3}
-  fireCooldown: 0.4
+  primaryFireCooldown: 0.6
+  secondaryFireCooldown: 5
 --- !u!1 &8607886323341442350
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +836,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 378838575
-  m_SortingLayer: 8
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}

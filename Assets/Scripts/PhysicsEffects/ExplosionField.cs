@@ -15,6 +15,7 @@ public class ExplosionExecutor: MonoBehaviour {
     [field: SerializeField] public float BlastForce { get; set; } = 20f;
     [field: SerializeField] public float BlastRadius { get; set; } = 5f;
     [field: SerializeField] public ForceMode2D ForceMode { get; set; } = ForceMode2D.Impulse;
+    [field: SerializeField] public AnimationCurve ForceCurve { get; set; }
     [field: SerializeField] public bool Continuous { get; set; } = false;
     [field: SerializeField] LayerMask HitMask { get; set; }
     [field: SerializeField] public bool destroyOnDetonate { get; set; } = true;

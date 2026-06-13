@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlatformerMovementHandler : MonoBehaviour {
@@ -58,13 +58,9 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // === Methods ===
     void Awake() {
         IsGrounded = false;
-        IsFalling = false;
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
-        Body = GetComponent<Rigidbody2D>();
-        Col = GetComponent<Collider2D>();
+	    IsFalling = false;
+	    Body = GetComponent<Rigidbody2D>();
+	    Col = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame

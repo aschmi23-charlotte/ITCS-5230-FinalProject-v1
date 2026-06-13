@@ -41,12 +41,6 @@ TagManager:
   - name: Background
     uniqueID: 2272761275
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
-  - name: UI
-    uniqueID: 2733841037
-    locked: 0
   - name: Terrain
     uniqueID: 1957141169
     locked: 0
@@ -55,6 +49,9 @@ TagManager:
     locked: 0
   - name: Physics Effects
     uniqueID: 2347067615
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Projectiles
     uniqueID: 2428450857
@@ -67,6 +64,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 378838575
+    locked: 0
+  - name: UI
+    uniqueID: 2733841037
     locked: 0
   m_RenderingLayers:
   - Default
