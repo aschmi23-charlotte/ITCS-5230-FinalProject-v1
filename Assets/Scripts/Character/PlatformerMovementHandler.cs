@@ -124,6 +124,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
                 stopFailTimer = 0.0f; // Reset the cutoff timer.
 
             } else {
+                // Get applicable friction coefficient:
                 float strength = 1.0f;
                 // We're being acted on by an external force. Allow it to have more noticable effect.
                 if (Mathf.Abs(external_forces_x / Body.mass) >= moveForceDifference * Body.mass) {
@@ -143,8 +144,18 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
                 float deltaX = desiredX - Body.linearVelocityX;
                 float addedForce = acceleration * deltaX * Body.mass * strength;
+
+                float effectiveFriction = FrictionCombiner.GetCombinedFriction(
+                    groundedResults[0].collider.friction,
+                    groundedResults[0].collider.frictionCombine,
+                    Col.friction,
+                    Col.frictionCombine
+                );
+
+                float frictionResistance = addedForce * effectiveFriction;
+
                 //Debug.LogFormat("addedForce: {0}", addedForce);
-                Body.AddForceX(addedForce, ForceMode2D.Force);
+                Body.AddForceX(addedForce + frictionResistance, ForceMode2D.Force);
                 nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
 
             }
