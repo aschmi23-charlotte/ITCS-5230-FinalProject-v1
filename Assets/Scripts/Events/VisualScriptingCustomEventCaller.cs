@@ -14,6 +14,7 @@ public class VisualScriptingCustomEventCaller : MonoBehaviour {
         public string[] argumentVariableNames;
 
         public void Invoke(Variables vars) {
+            // We want to pass args as an array, not param. Hence, CustomEvent.Trigger won't work.
             object[] args = new object[argumentVariableNames.Length];
 
             for (int i = 0; i < args.Length; i++) {
@@ -26,7 +27,8 @@ public class VisualScriptingCustomEventCaller : MonoBehaviour {
     public List<CustomEventCall> customEventCalls;
 
     public Variables variables { get; private set; }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
     void Awake() {
         variables = GetComponent<Variables>();
     }
