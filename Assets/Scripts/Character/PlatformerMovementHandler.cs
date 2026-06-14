@@ -102,6 +102,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
         return groundedResults[0];
     }
 
+    // This function should ONLY be called if IsGrounded == true
     public void HandleGroundedMovement(Vector2 move) {
         // Using rb.MovePosition or setting rb.linearVelocity every frame results in the player not being affected by in-world physics very much.
         // This movement code uses special physics calulations so that environmental physics effects can still work on the player.
@@ -143,7 +144,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
                 }
 
                 float deltaX = desiredX - Body.linearVelocityX;
-                float addedForce = acceleration * deltaX * Body.mass * strength;
+                float moveForce = acceleration * deltaX * Body.mass * strength;
 
                 float effectiveFriction = FrictionCombiner.GetCombinedFriction(
                     groundedResults[0].collider.friction,
@@ -152,12 +153,18 @@ public class PlatformerMovementHandler : MonoBehaviour {
                     Col.frictionCombine
                 );
 
-                float frictionResistance = addedForce * effectiveFriction;
+                float frictionForce = moveForce * effectiveFriction;
+                float combinedForce = moveForce + frictionForce;
+                Body.AddForceX(combinedForce, ForceMode2D.Force);
+                nextExpectedVelocityX = Body.linearVelocityX + ((moveForce / Body.mass) * Time.fixedDeltaTime);
 
-                //Debug.LogFormat("addedForce: {0}", addedForce);
-                Body.AddForceX(addedForce + frictionResistance, ForceMode2D.Force);
-                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
-
+                // Newton's third law says for every action there is an equal and opposite reaction.
+                // If we have to apply frictionForce to overcome friction pushing the character, then 
+                // -frictionForce is required to overcome friction on the floor. This should more 
+                // realistically simulate the force on a free-moving floor when someone walks on it.
+                if (groundedResults[0].rigidbody != null) {
+                    groundedResults[0].rigidbody.AddForceX(-frictionForce, ForceMode2D.Force);
+                }
             }
         }
 
@@ -211,6 +218,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // I keep going back and forth on whether this and the grounded version.
     // I keep telling myself I might end up needing significant differences between the two,
     // and it keeps not happening.
+    // EDIT: Nevermind, I guess it happened. At least a little.
     public void HandleAirborneMovement(Vector2 move) {
         // Movement uses rb.AddForce so that environmental physics effects can still work.
         // Horizontal Movement
@@ -234,7 +242,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
                 // While airborne, prevents the stop code from seeing acceleration from
                 // the movement state and bailing out incorrectly from that.
                 stopLastVelocityX = Body.linearVelocityX;
-                // Honestly, not entirely sure why this causes problems while grounded. 
+                // Honestly, not entirely sure why this code causes problems while grounded. 
 
 
             } else {
