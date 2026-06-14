@@ -57,7 +57,7 @@ public class ExplosionExecutor: MonoBehaviour {
     }
 
     void ApplyExplosionForce() {
-        ExplosionForce2D.PerformExplosion((Vector2)transform.position + Offset, BlastRadius, BlastForce, HitMask, ForceMode);
+        ExplosionForce2D.PerformCurvedExplosionForce((Vector2)transform.position + Offset, BlastRadius, BlastForce, HitMask, ForceCurve, ForceMode);
     }
 
 #if UNITY_EDITOR
