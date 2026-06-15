@@ -10,7 +10,7 @@ public abstract class WeaponBase : MonoBehaviour {
 
     public WeaponSystem ParentWeaponSystem { get; private set; }
 
-    protected void Awake() {
+    protected virtual void Awake() {
         ParentWeaponSystem = GetComponentInParent<WeaponSystem>();
     }
 

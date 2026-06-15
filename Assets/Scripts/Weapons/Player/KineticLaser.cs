@@ -54,6 +54,9 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float comboFireTime = 0.1f;
     [SerializeField] float comboCooldownTime = 1f;
 
+    [Header("Hit Information")]
+    [SerializeField] float tractorBeamStunPerSecond = 50f;
+
     // Internals
     [Header("Internals")]
     [SerializeField] WeaponState weaponState = WeaponState.Idle;
@@ -65,13 +68,11 @@ public class KineticLaser : ProjectileWeaponBase {
     protected Collider2D wielderCollider;
     protected float secondaryShortoutTimer = 0.0f;
 
-    void Start() {
+    protected override void Awake() {
+        base.Awake();
         wielderCollider = GetComponentInParent<Collider2D>();
     }
 
-    void OnDisable() {
-            
-    }
 
     void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
@@ -250,7 +251,6 @@ public class KineticLaser : ProjectileWeaponBase {
                 impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * basicForce, ForceMode2D.Impulse);
             }
         }
-        
     }
 
     protected void UpdateBasicLaserShot() {
@@ -298,6 +298,7 @@ public class KineticLaser : ProjectileWeaponBase {
     protected void StartTractorBeam() {
         int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
+
         // Pooling would be more efficient, but w/e.
         laserVisual = Instantiate(tractorVisualPrefab).GetComponent<LineRenderer>();
         laserVisual.transform.position = firePoint.position;
@@ -333,6 +334,11 @@ public class KineticLaser : ProjectileWeaponBase {
             } else {
                 impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * -tractorHoldForce, ForceMode2D.Force);
             }
+        }
+
+        Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
+        if (hurtbox != null) {
+            hurtbox.RecieveStunHit(tractorBeamStunPerSecond * Time.fixedDeltaTime);
         }
     }
 

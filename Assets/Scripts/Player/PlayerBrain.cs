@@ -49,6 +49,7 @@ public class PlayerBrain : MonoBehaviour {
         
     }
 
+    // === Most of the functions here are meant to be called from the State Machine ===
     // Weapons and Aiming Inputs
     public Vector2 GetGamepadAimDirection() {
         Vector2 direction = InputReader.ReadMoveInput();

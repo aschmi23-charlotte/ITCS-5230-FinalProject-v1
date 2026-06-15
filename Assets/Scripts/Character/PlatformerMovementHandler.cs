@@ -5,9 +5,10 @@ public class PlatformerMovementHandler : MonoBehaviour {
     // Editor Fields
     [Header("Horizontal Movement")]
     // Target move speed for the player.
-    [SerializeField] protected float moveSpeed = 10.0f;
+    [SerializeField] protected float moveSpeed = 15.0f;
     // The Player's acceleration
-    [SerializeField] protected float acceleration = 7.0f;
+    [SerializeField] protected float acceleration = 12.0f;
+    [SerializeField] protected float resistStateAcceleration = 10.0f;
     
     [System.Serializable]
     public enum FacingDirection {
@@ -27,12 +28,12 @@ public class PlatformerMovementHandler : MonoBehaviour {
     [SerializeField] protected ContactFilter2D groundFilter;
     [SerializeField] protected float coyoteTime = 0.2f;
 
-    [Header("Physics Values")]
+    [Header("Other Physics Values")]
     [SerializeField] protected float moveActionDeadzone = 0.2f;
-    [SerializeField] protected float moveForceDifference = 0.3f;
-    [SerializeField] protected float moveForceResistance = 0.3f;
+    [SerializeField] protected float moveResistanceDetectionDifference = 0.3f;
+    [SerializeField] protected float moveeResistanceAccelFraction = 0.3f;
     [SerializeField] protected float stopSpeedTarget = 0.0f;
-    [SerializeField] protected float stopCutoffTime = 0.5f;
+    [SerializeField] protected float stopCutoffTime = 0.5f; 
 
     [System.Serializable]
     public enum MoveControlState {
@@ -128,8 +129,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
                 // Get applicable friction coefficient:
                 float strength = 1.0f;
                 // We're being acted on by an external force. Allow it to have more noticable effect.
-                if (Mathf.Abs(external_forces_x / Body.mass) >= moveForceDifference * Body.mass) {
-                    strength = moveForceResistance;
+                if (Mathf.Abs(external_forces_x / Body.mass) >= moveResistanceDetectionDifference * Body.mass) {
+                    strength = moveeResistanceAccelFraction;
                 }
 
                 float desiredX = move.x * moveSpeed;
@@ -178,12 +179,12 @@ public class PlatformerMovementHandler : MonoBehaviour {
             ) {
                 moveControlState = MoveControlState.Stationary;
             } else {
-                float desiredX = 0.0f;
+                float desiredX = 0.0f; // stopSpeedTarget is supposed to get us as close to this as possible. I should probably just hard-code that.
                 float deltaX = desiredX - Body.linearVelocityX;
-                float addedForce = acceleration * deltaX * Body.mass;
+                float stopForce = acceleration * deltaX * Body.mass;
 
-                Body.AddForceX(addedForce);
-                nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
+                Body.AddForceX(stopForce);
+                nextExpectedVelocityX = Body.linearVelocityX + ((stopForce / Body.mass) * Time.fixedDeltaTime);
                 stopFailTimer += Time.fixedDeltaTime;
             }
         }
@@ -248,8 +249,8 @@ public class PlatformerMovementHandler : MonoBehaviour {
             } else {
                 float strength = 1.0f;
                 // We're being acted on by an external force. Allow it to have more noticable effect.
-                if (Mathf.Abs(external_forces_x / Body.mass) >= moveForceDifference * Body.mass) {
-                    strength = moveForceResistance;
+                if (Mathf.Abs(external_forces_x / Body.mass) >= moveResistanceDetectionDifference * Body.mass) {
+                    strength = moveeResistanceAccelFraction;
                 }
 
                 float desiredX = move.x * moveSpeed;
@@ -293,5 +294,15 @@ public class PlatformerMovementHandler : MonoBehaviour {
         }
 
         stopLastVelocityX = Body.linearVelocityX;
+    }
+
+    // My intention is for this to work whether grounded or not:
+    public void ResistMovement() {
+        float desiredX = 0.0f; // stopSpeedTarget is supposed to get us as close to this as possible. I should probably just hard-code that.
+        float deltaX = desiredX - Body.linearVelocityX;
+        float stopForce = resistStateAcceleration * deltaX * Body.mass;
+
+        Body.AddForceX(stopForce);
+        nextExpectedVelocityX = Body.linearVelocityX + ((stopForce / Body.mass) * Time.fixedDeltaTime);
     }
 }

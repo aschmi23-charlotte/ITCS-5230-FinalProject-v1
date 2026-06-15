@@ -10,7 +10,7 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] protected UnityEvent onNotDeadYet;
     [SerializeField] protected UnityEvent onDeath;
 
-
+    // Sets health without triggering any events. Use with caution.
     public float CurrentHealth {
         get {
             return currentHealth;
@@ -22,9 +22,13 @@ public class HealthManager : MonoBehaviour {
 
     void Awake() {}
 
-    public void TakeDamage(float amount) {
-        CurrentHealth -= amount;
+    public void RecieveDamage(float amount) {
+        if (amount <= 0f) {
+            Debug.LogFormat("Damage value {0} is less than or equal to zero. No effect.", amount);
+            return;
+        }
 
+        CurrentHealth -= amount;
         onTakeDamage.Invoke();
 
         if (CurrentHealth == 0) {
@@ -33,5 +37,4 @@ public class HealthManager : MonoBehaviour {
             onNotDeadYet.Invoke();
         }
     }
-
 }
