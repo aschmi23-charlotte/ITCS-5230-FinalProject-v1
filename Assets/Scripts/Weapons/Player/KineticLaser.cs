@@ -55,6 +55,8 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float comboCooldownTime = 1f;
 
     [Header("Hit Information")]
+    [SerializeField] float basicShotDamage = 10f;
+    [SerializeField] float superShotDamage = 20f;
     [SerializeField] float tractorBeamStunPerSecond = 50f;
 
     // Internals
@@ -251,6 +253,11 @@ public class KineticLaser : ProjectileWeaponBase {
                 impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * basicForce, ForceMode2D.Impulse);
             }
         }
+
+        Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
+        if (hurtbox != null) {
+            hurtbox.RecieveDamageHit(basicShotDamage);
+        }
     }
 
     protected void UpdateBasicLaserShot() {
@@ -278,6 +285,11 @@ public class KineticLaser : ProjectileWeaponBase {
             } else {
                 impactResults[1].rigidbody.AddForce(ParentWeaponSystem.AimDirection * superForce, ForceMode2D.Impulse);
             }
+        }
+
+        Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
+        if (hurtbox != null) {
+            hurtbox.RecieveDamageHit(superShotDamage);
         }
 
     }
