@@ -14,7 +14,7 @@ public class HealthManager : MonoBehaviour {
         [SerializeField] public UnityEvent onDeath;
     }
 
-    protected HealthEvents healthEvents;
+    [SerializeField] protected HealthEvents healthEvents;
 
 
     // Sets health without triggering any events. Use with caution.
