@@ -33,7 +33,7 @@ public class Hurtbox : MonoBehaviour {
         }
 
         if (stunManager != null) {
-            stunManager.RecieveStun(stunAmount);  
+            stunManager.RecieveStunPointDamage(stunAmount);  
         }
     }
 
@@ -51,7 +51,7 @@ public class Hurtbox : MonoBehaviour {
         hurtEvents.onStunHurt.Invoke();
 
         if (stunManager != null) {
-            stunManager.RecieveStun(stunAmount);  
+            stunManager.RecieveStunPointDamage(stunAmount);  
         }
     }
 

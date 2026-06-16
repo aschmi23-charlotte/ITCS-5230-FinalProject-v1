@@ -238,7 +238,7 @@ MonoBehaviour:
   comboCooldownTime: 0.5
   basicShotDamage: 10
   superShotDamage: 20
-  tractorBeamStunPerSecond: 30
+  tractorBeamStunPerSecond: 20
   weaponState: 0
   cooldownTarget: 0
   stateLifeTimer: 0
@@ -350,27 +350,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthManager
   maxHealth: 100
   currentHealth: 100
-  onTakeDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8593220286814493283}
-        m_TargetAssemblyTypeName: Unity.VisualScripting.StateMachine, Unity.VisualScripting.State
-        m_MethodName: TriggerUnityEvent
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: OnTakeDamage
-          m_BoolArgument: 0
-        m_CallState: 2
-  onNotDeadYet:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
+  healthEvents:
+    onTakeDamage:
+      m_PersistentCalls:
+        m_Calls: []
+    onNotDeadYet:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &4894761157089387852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,15 +374,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
   healthManager: {fileID: 4574145899804002135}
   stunManager: {fileID: 0}
-  onHit:
-    m_PersistentCalls:
-      m_Calls: []
-  onDamageHit:
-    m_PersistentCalls:
-      m_Calls: []
-  onStunHit:
-    m_PersistentCalls:
-      m_Calls: []
+  hurtEvents:
+    onHurt:
+      m_PersistentCalls:
+        m_Calls: []
+    onDamageHurt:
+      m_PersistentCalls:
+        m_Calls: []
+    onStunHurt:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1210118162769235196
 MonoBehaviour:
   m_ObjectHideFlags: 0
