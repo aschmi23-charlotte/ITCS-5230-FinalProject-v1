@@ -13,26 +13,26 @@ public class EnemyPlatformerMovementHandler : PlatformerMovementHandler {
     }
 
     // Stuff for handling the force resistance state.
-    public void State_ResistStart() {
+    public void ResistMovementStart() {
         moveControlState = MoveControlState.Stationary;
         resistStateTimer = 0f;
     } 
 
-    public void State_ResistUpdate() {
+    public void ResistMovementUpdate() {
         ResistMovement();
     }
 
-    public bool State_ResistShouldEnd() {
+    public bool ResistMovementShouldEnd() {
         return resistStateTimer >= resistStateTime;
     }
 
     // Stuff for the Stun State
-    public void State_StunStart() {
+    public void StunMovementStart() {
         moveControlState = MoveControlState.Stationary;
 
     }
 
-    public void State_StunUpdate() {
+    public void StunMovementUpdate() {
         moveControlState = MoveControlState.Stationary;
 
     }
