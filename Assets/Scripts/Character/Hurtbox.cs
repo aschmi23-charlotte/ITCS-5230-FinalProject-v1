@@ -5,8 +5,15 @@ using UnityEngine.Events;
 public class Hurtbox : MonoBehaviour {
     [SerializeField] protected HealthManager healthManager;
     [SerializeField] protected StunManager stunManager;
-    [SerializeField] public UnityEvent onDamageHit;
-    [SerializeField] public UnityEvent onStunHit;
+
+    [System.Serializable]
+    public class HurtEvents {
+        [SerializeField] public UnityEvent onHurt;
+        [SerializeField] public UnityEvent onDamageHurt;
+        [SerializeField] public UnityEvent onStunHurt;
+    }
+
+    [SerializeField] protected HurtEvents hurtEvents;
 
     protected Collider2D col;
 
@@ -14,16 +21,38 @@ public class Hurtbox : MonoBehaviour {
         col = GetComponent<Collider2D>();
     }
 
-    public void RecieveDamageHit(float damageAmount) {
-        onDamageHit.Invoke();
+    // If an action is supposed to do both damage and stun, then use this method instead.
+    // that way, we don't invoke onHit twice.
+    public void RecieveComboHit(float damageAmount, float stunAmount) {
+        hurtEvents.onHurt.Invoke();
+        hurtEvents.onDamageHurt.Invoke();
+        hurtEvents.onStunHurt.Invoke();
 
-        healthManager.RecieveDamage(damageAmount);
+        if (healthManager != null) {
+            healthManager.RecieveDamage(damageAmount);   
+        }
+
+        if (stunManager != null) {
+            stunManager.RecieveStun(stunAmount);  
+        }
     }
 
-        public void RecieveStunHit(float stunAmount) {
-        onStunHit.Invoke();
+    public void RecieveDamageHit(float damageAmount) {
+        hurtEvents.onHurt.Invoke();
+        hurtEvents.onDamageHurt.Invoke();
 
-        stunManager.RecieveStun(stunAmount);
+        if (healthManager != null) {
+            healthManager.RecieveDamage(damageAmount);   
+        }
+    }
+
+    public void RecieveStunHit(float stunAmount) {
+        hurtEvents.onHurt.Invoke();
+        hurtEvents.onStunHurt.Invoke();
+
+        if (stunManager != null) {
+            stunManager.RecieveStun(stunAmount);  
+        }
     }
 
 }

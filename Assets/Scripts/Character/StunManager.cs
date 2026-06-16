@@ -6,7 +6,12 @@ public class StunManager : MonoBehaviour {
     [SerializeField] protected float currentStunPoints = 100f;
     [SerializeField] protected float stunPointsRecoveryPerSecond = 10f;
 
-    [SerializeField] protected UnityEvent onStun;
+    [System.Serializable]
+    public class StunEvents {
+        [SerializeField] public UnityEvent onStun;
+    }
+
+    [SerializeField] protected StunEvents stunEvents;
 
     // Sets stun without triggering any events. Use with caution.
     public float CurrentStunPoints {
@@ -31,7 +36,7 @@ public class StunManager : MonoBehaviour {
         CurrentStunPoints -= amount;
 
         if (CurrentStunPoints == 0) {
-            onStun.Invoke();
+            stunEvents.onStun.Invoke();
         }
     }
 }

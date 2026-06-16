@@ -6,9 +6,16 @@ public class HealthManager : MonoBehaviour {
     [SerializeField] protected float maxHealth = 100f;
     [SerializeField] protected float currentHealth = 100f;
 
-    [SerializeField] protected UnityEvent onTakeDamage;
-    [SerializeField] protected UnityEvent onNotDeadYet;
-    [SerializeField] protected UnityEvent onDeath;
+    [System.Serializable]
+    public class HealthEvents {
+        
+        [SerializeField] public UnityEvent onTakeDamage;
+        [SerializeField] public UnityEvent onNotDeadYet;
+        [SerializeField] public UnityEvent onDeath;
+    }
+
+    protected HealthEvents healthEvents;
+
 
     // Sets health without triggering any events. Use with caution.
     public float CurrentHealth {
@@ -29,12 +36,12 @@ public class HealthManager : MonoBehaviour {
         }
 
         CurrentHealth -= amount;
-        onTakeDamage.Invoke();
+        healthEvents.onTakeDamage.Invoke();
 
         if (CurrentHealth == 0) {
-            onDeath.Invoke();
+            healthEvents.onDeath.Invoke();
         } else {
-            onNotDeadYet.Invoke();
+            healthEvents.onNotDeadYet.Invoke();
         }
     }
 }
