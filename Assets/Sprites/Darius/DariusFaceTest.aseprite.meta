@@ -129,7 +129,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: DariusFaceTest
     originalName: 
-    pivot: {x: 0.5, y: -0.06666667}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,8 +137,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 22
-      height: 30
+      width: 28
+      height: 32
     spriteID: 9640e4a9de001a34fba1441ac1e40fd7
     spriteBone: []
     spriteOutline: []
@@ -167,10 +167,10 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
-        y: 2
-        width: 22
-        height: 30
+        x: 2
+        y: 0
+        width: 28
+        height: 32
       spriteId: 9640e4a9de001a34fba1441ac1e40fd7
     linkedCells: []
     tileCells: []
@@ -182,4 +182,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 32, y: 32}
-  previousTextureSize: {x: 32, y: 64}
+  previousTextureSize: {x: 64, y: 64}

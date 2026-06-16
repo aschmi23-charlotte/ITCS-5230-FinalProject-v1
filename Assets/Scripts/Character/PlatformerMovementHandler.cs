@@ -41,7 +41,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
         Moving,
         Stopping,
     }
-    [SerializeField] MoveControlState moveControlState = MoveControlState.Stationary;
+    [SerializeField] protected MoveControlState moveControlState = MoveControlState.Stationary;
 
     // Attributes
     public Rigidbody2D Body { get; protected set; }

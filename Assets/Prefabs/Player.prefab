@@ -236,6 +236,9 @@ MonoBehaviour:
   comboChargeTime: 0.5
   comboFireTime: 0.1
   comboCooldownTime: 0.5
+  basicShotDamage: 10
+  superShotDamage: 20
+  tractorBeamStunPerSecond: 30
   weaponState: 0
   cooldownTarget: 0
   stateLifeTimer: 0
@@ -381,6 +384,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
   healthManager: {fileID: 4574145899804002135}
+  stunManager: {fileID: 0}
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamageHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onStunHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1210118162769235196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementHandler
   moveSpeed: 16
   acceleration: 13
+  resistStateAcceleration: 10
   facingDirection: 1
   jumpMethod: 0
   jumpAcceleration: 25
@@ -427,8 +441,8 @@ MonoBehaviour:
     maxNormalAngle: 0
   coyoteTime: 0.05
   moveActionDeadzone: 0.2
-  moveForceDifference: 0.3
-  moveForceResistance: 0.3
+  moveResistanceDetectionDifference: 0.3
+  moveeResistanceAccelFraction: 0.3
   stopSpeedTarget: 0
   stopCutoffTime: 0.5
   moveControlState: 0
