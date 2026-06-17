@@ -1,13 +1,26 @@
+using System.Collections.Generic;
+using Priority_Queue;
 using UnityEngine;
 
 public class NavigationController : MonoBehaviour {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
-        
+
+    public static NavigationController Instance { get; private set; }
+
+    public NavigationTilemap NavMap {get; private set;}
+
+    void Awake() {
+        Debug.Assert(Instance == null, "Multiple instances of NavigationController present!");
+        if (Instance == null) {
+            Instance = this;
+            Debug.Log("NavigationController instance awakened.");
+        }
+
+        NavMap = GetComponentInChildren<NavigationTilemap>();
     }
 
-    // Update is called once per frame
-    void Update() {
-        
+    public NavigationSearcher GetNewSearcher() {
+        return new NavigationSearcher(this);
     }
+
+
 }

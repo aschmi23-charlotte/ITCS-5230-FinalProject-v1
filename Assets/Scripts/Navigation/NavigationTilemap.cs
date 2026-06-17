@@ -6,15 +6,15 @@ public class NavigationTilemap : MonoBehaviour {
 
     [SerializeField] public bool autoToggleRenderer = true;
     
-    public Tilemap NavMap {get; private set;}
-    public TilemapRenderer NavRenderer {get; private set;}
+    public Tilemap Map {get; private set;}
+    public TilemapRenderer Renderer {get; private set;}
 
     void Awake() {
-        NavMap = GetComponent<Tilemap>();
-        NavRenderer = GetComponent<TilemapRenderer>();
+        Map = GetComponent<Tilemap>();
+        Renderer = GetComponent<TilemapRenderer>();
     }
 
     void Start() {
-        NavRenderer.enabled = false;
+        Renderer.enabled = false;
     }
 }

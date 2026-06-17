@@ -37,6 +37,8 @@ public class NavigationTilemapGeneratorEditor : Editor {
         int cellCount = 0;
 
         foreach (Vector3Int position in TargetGenerator.worldTilemap.cellBounds.allPositionsWithin) {
+            // Debug.Log(position);
+
             // Call at the top. That way, we don't need a bunch of these later.
             cellCount++;
             if (cellCount == TargetGenerator.celsPerFrame) {
