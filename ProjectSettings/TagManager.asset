@@ -16,7 +16,7 @@ TagManager:
   - Physics Objects
   - Projectiles
   - Physics Effects
-  - 
+  - Navigation
   - 
   - 
   - 
@@ -67,6 +67,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2733841037
+    locked: 0
+  - name: Navigation
+    uniqueID: 2559598553
     locked: 0
   m_RenderingLayers:
   - Default
