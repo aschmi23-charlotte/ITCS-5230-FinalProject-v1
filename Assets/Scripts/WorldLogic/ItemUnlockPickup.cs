@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class ItemUnlock : MonoBehaviour {
+public class ItemUnlock : ItemPickupBase {
+
+    [Header("Upgrade Info")]
     [SerializeField] protected PlayerBrain.PlayerUpgrades.PlayerUpgradeType upgradeType 
         = PlayerBrain.PlayerUpgrades.PlayerUpgradeType.PulseJump;
 
-    public void OnItemPickup(PlayerBrain player) {
+    public override void OnItemPickup(PlayerBrain player) {
         player.Upgrades.TriggerUnlock(upgradeType);
     }
 }

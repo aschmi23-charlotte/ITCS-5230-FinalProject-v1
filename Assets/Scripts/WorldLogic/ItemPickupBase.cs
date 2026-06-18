@@ -4,7 +4,7 @@ using UnityEngine.Events;
 public abstract class ItemPickupBase : MonoBehaviour {
     // Editor Fields:
     [Header("General Pickup Info")]
-    [SerializeField] protected bool destroyOnPickup;
+    [SerializeField] protected bool destroyOnPickup = true;
     [SerializeField] protected UnityEvent onPickupEvent;
     
     // Attributes:
@@ -14,8 +14,9 @@ public abstract class ItemPickupBase : MonoBehaviour {
         Trigger = GetComponent<Collider2D>();
     }
 
-    public virtual void OnTrggerEnter2D(Collider2D collider) {
-        PlayerBrain player = collider.GetComponent<PlayerBrain>();
+    public virtual void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("Triggered");
+        PlayerBrain player = other.GetComponent<PlayerBrain>();
         // If this is not the player, ignore it.
         if (player == null) { return; }
         
