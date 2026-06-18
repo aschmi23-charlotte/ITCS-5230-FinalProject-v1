@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HudController
   hudColors:
     healthColor: {r: 1, g: 0, b: 0, a: 1}
-    ammoColor: {r: 0, g: 0.1551485, b: 1, a: 0}
+    ammoColor: {r: 0, g: 0.15686262, b: 1, a: 1}
 --- !u!114 &7092658157181874294
 MonoBehaviour:
   m_ObjectHideFlags: 0

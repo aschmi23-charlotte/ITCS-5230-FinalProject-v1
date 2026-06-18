@@ -8,7 +8,7 @@
         <ui:VisualElement name="WeaponRegion" style="flex-grow: 1; height: auto; flex-direction: row; max-height: 60px;">
             <ui:Label text="Label" name="AmmoCountNumber" style="align-self: center; align-content: center; color: rgb(0, 59, 255); font-size: 30px; min-width: 90px; -unity-text-align: upper-right; -unity-font-style: bold;"/>
             <ui:Image source="project://database/Assets/Sprites/Crosshairs/Crosshair_01_T02_Purple.png?fileID=-7987441400860379477&amp;guid=b278f53d7e94cba4d97ed5e9768d89e8&amp;type=3#Crosshair_01_T02_Purple_0" name="WeaponIcon" style="width: 60px; height: 60px;"/>
-            <ui:ProgressBar value="1" title="" name="AmmoCountBar" high-value="1" style="height: auto; align-self: center; align-content: center; flex-grow: 1; margin-top: 0; margin-right: 5px; margin-bottom: 0; margin-left: 5px; flex-direction: column;"/>
+            <ui:ProgressBar value="1" title="" name="AmmoCountBar" high-value="1" low-value="0" style="height: auto; align-self: center; align-content: center; flex-grow: 1; margin-top: 0; margin-right: 5px; margin-bottom: 0; margin-left: 5px; flex-direction: column;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

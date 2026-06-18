@@ -42,7 +42,6 @@ public class HudController : MonoBehaviour {
         HealthBar.value = PlayerBrain.Instance.Health.HealthPercent;
         AmmoCountNumber.text = PlayerBrain.Instance.Weapons.WeaponAmmoCount.ToString();
         AmmoCountBar.value = PlayerBrain.Instance.Weapons.WeaponAmmoPercent;
-
     }
 
     private void ConfigureInnerProgressBar(ProgressBar bar, Color color) {
