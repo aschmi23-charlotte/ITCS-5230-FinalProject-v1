@@ -1,74 +1,40 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlatformerMovementHandler : MonoBehaviour {
+public class PlatformerMovementHandler : MovementHandlerBase {
     // Editor Fields
-    [Header("Horizontal Movement")]
-    // Target move speed for the player.
-    [SerializeField] protected float moveSpeed = 15.0f;
-    // The Player's acceleration
-    [SerializeField] protected float acceleration = 12.0f;
-    [SerializeField] protected float resistStateAcceleration = 10.0f;
-    
-    [System.Serializable]
-    public enum FacingDirection {
-        Left,
-        Right,
-    }
-    public FacingDirection facingDirection = FacingDirection.Right;
 
     [System.Serializable]
     public enum JumpMethod {
         SetVelocity,
         AddForce,
     }
+
     [Header("Jumping")]
     [SerializeField] protected JumpMethod jumpMethod = JumpMethod.SetVelocity;
     [SerializeField] protected float jumpAcceleration = 10.0f;
     [SerializeField] protected ContactFilter2D groundFilter;
     [SerializeField] protected float coyoteTime = 0.2f;
 
-    [Header("Other Physics Values")]
-    [SerializeField] protected float moveActionDeadzone = 0.2f;
-    [SerializeField] protected float moveResistanceDetectionDifference = 0.3f;
-    [SerializeField] protected float moveeResistanceAccelFraction = 0.3f;
-    [SerializeField] protected float stopSpeedTarget = 0.0f;
-    [SerializeField] protected float stopCutoffTime = 0.5f; 
-
-    [System.Serializable]
-    public enum MoveControlState {
-        Stationary,
-        Moving,
-        Stopping,
-    }
-    [SerializeField] protected MoveControlState moveControlState = MoveControlState.Stationary;
 
     // Attributes
-    public Rigidbody2D Body { get; protected set; }
-    public Collider2D Col { get; protected set; }
-    public bool IsGrounded { get; protected set; }
-    public float CoyoteTimer { get; protected set; }
-    public bool IsFalling { get; protected set; }
+
+    public bool IsGrounded { get; protected set; } = false;
+    public bool IsFalling { get; protected set; } = false;
+    public float CoyoteTimer { get; protected set; } = 0f;
 
     // Internal values
-    protected float nextExpectedVelocityX = 0.0f;
-    protected float stopLastVelocityX = 0.0f;
-    protected float stopFailTimer = 0.0f;
     private RaycastHit2D[] groundedResults = new RaycastHit2D[1];
 
     // === Methods ===
-    void Awake() {
-        IsGrounded = false;
-	    IsFalling = false;
-	    Body = GetComponent<Rigidbody2D>();
-	    Col = GetComponent<Collider2D>();
+    // Well this is redundant now. But I might need it again later.
+    protected override void Awake() {
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update() {}
-
-    void FixedUpdate() {
-        //RaycastHit2D hit = Physics2D.Raycast(rb.position, Vector2.down, 0.2f, groundLayers);
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
+        
         int hit = Col.Cast(Vector2.down, groundFilter, groundedResults, 0.2f);
         IsGrounded = hit > 0;
 
@@ -79,24 +45,6 @@ public class PlatformerMovementHandler : MonoBehaviour {
         }
 
         IsFalling = Body.linearVelocityY < 0.0f;
-    }
-
-    public void UpdateFacing(Vector2 direction) {
-        if (direction.x > 0f) {
-            facingDirection = FacingDirection.Right;
-        } else if (direction.x < 0f) {
-            facingDirection = FacingDirection.Left;
-        }
-    }
-
-    public Vector2 GetFacingAsVector() {
-        switch (facingDirection) {
-            case FacingDirection.Left:
-                return Vector2.left;
-            case FacingDirection.Right:
-            default:
-                return Vector2.right;
-        }
     }
 
     public RaycastHit2D GetGroundedCast() {
@@ -239,12 +187,10 @@ public class PlatformerMovementHandler : MonoBehaviour {
                 moveControlState = MoveControlState.Stopping;
                 stopFailTimer = 0.0f; // Reset the cutoff timer.
 
-
                 // While airborne, prevents the stop code from seeing acceleration from
                 // the movement state and bailing out incorrectly from that.
                 stopLastVelocityX = Body.linearVelocityX;
                 // Honestly, not entirely sure why this code causes problems while grounded. 
-
 
             } else {
                 float strength = 1.0f;
@@ -266,7 +212,7 @@ public class PlatformerMovementHandler : MonoBehaviour {
 
                 float deltaX = desiredX - Body.linearVelocityX;
                 float addedForce = acceleration * deltaX * Body.mass * strength;
-                //Debug.LogFormat("addedForce: {0}", addedForce);
+
                 Body.AddForceX(addedForce, ForceMode2D.Force);
                 nextExpectedVelocityX = Body.linearVelocityX + ((addedForce / Body.mass) * Time.fixedDeltaTime);
 
@@ -294,15 +240,5 @@ public class PlatformerMovementHandler : MonoBehaviour {
         }
 
         stopLastVelocityX = Body.linearVelocityX;
-    }
-
-    // My intention is for this to work whether grounded or not:
-    public void ResistMovement() {
-        float desiredX = 0.0f; // stopSpeedTarget is supposed to get us as close to this as possible. I should probably just hard-code that.
-        float deltaX = desiredX - Body.linearVelocityX;
-        float stopForce = resistStateAcceleration * deltaX * Body.mass;
-
-        Body.AddForceX(stopForce);
-        nextExpectedVelocityX = Body.linearVelocityX + ((stopForce / Body.mass) * Time.fixedDeltaTime);
     }
 }
