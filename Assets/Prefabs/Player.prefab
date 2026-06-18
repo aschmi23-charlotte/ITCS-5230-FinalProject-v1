@@ -139,7 +139,27 @@ MonoBehaviour:
   primaryInputStatus: 0
   secondaryInputStatus: 0
   mainSpriteRenderer: {fileID: 4046904004998446222}
+  infiniteAmmo: 0
+  ammoCount: 20
+  ammoCapacity: 20
+  ammoRecoveryTimeBetweenTicks: 0.5
+  ammoRecoveryDelay: 1
   firePoint: {fileID: 621425954356170917}
+  basicShotDamage: 10
+  superShotDamage: 20
+  tractorBeamStunPerSecond: 20
+  basicShotAmmoCost: 1
+  superShotAmmoCost: 2
+  basicPrimaryFireTime: 0.05
+  basicPrimaryCooldownTime: 0.05
+  superChargeTime: 0.5
+  superFireTime: 0.1
+  superCooldownTime: 0.5
+  basicSecondaryCooldownTime: 0.1
+  basicSecondaryCollisionPauseTime: 0.5
+  comboChargeTime: 0.5
+  comboFireTime: 0.1
+  comboCooldownTime: 0.5
   weaponColors:
     idleColor: {r: 0, g: 0, b: 0, a: 1}
     shotColor: {r: 0.5188679, g: 0, b: 0.004981773, a: 1}
@@ -226,19 +246,6 @@ MonoBehaviour:
   tractorHoldForce: 25
   applyForcesAtImpactPoint: 1
   tractorBeamMinimumDistance: 1
-  basicPrimaryFireTime: 0.05
-  basicPrimaryCooldownTime: 0.05
-  superChargeTime: 0.5
-  superFireTime: 0.1
-  superCooldownTime: 0.5
-  basicSecondaryCooldownTime: 0.1
-  basicSecondaryCollisionPauseTime: 0.5
-  comboChargeTime: 0.5
-  comboFireTime: 0.1
-  comboCooldownTime: 0.5
-  basicShotDamage: 10
-  superShotDamage: 20
-  tractorBeamStunPerSecond: 20
   weaponState: 0
   cooldownTarget: 0
   stateLifeTimer: 0
@@ -692,7 +699,14 @@ MonoBehaviour:
   primaryInputStatus: 0
   secondaryInputStatus: 0
   mainSpriteRenderer: {fileID: 925873591671437652}
+  infiniteAmmo: 0
+  ammoCount: 8
+  ammoCapacity: 8
+  ammoRecoveryTimeBetweenTicks: 1
+  ammoRecoveryDelay: 2
   firePoint: {fileID: 853192373890036255}
+  primaryAmmoCost: 1
+  secondaryAmmoCost: 3
   weaponColors:
     cooldownColorGradient:
       serializedVersion: 2

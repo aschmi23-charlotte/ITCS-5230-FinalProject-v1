@@ -26,6 +26,27 @@ public class KineticLaser : ProjectileWeaponBase {
         public Gradient cooldownColorGradient;
     }
 
+    [Header("Hit Information")]
+    [SerializeField] float basicShotDamage = 10f;
+    [SerializeField] float superShotDamage = 20f;
+    [SerializeField] float tractorBeamStunPerSecond = 50f;
+
+    [Header("Ammo Consumption")]
+    [SerializeField] int basicShotAmmoCost = 1;
+    [SerializeField] int superShotAmmoCost = 3;
+
+    [Header("Kinetic Laser Timings")]
+    [SerializeField] float basicPrimaryFireTime = 0.1f;
+    [SerializeField] float basicPrimaryCooldownTime = 0.1f;    
+    [SerializeField] float superChargeTime = 1.5f;
+    [SerializeField] float superFireTime = 0.1f;
+    [SerializeField] float superCooldownTime = 1f;
+    [SerializeField] float basicSecondaryCooldownTime = 0.1f;
+    [SerializeField] float basicSecondaryCollisionPauseTime = 0.5f;
+    [SerializeField] float comboChargeTime = 1.5f;
+    [SerializeField] float comboFireTime = 0.1f;
+    [SerializeField] float comboCooldownTime = 1f;
+
     [Header("Kinetic Laser Visuals")]
     [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject basicVisualPrefab;
@@ -40,24 +61,6 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float tractorHoldForce = 30f;
     [SerializeField] bool applyForcesAtImpactPoint = true;
     [SerializeField] float tractorBeamMinimumDistance = 1f;
-
-    [Header("Kinetic Laser Timings")]
-    [SerializeField] float basicPrimaryFireTime = 0.1f;
-    [SerializeField] float basicPrimaryCooldownTime = 0.1f;    
-    [SerializeField] float superChargeTime = 1.5f;
-    [SerializeField] float superFireTime = 0.1f;
-    [SerializeField] float superCooldownTime = 1f;
-
-    [SerializeField] float basicSecondaryCooldownTime = 0.1f;
-    [SerializeField] float basicSecondaryCollisionPauseTime = 0.5f;
-    [SerializeField] float comboChargeTime = 1.5f;
-    [SerializeField] float comboFireTime = 0.1f;
-    [SerializeField] float comboCooldownTime = 1f;
-
-    [Header("Hit Information")]
-    [SerializeField] float basicShotDamage = 10f;
-    [SerializeField] float superShotDamage = 20f;
-    [SerializeField] float tractorBeamStunPerSecond = 50f;
 
     // Internals
     [Header("Internals")]
@@ -86,7 +89,8 @@ public class KineticLaser : ProjectileWeaponBase {
         }
     }
 
-    void FixedUpdate() {
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
         UpdateWeaponState();
         UpdateWeaponColor();
     }
@@ -107,7 +111,7 @@ public class KineticLaser : ProjectileWeaponBase {
         
         if (weaponState == WeaponState.Idle) {
             // Weapon is ready
-            if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+            if (primaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(basicShotAmmoCost)) {
                 StartBasicLaserShot();
                 ChangeWeaponState(WeaponState.PrimaryFireBasic);
 
@@ -129,6 +133,7 @@ public class KineticLaser : ProjectileWeaponBase {
                 }
             }
         } else if (weaponState == WeaponState.PrimaryFireChargingSuper) {
+            ammoRecoveryDelayTimer = 0f;
             if (primaryInputStatus == WeaponSystem.InputStatus.Released || primaryInputStatus == WeaponSystem.InputStatus.NoInput) {
                 // End Charging Early
                 StartCooldown(basicPrimaryCooldownTime);
@@ -138,8 +143,9 @@ public class KineticLaser : ProjectileWeaponBase {
             }
 
         } else if (weaponState == WeaponState.PrimaryFireSuperReady) {
+            ammoRecoveryDelayTimer = 0f;
             // Ready to Fire Super
-            if (primaryInputStatus == WeaponSystem.InputStatus.Released) {
+            if (primaryInputStatus == WeaponSystem.InputStatus.Released && ConsumeAmmo(superShotAmmoCost)) {
                 // Fire Super
                 StartSuperLaserShot();
                 ChangeWeaponState(WeaponState.PrimaryFireSuper);
@@ -157,6 +163,7 @@ public class KineticLaser : ProjectileWeaponBase {
 
         } else if (weaponState == WeaponState.SecondaryFireActive) {
             SetChargeVisual(stateLifeTimer / comboChargeTime);
+            ammoRecoveryDelayTimer = 0f;
             if (stateLifeTimer >= comboChargeTime && secondaryInputStatus == WeaponSystem.InputStatus.Held) {
                 // Combo Ready
                 ChangeWeaponState(WeaponState.SecondaryFireComboReady);
@@ -170,6 +177,7 @@ public class KineticLaser : ProjectileWeaponBase {
             }
 
         } else if (weaponState == WeaponState.SecondaryFireComboReady) {
+            ammoRecoveryDelayTimer = 0f;
             if (
                 secondaryInputStatus == WeaponSystem.InputStatus.Released
                 || secondaryInputStatus == WeaponSystem.InputStatus.NoInput
@@ -177,7 +185,7 @@ public class KineticLaser : ProjectileWeaponBase {
                 // End Secondary (User Input)
                 EndTractorBeam();
                 StartCooldown(basicSecondaryCooldownTime);
-            } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+            } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(superShotAmmoCost)) {
                 EndTractorBeam();
                 StartSuperLaserShot();
                 ChangeWeaponState(WeaponState.ComboFire);

@@ -8,15 +8,32 @@ public abstract class WeaponBase : MonoBehaviour {
     [Header("Common Visuals")]
     [SerializeField] protected SpriteRenderer mainSpriteRenderer;
 
-    [Header("Ammo")]
+    [Header("Common Ammo")]
     [SerializeField] public bool infiniteAmmo = false;
-    [SerializeField] public int ammoCount = 10;
-    [SerializeField] public int ammoCapacity = 10;
+    [SerializeField] public int ammoCount = 20;
+    [SerializeField] public int ammoCapacity = 20;
+    [SerializeField] public float ammoRecoveryTimeBetweenTicks = 0.5f;
+    [SerializeField] public float ammoRecoveryDelay = 1f;
 
     public WeaponSystem ParentWeaponSystem { get; private set; }
 
+    protected float ammoRecoveryTickTimer = 0f;
+    protected float ammoRecoveryDelayTimer = 0f;
+
     protected virtual void Awake() {
         ParentWeaponSystem = GetComponentInParent<WeaponSystem>();
+    }
+
+    protected virtual void FixedUpdate() {
+        // Handle ammo recovery:
+        if (ammoRecoveryDelayTimer < ammoRecoveryDelay) {
+            ammoRecoveryDelayTimer += Time.fixedDeltaTime;
+        } else if (ammoRecoveryTickTimer < ammoRecoveryTimeBetweenTicks) {
+            ammoRecoveryTickTimer += Time.fixedDeltaTime;
+        } else if (ammoCount < ammoCapacity){
+            ammoCount += 1;
+            ammoRecoveryTickTimer = 0f;
+        }
     }
 
     public void SetPrimaryInputStatus(WeaponSystem.InputStatus status) {
@@ -39,6 +56,22 @@ public abstract class WeaponBase : MonoBehaviour {
         mainSpriteRenderer.enabled = false;
         primaryInputStatus = WeaponSystem.InputStatus.NoInput;
         secondaryInputStatus = WeaponSystem.InputStatus.NoInput;
+    }
+
+    public bool ConsumeAmmo(int ammoAmount) {
+        if (infiniteAmmo) {
+            return true;
+        }
+
+        if (ammoCount - ammoAmount < 0f) {
+            return false;
+        }
+
+        ammoCount -= ammoAmount;
+        ammoRecoveryTickTimer = 0f;
+        ammoRecoveryDelayTimer = 0f;
+        
+        return true;
     }
 
     // I'm not sure this will actually be used, but I'll hold out until health stuff is implemented.

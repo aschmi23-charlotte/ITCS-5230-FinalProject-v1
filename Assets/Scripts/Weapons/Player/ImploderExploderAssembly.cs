@@ -8,6 +8,10 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
         public Gradient cooldownColorGradient;
     }
 
+    [Header("Ammo Consumtion")]
+    [SerializeField] int primaryAmmoCost = 1;
+    [SerializeField] int secondaryAmmoCost = 3;
+
     // Fortunately, the IEA state management should be a LOT simpler than the Kinetic Laser.
     [Header("IEA Visuals")]
     [SerializeField] WeaponColors weaponColors;
@@ -21,12 +25,14 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
 
     // This one is a LOT simpler than the Kinetic Laser.
     // Also, a charge attack on this thing may be... too strong.
-    void FixedUpdate() {
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
+
         SetCooldownVisual();
         // Handle primary fire:
         if (primaryFireCooldownTimer > 0f) {
             primaryFireCooldownTimer -= Time.fixedDeltaTime;
-        } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+        } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(primaryAmmoCost)) {
             FireProjectile(primaryProjectilePrefab);
             primaryFireCooldownTimer = primaryFireCooldown;
         }
@@ -35,7 +41,7 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
         if (secondaryireCooldownTimer > 0f) {
             secondaryireCooldownTimer -= Time.fixedDeltaTime;
             return;
-        } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed) {
+        } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(secondaryAmmoCost)) {
             FireProjectile(secondaryProjectilePrefab);
             secondaryireCooldownTimer = secondaryFireCooldown;
         }
