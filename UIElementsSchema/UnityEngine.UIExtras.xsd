@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="UnityEngine.UIExtras" elementFormDefault="qualified" targetNamespace="UnityEngine.UIExtras" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:complexType name="NavigationDrawerButtonType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="UnityEngine.UIElements" base="q1:VisualElementType">
+        <xs:choice />
+        <xs:attribute default="Button" name="text" type="xs:string" />
+        <xs:attribute name="icon" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="NavigationDrawerButton" xmlns:q2="UnityEngine.UIElements" substitutionGroup="q2:VisualElement" type="tns:NavigationDrawerButtonType" />
+  <xs:complexType name="NavigationDrawerType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="UnityEngine.UIElements" base="q3:VisualElementType">
+        <xs:choice />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="NavigationDrawer" xmlns:q4="UnityEngine.UIElements" substitutionGroup="q4:VisualElement" type="tns:NavigationDrawerType" />
+</xs:schema>
