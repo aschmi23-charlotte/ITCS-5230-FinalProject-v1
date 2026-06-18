@@ -8,6 +8,11 @@ public abstract class WeaponBase : MonoBehaviour {
     [Header("Common Visuals")]
     [SerializeField] protected SpriteRenderer mainSpriteRenderer;
 
+    [Header("Ammo")]
+    [SerializeField] public bool infiniteAmmo = false;
+    [SerializeField] public int ammoCount = 10;
+    [SerializeField] public int ammoCapacity = 10;
+
     public WeaponSystem ParentWeaponSystem { get; private set; }
 
     protected virtual void Awake() {

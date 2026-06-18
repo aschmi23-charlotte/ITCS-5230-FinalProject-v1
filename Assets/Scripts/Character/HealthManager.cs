@@ -27,6 +27,23 @@ public class HealthManager : MonoBehaviour {
         }
     }
 
+    public float MaxHealth {
+        get {
+            return maxHealth;
+        }
+        set {
+            maxHealth = value;
+        }
+    }
+
+    public float HealthPercent {
+        get {
+            return currentHealth / maxHealth;
+        } set {
+            currentHealth = maxHealth * Mathf.Clamp01(value);
+        }
+    }
+
     void Awake() {}
 
     public void RecieveDamage(float amount) {

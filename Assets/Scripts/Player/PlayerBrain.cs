@@ -10,6 +10,8 @@ using UnityEngine.InputSystem.LowLevel;
 [RequireComponent(typeof(Variables))]
 [RequireComponent(typeof(StateMachine))]
 public class PlayerBrain : MonoBehaviour {
+    public static PlayerBrain Instance {get; private set;} = null;
+
     // This file is mostly here to tie all the discrete pieces of the player together.
     [System.Serializable]
     public class PlayerUpgrades {
@@ -59,6 +61,9 @@ public class PlayerBrain : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
+        Debug.AssertFormat(Instance == null, "Only one instance of the player in the scene.");
+        Instance = this;
+
         Health = GetComponent<HealthManager>();
         Hurt = GetComponent<Hurtbox>();
         InputReader = GetComponent<PlayerInputReader>();
@@ -67,7 +72,11 @@ public class PlayerBrain : MonoBehaviour {
         StateVariables = GetComponent<Variables>();
         StateHandler = GetComponent<StateMachine>();
     }
-    
+
+    void OnDestroy() {
+        Instance = null;
+    }
+
     void FixedUpdate() {
         
     }

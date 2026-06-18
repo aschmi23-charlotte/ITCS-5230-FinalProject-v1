@@ -37,14 +37,42 @@ public class WeaponSystem : MonoBehaviour {
             return activeWeaponIndex;
         }
         set {
+
             weapons[activeWeaponIndex].OnSwitchFrom();
-            activeWeaponIndex = value;
+            activeWeaponIndex = Mathf.Clamp(value, 0, weapons.Count - 1);
             weapons[activeWeaponIndex].OnSwitchTo();
         }
     }
 
+    public int WeaponAmmoCount {
+        get {
+            return weapons[activeWeaponIndex].ammoCount;
+        } 
+        set {
+            weapons[activeWeaponIndex].ammoCount = value;
+        }
+    }
+
+    public int WeaponAmmoCapacity {
+        get {
+            return weapons[activeWeaponIndex].ammoCapacity;
+        } 
+        set {
+            weapons[activeWeaponIndex].ammoCapacity = value;
+        }
+    }
+
+    public float WeaponAmmoPercent {
+        get {
+            return ((float) weapons[activeWeaponIndex].ammoCount) / ((float) weapons[activeWeaponIndex].ammoCapacity);
+        } 
+        set {
+            weapons[activeWeaponIndex].ammoCount = (int)(weapons[activeWeaponIndex].ammoCapacity * Mathf.Clamp01(value));
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake() {
+    void Start() {
         ResetWeapons();
     }
 
