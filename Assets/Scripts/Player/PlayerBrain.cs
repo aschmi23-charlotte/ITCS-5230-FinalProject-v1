@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 [RequireComponent(typeof(HealthManager))]
 [RequireComponent(typeof(Hurtbox))]
@@ -12,12 +13,33 @@ public class PlayerBrain : MonoBehaviour {
     // This file is mostly here to tie all the discrete pieces of the player together.
     [System.Serializable]
     public class PlayerUpgrades {
+        public enum PlayerUpgradeType {
+            PulseJump,
+            Juggernaut,
+            IEA,    
+        }
+
         public bool hasPulseJump = false;
         public bool hasJuggernaut = false;
         public bool hasIEA = false;
+
+        public void TriggerUnlock(PlayerUpgradeType upgradeType) {
+            switch(upgradeType) {
+                case PlayerUpgradeType.PulseJump:
+                    hasPulseJump = true;
+                    break;
+                case PlayerUpgradeType.Juggernaut:
+                    hasJuggernaut = true;
+                    break;
+                case PlayerUpgradeType.IEA:
+                    hasIEA = true;
+                    break;
+            }
+        }
     }
+
     [Header("Player Abilities")]
-    public PlayerUpgrades upgrades;
+    [SerializeField] protected PlayerUpgrades upgrades;
 
     // Editor Fields
     [Header("Player Sprite")]
@@ -33,7 +55,8 @@ public class PlayerBrain : MonoBehaviour {
     public WeaponSystem Weapons { get; private set; }
     public Variables StateVariables { get; private set; }
     public StateMachine StateHandler { get; private set; }
-    
+    public PlayerUpgrades Upgrades { get { return upgrades; } }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
         Health = GetComponent<HealthManager>();
