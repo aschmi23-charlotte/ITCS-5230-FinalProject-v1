@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class EnemyPlatformerMovementHandler : PlatformerMovementHandler {
+public class NPCPlatformerMovementHandler : PlatformerMovementHandler {
     
     [SerializeField] protected float resistStateTime = 2f;
 
     private float resistStateTimer = 0f;
 
-    public void FixedUpdate() {
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
+        
         if (resistStateTimer < resistStateTime) {
             resistStateTimer += Time.fixedDeltaTime;
         }

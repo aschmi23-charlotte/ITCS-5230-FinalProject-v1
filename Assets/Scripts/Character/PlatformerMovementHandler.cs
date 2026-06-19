@@ -22,6 +22,9 @@ public class PlatformerMovementHandler : MovementHandlerBase {
     public bool IsGrounded { get; protected set; } = false;
     public bool IsFalling { get; protected set; } = false;
     public float CoyoteTimer { get; protected set; } = 0f;
+    protected float nextExpectedVelocityX = 0.0f;
+    protected float stopLastVelocityX = 0.0f;
+    protected float stopFailTimer = 0.0f;
 
     // Internal values
     private RaycastHit2D[] groundedResults = new RaycastHit2D[1];
@@ -49,6 +52,14 @@ public class PlatformerMovementHandler : MovementHandlerBase {
 
     public RaycastHit2D GetGroundedCast() {
         return groundedResults[0];
+    }
+
+    public override void ProcessMovementDirection(Vector2 direction) {
+        if (IsGrounded) {
+            HandleGroundedMovement(direction);
+        } else {
+            HandleAirborneMovement(direction);
+        }
     }
 
     // This function should ONLY be called if IsGrounded == true
@@ -240,5 +251,14 @@ public class PlatformerMovementHandler : MovementHandlerBase {
         }
 
         stopLastVelocityX = Body.linearVelocityX;
+    }
+    // My intention is for this to work whether grounded or not:
+    public override void ResistMovement() {
+        float desiredX = 0.0f; // stopSpeedTarget is supposed to get us as close to this as possible. I should probably just hard-code that.
+        float deltaX = desiredX - Body.linearVelocityX;
+        float stopForce = resistStateAcceleration * deltaX * Body.mass;
+
+        Body.AddForceX(stopForce);
+        nextExpectedVelocityX = Body.linearVelocityX + ((stopForce / Body.mass) * Time.fixedDeltaTime);
     }
 }

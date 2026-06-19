@@ -1,0 +1,382 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3766839840297932500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3953704930835250748}
+  - component: {fileID: 6729755499838374006}
+  m_Layer: 7
+  m_Name: TestEnemySprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3953704930835250748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766839840297932500}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2374063474590728187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &6729755499838374006
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766839840297932500}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: -455054105
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Color: {r: 0, g: 0.827451, b: 0.06257076, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 2}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!1 &6900366890137228590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2374063474590728187}
+  - component: {fileID: 1911876422756792672}
+  - component: {fileID: 3093294765888192498}
+  - component: {fileID: 201815683500343435}
+  - component: {fileID: 4266690141193327656}
+  - component: {fileID: 4442475346655946925}
+  - component: {fileID: 7621496200019716973}
+  - component: {fileID: 5780844309424827183}
+  - component: {fileID: 2586024217910198529}
+  m_Layer: 7
+  m_Name: GroundedTestEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2374063474590728187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 207, y: 35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3953704930835250748}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1911876422756792672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &3093294765888192498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe58df89b5b74a97a123b5ed2b70422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.VisualScripting.State::Unity.VisualScripting.StateMachine
+  _data:
+    _json: '{"nest":{"source":"Embed","macro":null,"embed":{"title":"TestEnemy States","summary":"State
+      Controls for Test Enemy","pan":{"x":326.0,"y":42.0},"zoom":1.0,"elements":[{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Stunned","summary":null,"pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":-215.0},"guid":"e098045f-20d3-426c-b83b-2db6fd92fe8b","$version":"A","$type":"Unity.VisualScripting.OnEnterState","$id":"14"},{"coroutine":false,"defaultValues":{},"position":{"x":-201.0,"y":-39.0},"guid":"9c12358f-5300-48e8-aede-a0b569e604a8","$version":"A","$type":"Unity.VisualScripting.Update","$id":"16"},{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":145.0},"guid":"b822857d-5089-4107-8419-e807a438819e","$version":"A","$type":"Unity.VisualScripting.OnExitState"},{"chainable":false,"parameterNames":[],"member":{"name":"StunMovementStart","parameterTypes":[],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":68.0,"y":-232.0},"guid":"b41e052a-9e31-4745-b3fb-ca721a51dcb5","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"20"},{"chainable":false,"parameterNames":[],"member":{"name":"StunMovementUpdate","parameterTypes":[],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":66.0,"y":-32.0},"guid":"125b4893-a8a7-4479-83b3-835af1ef16b9","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"24"},{"sourceUnit":{"$ref":"14"},"sourceKey":"trigger","destinationUnit":{"$ref":"20"},"destinationKey":"enter","guid":"3136a4a0-5e06-4ead-aadd-d8b41ffb4c24","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"16"},"sourceKey":"trigger","destinationUnit":{"$ref":"24"},"destinationKey":"enter","guid":"87270927-a39e-4d87-a1e7-3895e42b737d","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"isStart":true,"position":{"x":235.0,"y":-16.0},"width":172.0,"guid":"4e10aef4-c760-43e8-a4d6-dbdb5cd70d3b","$version":"A","$type":"Unity.VisualScripting.FlowState","$id":"4"},{"nest":{"source":"Embed","macro":null,"embed":{"title":"Normal
+      Behavior","summary":"Enemy is in control.","pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Normal
+      Movement","summary":"... not that we''re moving yet.","pan":{"x":0.0,"y":60.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-216.0,"y":-215.0},"guid":"b8b66cc5-f0ad-43a0-8d78-3591e7512cac","$version":"A","$type":"Unity.VisualScripting.OnEnterState"},{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":145.0},"guid":"06c05c31-cedf-4822-9b0d-dfdb16da2d2c","$version":"A","$type":"Unity.VisualScripting.OnExitState"},{"coroutine":false,"defaultValues":{},"position":{"x":-229.0,"y":-30.0},"guid":"c3f9bddf-bce4-4c0d-989e-ba015990a728","$version":"A","$type":"Unity.VisualScripting.FixedUpdate","$id":"48"},{"chainable":false,"parameterNames":["move"],"member":{"name":"HandleGroundedMovement","parameterTypes":["UnityEngine.Vector2"],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null,"%move":{"x":0.0,"y":0.0,"$type":"UnityEngine.Vector2"}},"position":{"x":102.0,"y":-29.0},"guid":"29523993-0a10-4eb7-b41d-743e634827ae","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"50"},{"sourceUnit":{"$ref":"48"},"sourceKey":"trigger","destinationUnit":{"$ref":"50"},"destinationKey":"enter","guid":"4471abdb-89f3-4e9b-ab7a-3feb4356c9ae","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"isStart":true,"position":{"x":-83.0,"y":-205.0},"width":170.0,"guid":"fcce6ff9-454c-46b4-a115-4fc95cbeb738","$version":"A","$type":"Unity.VisualScripting.FlowState","$id":"34"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Taken
+      A Hit","summary":"Making sure we don''t","pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":-215.0},"guid":"5a5d80b2-4ebf-4b13-8f62-762b2e585834","$version":"A","$type":"Unity.VisualScripting.OnEnterState","$id":"65"},{"coroutine":false,"defaultValues":{},"position":{"x":-205.0,"y":145.0},"guid":"4483f9c2-f50a-4949-bcf0-40a6a26cf23b","$version":"A","$type":"Unity.VisualScripting.OnExitState"},{"coroutine":false,"defaultValues":{},"position":{"x":-220.0,"y":-38.0},"guid":"2bfd9bcf-34d1-49e4-9733-94f6996fa099","$version":"A","$type":"Unity.VisualScripting.FixedUpdate","$id":"69"},{"chainable":false,"parameterNames":[],"member":{"name":"ResistMovementStart","parameterTypes":[],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":66.0,"y":-212.0},"guid":"afd4b2f6-7047-437e-adc3-93b03a60b9cc","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"71"},{"chainable":false,"parameterNames":[],"member":{"name":"ResistMovementUpdate","parameterTypes":[],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":39.0,"y":-38.0},"guid":"bc6feba9-0111-48ea-821b-246301967cee","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"75"},{"sourceUnit":{"$ref":"65"},"sourceKey":"trigger","destinationUnit":{"$ref":"71"},"destinationKey":"enter","guid":"1fd47c48-d54b-4a99-92f2-a9ead5cad4e2","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"69"},"sourceKey":"trigger","destinationUnit":{"$ref":"75"},"destinationKey":"enter","guid":"dc52804c-b75b-40c0-ad19-0631777400b7","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"isStart":false,"position":{"x":-87.0,"y":90.0},"width":170.0,"guid":"59c93f45-e20f-41d3-bbed-581bbefe207b","$version":"A","$type":"Unity.VisualScripting.FlowState","$id":"55"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":164.0,"y":7.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":198.0,"y":-64.0},"guid":"406a0386-b0a0-490f-84cd-e02f07bf3a0d","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"91"},{"coroutine":false,"defaultValues":{"name":{"$content":"ResistForce","$type":"System.String"}},"position":{"x":-62.0,"y":-60.0},"guid":"7795f63d-4fef-47ba-aabd-e7cf1d9e7a14","$version":"A","$type":"Unity.VisualScripting.BoltUnityEvent","$id":"93"},{"sourceUnit":{"$ref":"93"},"sourceKey":"trigger","destinationUnit":{"$ref":"91"},"destinationKey":"trigger","guid":"5d67b135-4b74-4d33-9b30-f901d2efbb0c","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"source":{"$ref":"34"},"destination":{"$ref":"55"},"guid":"c7013133-c1b9-4a3c-baed-59f882f66b2d","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":212.0,"y":-85.0},"guid":"06040e81-9c02-4ab4-a61f-3b071e36061a","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"106"},{"defaultValues":{},"position":{"x":26.0,"y":-84.0},"guid":"87bf0b3f-8cb3-4f80-9808-e830c3f4f06f","$version":"A","$type":"Unity.VisualScripting.If","$id":"108"},{"coroutine":false,"defaultValues":{},"position":{"x":-338.0,"y":-84.0},"guid":"4d7d191d-5488-49d3-9333-197ae64b4475","$version":"A","$type":"Unity.VisualScripting.FixedUpdate","$id":"110"},{"chainable":false,"parameterNames":[],"member":{"name":"ResistMovementShouldEnd","parameterTypes":[],"targetType":"EnemyPlatformerMovementHandler","targetTypeName":"EnemyPlatformerMovementHandler","$version":"A"},"defaultValues":{"target":null},"position":{"x":-336.0,"y":35.0},"guid":"cb946777-7449-4f63-8041-4a8e96d1c09a","$version":"A","$type":"Unity.VisualScripting.InvokeMember","$id":"112"},{"sourceUnit":{"$ref":"110"},"sourceKey":"trigger","destinationUnit":{"$ref":"108"},"destinationKey":"enter","guid":"7d8f8570-adf6-48dd-90cb-6143647c4a08","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"108"},"sourceKey":"ifTrue","destinationUnit":{"$ref":"106"},"destinationKey":"trigger","guid":"7814c935-ebbf-475c-ac66-e65698e9aeb8","$type":"Unity.VisualScripting.ControlConnection"},{"sourceUnit":{"$ref":"112"},"sourceKey":"result","destinationUnit":{"$ref":"108"},"destinationKey":"condition","guid":"f5bab6ea-b9e1-4730-9bf0-246e8fb2ad8e","$type":"Unity.VisualScripting.ValueConnection"}],"$version":"A"}},"source":{"$ref":"55"},"destination":{"$ref":"34"},"guid":"f7f38954-1d48-457a-84bf-bba9cf9c57ef","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"}],"$version":"A"}},"isStart":false,"position":{"x":-76.0,"y":12.0},"width":170.0,"guid":"937fc3ae-206b-4cf0-8adb-0bbc357f4f9a","$type":"Unity.VisualScripting.SuperState","$id":"30"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Normal
+      to Stun","summary":"Character was stunned.","pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":100.0,"y":-50.0},"guid":"f7dc588f-117f-42bf-b715-b110548b463c","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"129"},{"coroutine":false,"defaultValues":{"name":{"$content":"StunStateStart","$type":"System.String"}},"position":{"x":-157.0,"y":-46.0},"guid":"e4023529-157c-4076-8d27-f6ea4f3c5627","$version":"A","$type":"Unity.VisualScripting.BoltUnityEvent","$id":"131"},{"sourceUnit":{"$ref":"131"},"sourceKey":"trigger","destinationUnit":{"$ref":"129"},"destinationKey":"trigger","guid":"27b29aa0-dbaf-4f1a-88af-0b4ef953fa64","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"source":{"$ref":"30"},"destination":{"$ref":"4"},"guid":"d81819d0-d0fd-4256-8cce-577767b964ce","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"},{"nest":{"source":"Embed","macro":null,"embed":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Stunned
+      to Normal","summary":"Character is no longer stunned.","pan":{"x":0.0,"y":0.0},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":51.0,"y":-41.0},"guid":"7017214b-c2da-424a-89d2-f939c405c920","$version":"A","$type":"Unity.VisualScripting.TriggerStateTransition","$id":"144"},{"coroutine":false,"defaultValues":{"name":{"$content":"StunStateEnd","$type":"System.String"}},"position":{"x":-206.0,"y":-37.0},"guid":"211ece37-38f1-416f-af39-d2b4b01e5215","$version":"A","$type":"Unity.VisualScripting.BoltUnityEvent","$id":"146"},{"sourceUnit":{"$ref":"146"},"sourceKey":"trigger","destinationUnit":{"$ref":"144"},"destinationKey":"trigger","guid":"a2d2b351-41aa-4f25-92d0-ca248dc66164","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}},"source":{"$ref":"4"},"destination":{"$ref":"30"},"guid":"557dd92d-6f87-48f4-a7f5-0bc4429160af","$version":"A","$type":"Unity.VisualScripting.FlowStateTransition"}],"$version":"A"}}}'
+    _objectReferences: []
+--- !u!114 &201815683500343435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e118a963d56b9f64db942858fe3a3d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthManager
+  maxHealth: 100
+  currentHealth: 100
+  healthEvents:
+    onTakeDamage:
+      m_PersistentCalls:
+        m_Calls: []
+    onNotDeadYet:
+      m_PersistentCalls:
+        m_Calls: []
+    onDeath:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &4266690141193327656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d90aaa280ed77c48b956a2dd030814b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StunManager
+  maxStunPoints: 100
+  currentStunPoints: 100
+  stunPointsRecoveryPerSecond: 20
+  stunPointRecoveryDelay: 3
+  stunTime: 4
+  restoreStunPointsOnStunEnd: 1
+  stunEvents:
+    onStunStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3093294765888192498}
+          m_TargetAssemblyTypeName: Unity.VisualScripting.StateMachine, Unity.VisualScripting.State
+          m_MethodName: TriggerUnityEvent
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: StunStateStart
+            m_BoolArgument: 0
+          m_CallState: 2
+    onStunEnd:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3093294765888192498}
+          m_TargetAssemblyTypeName: Unity.VisualScripting.StateMachine, Unity.VisualScripting.State
+          m_MethodName: TriggerUnityEvent
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: StunStateEnd
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4442475346655946925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a47973fe6b23ca42bad9e1f774d16ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
+  healthManager: {fileID: 201815683500343435}
+  stunManager: {fileID: 4266690141193327656}
+  hurtEvents:
+    onHurt:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3093294765888192498}
+          m_TargetAssemblyTypeName: Unity.VisualScripting.StateMachine, Unity.VisualScripting.State
+          m_MethodName: TriggerUnityEvent
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ResistForce
+            m_BoolArgument: 0
+          m_CallState: 2
+    onDamageHurt:
+      m_PersistentCalls:
+        m_Calls: []
+    onStunHurt:
+      m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &7621496200019716973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68f875f35a253c4bbb006a83cf51a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPlatformerMovementHandler
+  moveSpeed: 15
+  acceleration: 12
+  resistStateAcceleration: 10
+  facingDirection: 1
+  moveActionDeadzone: 0.2
+  moveResistanceDetectionDifference: 0.3
+  moveeResistanceAccelFraction: 0.3
+  stopSpeedTarget: 0
+  stopCutoffTime: 0.5
+  moveControlState: 0
+  jumpMethod: 0
+  jumpAcceleration: 10
+  groundFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  coyoteTime: 0.2
+  resistStateTime: 2
+--- !u!50 &5780844309424827183
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 2d40afe407610c948b1f3f6d3f4e6d79, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!70 &2586024217910198529
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900366890137228590}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 1}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
