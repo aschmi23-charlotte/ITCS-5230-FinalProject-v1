@@ -100,7 +100,15 @@ public class NavigationPathNode : FastPriorityQueueNode {
     }
 
     public bool IsEnd() {
-        return position == searcher.startPosition;
+        return position == searcher.endPosition;
+    }
+
+    public bool IsObstructed() {
+        return GetNavTile().Obstructed;
+    }
+
+    public bool IsPartOfSolution() {
+        return solvedChildDirection != NavigationHelpers.Direction.None;
     }
 
     public bool IsDiscovered() {
@@ -129,5 +137,13 @@ public class NavigationPathNode : FastPriorityQueueNode {
         parentDirection = NavigationHelpers.Direction.None;
         searchPathCost = -1;
         solvedChildDirection = NavigationHelpers.Direction.None;
+    }
+
+    public bool IsWithinNode(Vector2 checkPos) {
+        return searcher.controller.NavMap.Map.WorldToCell(checkPos) == (Vector3Int)position;
+    }
+
+    public Vector2 GetWorldPosition() {
+        return searcher.controller.NavMap.Map.CellToWorld((Vector3Int)position);
     }
 }

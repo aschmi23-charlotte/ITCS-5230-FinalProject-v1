@@ -1,46 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Priority_Queue;
-using NUnit.Framework.Constraints;
-using JetBrains.Annotations;
+using System;
+using Unity.Behavior;
 
 // Pathfinding Grid for A*
 // We'll use Manhattan pathing and distance, since the game world is grid-based.
 
+[System.Serializable]
 public class NavigationSearcher {
-    public NavigationController controller {get; private set;} 
-    public int maxDepth = 0;
-    public Heuristic heuristic = Heuristic.LinearDistance;
-    public Vector2Int startPosition {get; private set;} = Vector2Int.zero;
-    public Vector2Int endPosition {get; private set;} = Vector2Int.zero;
-    public BoundsInt bounds {get; private set;}
-    public NavigationPathNode[,] nodes {get; private set;}
-
     public enum Heuristic {
         LinearDistance,
         ManhattanDistance,
     }
 
+    [SerializeField] public Heuristic heuristic = Heuristic.LinearDistance;
+    [SerializeField] public int maxDepth = 0;
+    [field: SerializeField] public Vector2Int startPosition {get; private set;} = Vector2Int.zero;
+    [field: SerializeField] public Vector2Int endPosition {get; private set;} = Vector2Int.zero;
+    
+    [field: NonSerialized] public NavigationController controller {get; private set;} 
+    [field: NonSerialized] public BoundsInt bounds {get; private set;}
+    [field: NonSerialized] public NavigationPathNode[,] nodes {get; private set;}
+
     protected bool unsolvable = false;
-    protected FastPriorityQueue<NavigationPathNode> searchQueue = null;
     protected bool searching = false;
+    protected FastPriorityQueue<NavigationPathNode> searchQueue = null;
+    protected LinkedList<NavigationPathNode> discoveredNodes = null;
 
-
+    public NavigationSearcher() {}
     public NavigationSearcher(NavigationController p_controller, int p_maxDepth = 0, Heuristic p_heuristic = Heuristic.LinearDistance) {
-        controller = p_controller;
+
         maxDepth = p_maxDepth;
         heuristic = p_heuristic;
 
+        Initialize(p_controller);
+    }
+
+    public void Initialize(NavigationController p_controller) {
+        controller = p_controller;
+        
         bounds = controller.NavMap.Map.cellBounds;
         nodes = new NavigationPathNode[bounds.size.x, bounds.size.y];
 
         foreach (Vector3Int pos in bounds.allPositionsWithin) {
             nodes[pos.x - bounds.min.x, pos.y - bounds.min.y] = new NavigationPathNode(this, (Vector2Int)pos);
         }
+    }
 
-        // We're never gonna queue more nodes than the total number, right?
-        // Probably overkill, but at least I know it works.
-        searchQueue = null;
+    public NavigationPathNode GetNodeAtWorldPos(Vector2 pos) {
+        return GetNodeAtWorldPos((Vector3)pos);
+    }
+
+    public NavigationPathNode GetNodeAtWorldPos(Vector3 pos) {
+        return GetNodeAt(controller.NavMap.Map.WorldToCell(pos));
     }
 
     public NavigationPathNode GetNodeAt(Vector2Int pos) {
@@ -58,13 +71,18 @@ public class NavigationSearcher {
         return GetNodeAt(startPosition);
     }
 
-    public void SetSearchTargets(Vector2Int startPos, Vector2Int endPos) {
+    public void SetCellSearchTargets(Vector2Int startPos, Vector2Int endPos) {
         startPosition = startPos;
         endPosition = endPos;
     }
 
-    public void InitSearch() {
+    public void SetSearchTargets(Vector2 startPos, Vector2 endPos) {
+        SetCellSearchTargets((Vector2Int)controller.NavMap.Map.WorldToCell(startPos), (Vector2Int)controller.NavMap.Map.WorldToCell(endPos));
+    }
+
+    public void StartSearch() {
         searchQueue = new FastPriorityQueue<NavigationPathNode>(nodes.Length);
+        discoveredNodes = new LinkedList<NavigationPathNode>();
 
         NavigationPathNode startNode = GetStartNode();
 
@@ -106,6 +124,12 @@ public class NavigationSearcher {
                     NavigationHelpers.GetOppositeDirection(neighbor.direction)
                 );
 
+                discoveredNodes.AddLast(neighbor.node);
+
+                if (neighbor.node.IsObstructed()) {
+                    continue;
+                }
+
                 searchQueue.Enqueue(neighbor.node, neighbor.node.CalculatePriority(heuristic));
             }
         }
@@ -117,14 +141,24 @@ public class NavigationSearcher {
         return GetEndNode().IsDiscovered();
     }
     
-    public void ResetSolution() {
-        foreach (Vector3Int pos in bounds.allPositionsWithin) {
-            GetNodeAt(pos).ResetSolution();
+    // Prep for a new search.
+    public void Reset() {
+        unsolvable = false;
+        searching = false;
+        if (discoveredNodes != null) {
+            foreach (NavigationPathNode node in discoveredNodes) {
+                node.ResetSolution();
+            }
+            discoveredNodes.Clear();   
+        }   
+
+        if (searchQueue != null) {
+            searchQueue.Clear();
         }
     }
 
     public bool SearchUntilComplete() {
-        InitSearch();
+        StartSearch();
         UpdateSearch();
         return IsSolutionFound();
     }
@@ -135,10 +169,22 @@ public class NavigationSearcher {
 
     IEnumerator<object> SearchCoroutine(int stepsPerFrame = 300) {
         searching = true;
-        InitSearch();
+        StartSearch();
         while(!UpdateSearch(stepsPerFrame)) {
             yield return null;
         }
         searching = false;
+    }
+
+    public List<NavigationPathNode> GetSolutionAsList() {
+        List<NavigationPathNode> retVal = new List<NavigationPathNode>(GetEndNode().depth);
+
+        NavigationPathNode node = GetStartNode();
+        while (node != null) {
+            retVal.Add(node);
+            node = node.GetSolvedChildNode();
+        }
+
+        return retVal;
     }
 }

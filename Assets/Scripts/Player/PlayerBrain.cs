@@ -61,7 +61,7 @@ public class PlayerBrain : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
-        Debug.AssertFormat(Instance == null, "Only one instance of the player in the scene.");
+        Debug.AssertFormat(Instance == null, "Multiple Players in the scene!");
         Instance = this;
 
         Health = GetComponent<HealthManager>();
