@@ -78,14 +78,13 @@ public class KineticLaser : ProjectileWeaponBase {
         wielderCollider = GetComponentInParent<Collider2D>();
     }
 
-
     void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
-            UpdateBasicLaserShot();
+            UpdateBasicLaserShotRendering();
         } else if (weaponState == WeaponState.PrimaryFireSuper || weaponState == WeaponState.ComboFire) {
-            UpdateSuperLaserShot();
+            UpdateSuperLaserShotRendering();
         } else if (weaponState == WeaponState.SecondaryFireActive || weaponState == WeaponState.SecondaryFireComboReady) {
-            UpdateTractorBeam();
+            UpdateTractorBeamRendering();
         }
     }
 
@@ -93,14 +92,6 @@ public class KineticLaser : ProjectileWeaponBase {
         base.FixedUpdate();
         UpdateWeaponState();
         UpdateWeaponColor();
-    }
-
-    public override void OnSwitchTo() {
-        base.OnSwitchTo();
-    }
-
-    public override void OnSwitchFrom() {
-        base.OnSwitchFrom();
     }
 
     void UpdateWeaponState() {
@@ -268,7 +259,7 @@ public class KineticLaser : ProjectileWeaponBase {
         }
     }
 
-    protected void UpdateBasicLaserShot() {
+    protected void UpdateBasicLaserShotRendering() {
         laserVisual.transform.position = firePoint.position;
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
     }
@@ -302,7 +293,7 @@ public class KineticLaser : ProjectileWeaponBase {
 
     }
 
-    protected void UpdateSuperLaserShot() {
+    protected void UpdateSuperLaserShotRendering() {
         laserVisual.transform.position = firePoint.position;
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
     }
@@ -339,7 +330,7 @@ public class KineticLaser : ProjectileWeaponBase {
 
     }
 
-    protected void UpdateTractorBeam() {
+    protected void UpdateTractorBeamRendering() {
         int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
         laserVisual.transform.position = firePoint.position;
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
