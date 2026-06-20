@@ -18,6 +18,8 @@ public class PlayerFollowCamAssigner : MonoBehaviour {
         Debug.Assert(followCam != null, "PlayerFollowCamAssigner is attached to a CinemachineCamera");
 
         followCam.Target.TrackingTarget = GlobalController.Instance.Player.transform;
+        // Forces the camera to jump to the player.
+        followCam.PreviousStateIsValid = false;
         
         Debug.Log("PlayerFollowCamAssigner finished.");
     }
