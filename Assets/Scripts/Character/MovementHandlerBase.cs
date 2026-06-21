@@ -45,6 +45,7 @@ public abstract class MovementHandlerBase : MonoBehaviour {
 	    Col = GetComponent<Collider2D>();
     }
 
+    protected virtual void Start() {}
     protected virtual void Update() {}
     protected virtual void FixedUpdate() {}
 
