@@ -12,7 +12,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
     }
 
     public void JuggernautMovementUpdateGrounded() {
-        switch(facingDirection) {
+        switch(currentFacingDirection) {
             case FacingDirection.Left:
                 HandleGroundedMovement(Vector2.left * juggernautSpeedMultiplier);
                 break;
@@ -24,7 +24,7 @@ public class PlayerMovementHandler : PlatformerMovementHandler {
     }
 
     public void JuggernautMovementUpdateAirborne() {
-        switch (facingDirection) {
+        switch (currentFacingDirection) {
             case FacingDirection.Left:
                 HandleAirborneMovement(Vector2.left * juggernautSpeedMultiplier);
                 break;

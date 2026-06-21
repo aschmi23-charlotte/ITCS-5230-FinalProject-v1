@@ -13,8 +13,11 @@ public abstract class MovementHandlerBase : MonoBehaviour {
         Left,
         Right,
     }
+    [Header("Facing Rendering")]
 
-    public FacingDirection facingDirection = FacingDirection.Right;
+    [field: SerializeField] public SpriteRenderer MainSpriteRenderer {get; private set; }
+    public FacingDirection spriteFacingDirection = FacingDirection.Right;
+    public FacingDirection currentFacingDirection = FacingDirection.Right;
 
     [Header("Other Physics Values")]
     [SerializeField] protected float moveActionDeadzone = 0.2f;
@@ -29,6 +32,7 @@ public abstract class MovementHandlerBase : MonoBehaviour {
         Moving,
         Stopping,
     }
+    
     [Header("Movement State Handling")]
     [SerializeField] protected MoveControlState moveControlState = MoveControlState.Stationary;
 
@@ -46,14 +50,19 @@ public abstract class MovementHandlerBase : MonoBehaviour {
 
     public void UpdateFacing(Vector2 direction) {
         if (direction.x > 0f) {
-            facingDirection = FacingDirection.Right;
+            currentFacingDirection = FacingDirection.Right;
         } else if (direction.x < 0f) {
-            facingDirection = FacingDirection.Left;
+            currentFacingDirection = FacingDirection.Left;
         }
+
+        if (MainSpriteRenderer != null) {
+            MainSpriteRenderer.flipX = spriteFacingDirection != currentFacingDirection;
+        }
+
     }
 
     public Vector2 GetFacingAsVector() {
-        switch (facingDirection) {
+        switch (currentFacingDirection) {
             case FacingDirection.Left:
                 return Vector2.left;
             case FacingDirection.Right:
