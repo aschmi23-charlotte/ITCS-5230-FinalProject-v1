@@ -78,7 +78,7 @@ public class KineticLaser : ProjectileWeaponBase {
         wielderCollider = GetComponentInParent<Collider2D>();
     }
 
-    void Update() {
+    protected override void Update() {
         if (weaponState == WeaponState.PrimaryFireBasic) {
             UpdateBasicLaserShotRendering();
         } else if (weaponState == WeaponState.PrimaryFireSuper || weaponState == WeaponState.ComboFire) {
@@ -309,7 +309,6 @@ public class KineticLaser : ProjectileWeaponBase {
     protected void StartTractorBeam() {
         int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
 
-
         // Pooling would be more efficient, but w/e.
         laserVisual = Instantiate(tractorVisualPrefab).GetComponent<LineRenderer>();
         laserVisual.transform.position = firePoint.position;
@@ -347,9 +346,12 @@ public class KineticLaser : ProjectileWeaponBase {
             }
         }
 
+        // I'm trying to keep all game logic and interactions on FixedUpdate, to make pausing easy.
+        // And Update should only call rendering-related code.
+        // This is being called by Update, so I probably need to move it... later.
         Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
         if (hurtbox != null) {
-            hurtbox.RecieveStunHit(tractorBeamStunPerSecond * Time.fixedDeltaTime);
+            hurtbox.RecieveStunHit(tractorBeamStunPerSecond * Time.deltaTime, false);
         }
     }
 

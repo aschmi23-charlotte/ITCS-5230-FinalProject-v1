@@ -65,6 +65,9 @@ TagManager:
   - name: Player
     uniqueID: 378838575
     locked: 0
+  - name: Weapons
+    uniqueID: 2975461139
+    locked: 0
   - name: Pickups
     uniqueID: 1158767885
     locked: 0

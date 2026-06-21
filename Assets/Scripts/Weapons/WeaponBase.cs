@@ -6,6 +6,7 @@ public abstract class WeaponBase : MonoBehaviour {
     [SerializeField] protected WeaponSystem.InputStatus secondaryInputStatus = WeaponSystem.InputStatus.NoInput;
 
     [Header("Common Visuals")]
+    // I'm not automatically detecting this in case a weapon has multiple sprite renderers.
     [SerializeField] protected SpriteRenderer mainSpriteRenderer;
 
     [Header("Common Ammo")]
@@ -23,6 +24,10 @@ public abstract class WeaponBase : MonoBehaviour {
     protected virtual void Awake() {
         ParentWeaponSystem = GetComponentInParent<WeaponSystem>();
     }
+
+    // I'd rather enforce the pattern of having these be overrides now in-case changes are needed down the line.
+    protected virtual void Start() {}
+    protected virtual void Update() {}
 
     protected virtual void FixedUpdate() {
         // Handle ammo recovery:
