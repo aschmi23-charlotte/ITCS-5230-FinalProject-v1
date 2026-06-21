@@ -47,7 +47,8 @@ public class PlayerBrain : MonoBehaviour {
     [Header("Player Sprite")]
     [SerializeField] SpriteRenderer spriteRenderer = null;
     [SerializeField] Color baseColor = new Color(1f, 1f, 1f, 1f);
-    [SerializeField] Color juggernautColor = new Color(1f, 0f, 0f, 1f);
+    [SerializeField] Color juggernautColor = new Color(0.7f, 0.7f, 0.7f, 1f);
+    [SerializeField] Color invulnColor = new Color(1f, 0f, 0f, 1f);
 
     // Attributes
     public HealthManager Health { get; private set; }
@@ -58,6 +59,8 @@ public class PlayerBrain : MonoBehaviour {
     public Variables StateVariables { get; private set; }
     public StateMachine StateHandler { get; private set; }
     public PlayerUpgrades Upgrades { get { return upgrades; } }
+
+    private bool juggernautActive = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() {
@@ -73,12 +76,14 @@ public class PlayerBrain : MonoBehaviour {
         StateHandler = GetComponent<StateMachine>();
     }
 
-    void OnDestroy() {
-        Instance = null;
-    }
-
-    void FixedUpdate() {
-        
+    void Update() {
+        if (Hurt.IsInvulnerable()) {
+            spriteRenderer.color = invulnColor;
+        } else if (juggernautActive) {
+            spriteRenderer.color = juggernautColor;
+        } else {
+            spriteRenderer.color = baseColor;
+        }
     }
 
     // === Most of the functions here are meant to be called from the State Machine ===
@@ -198,6 +203,7 @@ public class PlayerBrain : MonoBehaviour {
 
     // Juggernaut
     public void State_JuggernautStart() {
+        juggernautActive = true;
         spriteRenderer.color = juggernautColor;
         Movement.JuggernautMovementStart();
     }
@@ -222,7 +228,7 @@ public class PlayerBrain : MonoBehaviour {
     }
 
     public void State_JuggernautEnd() {
-        spriteRenderer.color = baseColor;
+        juggernautActive = false;
         Movement.JuggernautMovementEnd();
     }
 }
