@@ -3,7 +3,7 @@ using Unity.Behavior;
 using Unity.VisualScripting;
 
 [RequireComponent(typeof(BehaviorGraphAgent))]
-public class BlackboardVariableBridge : MonoBehaviour {
+public class BehaviorVariableBridge : MonoBehaviour {
     protected BehaviorGraphAgent agent;
 
     void Awake() {
@@ -15,7 +15,7 @@ public class BlackboardVariableBridge : MonoBehaviour {
         agent.GetVariable<T>(name, out BlackboardVariable<T> variable);
 
         if (variable == null) {
-            Debug.LogErrorFormat("No Blackboard named {0}", name);
+            Debug.LogErrorFormat("No Blackboard Variable named {0}", name);
             return default;
         }
 
@@ -26,7 +26,7 @@ public class BlackboardVariableBridge : MonoBehaviour {
         agent.GetVariable<T>(name, out BlackboardVariable<T> variable);
 
         if (variable == null) {
-            Debug.LogErrorFormat("No Blackboard named {0}", name);
+            Debug.LogErrorFormat("No Blackboard Variable named {0}", name);
             return;
         }
 
