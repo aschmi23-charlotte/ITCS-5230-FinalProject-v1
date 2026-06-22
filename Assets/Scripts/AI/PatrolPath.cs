@@ -16,12 +16,6 @@ public class PatrolPath : MonoBehaviour {
     [field: SerializeField] public FollowMode followMode { get; private set; } = FollowMode.OneWay;
     [field: SerializeField] public List<PatrolPathNode> nodes { get; private set; }
 
-#if UNITY_EDITOR
-    [Header("Editor")]
-    [SerializeField] protected bool alwaysDrawGizmos = false;
-    [SerializeField] protected Color gizmoColor = Color.yellow;
-#endif
-
     // Informing each node of it's index on startup.
     void Start() {
         AssignIndices();
@@ -34,6 +28,10 @@ public class PatrolPath : MonoBehaviour {
     }
 
 #if UNITY_EDITOR
+    [Header("Editor")]
+    [SerializeField] protected bool alwaysDrawGizmos = false;
+    [SerializeField] protected Color gizmoColor = Color.yellow;
+
     void OnDrawGizmos() {
         if (alwaysDrawGizmos) {
             DrawGizmos();

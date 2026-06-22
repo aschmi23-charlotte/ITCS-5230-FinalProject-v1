@@ -34,7 +34,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &925873591671437652
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -91,6 +91,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &3487145886468699236
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,11 +267,12 @@ GameObject:
   - component: {fileID: 1210118162769235196}
   - component: {fileID: 8161912056733663540}
   - component: {fileID: 5519955083893365927}
+  - component: {fileID: -5490981112207116635}
   - component: {fileID: 2142149526206280050}
   - component: {fileID: 3557371597647632524}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,6 +313,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1789102991692004335}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   juggernautColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  invulnColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &5648137612112461351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a47973fe6b23ca42bad9e1f774d16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
+  invulnFrameTime: 2
   healthManager: {fileID: 4574145899804002135}
   stunManager: {fileID: 0}
   hurtEvents:
@@ -419,7 +423,15 @@ MonoBehaviour:
   moveSpeed: 16
   acceleration: 13
   resistStateAcceleration: 10
-  facingDirection: 1
+  <MainSpriteRenderer>k__BackingField: {fileID: 0}
+  spriteFacingDirection: 1
+  currentFacingDirection: 1
+  moveActionDeadzone: 0.2
+  moveResistanceDetectionDifference: 0.3
+  moveeResistanceAccelFraction: 0.3
+  stopSpeedTarget: 0
+  stopCutoffTime: 0.5
+  moveControlState: 0
   jumpMethod: 0
   jumpAcceleration: 25
   groundFilter:
@@ -437,12 +449,6 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   coyoteTime: 0.05
-  moveActionDeadzone: 0.2
-  moveResistanceDetectionDifference: 0.3
-  moveeResistanceAccelFraction: 0.3
-  stopSpeedTarget: 0
-  stopCutoffTime: 0.5
-  moveControlState: 0
   juggernautMassMultiplier: 3
   juggernautSpeedMultiplier: 2
 --- !u!114 &5519955083893365927
@@ -465,6 +471,22 @@ MonoBehaviour:
   weapons:
   - {fileID: 5714286712236871125}
   - {fileID: 7626000316682719256}
+--- !u!114 &-5490981112207116635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275876245608857341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee92d5fffd2820e41975d5816303e3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HostileTag
+  hostileCategories: 1
+  detectionPosition: {x: 0, y: 1}
+  alwaysDrawGizmos: 0
+  gizmoColor: {r: 0.627451, g: 0.1254902, b: 0.9411765, a: 1}
 --- !u!50 &2142149526206280050
 Rigidbody2D:
   serializedVersion: 5
@@ -594,7 +616,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1789102991692004335
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -651,6 +673,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &8257336854170893891
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +833,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4046904004998446222
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -867,3 +890,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
