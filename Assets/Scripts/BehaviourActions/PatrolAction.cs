@@ -8,7 +8,7 @@ using Unity.Properties;
 [Serializable, GeneratePropertyBag]
 [NodeDescription(
     name: "PatrolAction",
-    story: "Update [outMoveTarget] and [outSpeedPercent] so that [gameObject] follows the path [patrolPath] with a speed of [patrolSpeedPercent] starting at node [firstNodeIndex]",
+    story: "[gameObject] follows the path [patrolPath] with a speed of [patrolSpeedPercent] starting at node [firstNodeIndex].",
     category: "Action",
     id: "45458bec77ae939313e6e51c32994c91"
 )]
@@ -17,10 +17,10 @@ public partial class PatrolAction : Action {
     // This action determines how the agent WANTS to move.
     [SerializeReference] public BlackboardVariable<GameObject> gameObject;
     [SerializeReference] public BlackboardVariable<PatrolPath> patrolPath;
-    // [SerializeReference] public BlackboardVariable<float> patrolSpeedPercent;
     [SerializeReference] public BlackboardVariable<float> patrolSpeedPercent;
     [SerializeReference] public BlackboardVariable<int> firstNodeIndex;
 
+    [SerializeReference] public BlackboardVariable<bool> outWantsToMove;
     [SerializeReference] public BlackboardVariable<Vector2> outMoveTarget;
     [SerializeReference] public BlackboardVariable<float> outSpeedPercent;
 
@@ -41,21 +41,19 @@ public partial class PatrolAction : Action {
     }
 
     protected override Status OnUpdate() {
-        PatrolPathNode node = GetTargetPathNode();
+        PatrolPathNode node = GetPathNode(targetNodeIndex);
 
         // // Stop and wait.
         if ((gameObject.Value.transform.position - node.transform.position).magnitude < node.targetRadius) {
-            // patrolMode = PatrolMode.Stop;
-            // stopTimer += Time.deltaTime;
+            outWantsToMove.Value = false;
+            stopTimer += Time.deltaTime;
 
             // Time to move onto a new target.
-            // if (stopTimer > node.waitTime) {
-            if (true) {
+            if (stopTimer > node.waitTime) {
                 // At the beginning again. Turning around.
                 if (runBackwards && targetNodeIndex == 0) {
                     runBackwards = !runBackwards;
                     targetNodeIndex += runBackwards ? -1 : 1;
-                    node = GetTargetPathNode();
                 }
 
                 // Reached the end of the path;
@@ -78,19 +76,20 @@ public partial class PatrolAction : Action {
                     targetNodeIndex += runBackwards ? -1 : 1;
                 }
 
-                node = GetTargetPathNode();
-            }
+                node = GetPathNode(targetNodeIndex);
+            } 
         }
+        else {
+            outWantsToMove.Value = true;
+            stopTimer = 0;
+        }
+
         outMoveTarget.Value = node.transform.position;
         outSpeedPercent.Value = patrolSpeedPercent.Value;
         return Status.Running;
     }
 
     protected override void OnEnd() {
-    }
-
-    protected PatrolPathNode GetTargetPathNode() {
-        return GetPathNode(targetNodeIndex);
     }
 
     protected PatrolPathNode GetPathNode(int index) {

@@ -7,12 +7,17 @@ public class MovementAgentBrain : MonoBehaviour {
         Movement = GetComponent<MovementHandlerBase>();
     }
 
-    public void UpdateMovement(Vector2 destination, float speedPercent) {
-        Vector2 delta = destination - (Vector2)transform.position;
-        Vector2 direction = delta.normalized;
+    public void UpdateMovement(bool wantsToMove, Vector2 destination, float speedPercent) {
+        if (wantsToMove) {
+            Vector2 delta = destination - (Vector2)transform.position;
+            Vector2 direction = delta.normalized;
 
-        Movement.UpdateFacing(direction);
-        Movement.ProcessMovementDirection(direction * speedPercent);
+            Movement.UpdateFacing(direction);
+            Movement.ProcessMovementDirection(direction * speedPercent);
+        } else {
+            Movement.ProcessMovementDirection(Vector2.zero);
+        }
+
         
     }
 }
