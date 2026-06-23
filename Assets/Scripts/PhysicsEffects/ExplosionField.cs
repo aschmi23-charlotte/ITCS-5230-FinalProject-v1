@@ -12,12 +12,15 @@ public class ExplosionExecutor: MonoBehaviour {
     [Header("Explosion Properties")]
     // I want these accessable in Visual Scripting, but still serialized.
     [field: SerializeField] public Vector2 Offset { get; set; } = Vector2.zero;
-    [field: SerializeField] public float BlastForce { get; set; } = 20f;
     [field: SerializeField] public float BlastRadius { get; set; } = 5f;
+    [field: SerializeField] public float BlastForce { get; set; } = 20f;
     [field: SerializeField] public ForceMode2D ForceMode { get; set; } = ForceMode2D.Impulse;
+    [field: SerializeField] LayerMask ForceHitMask { get; set; }
     [field: SerializeField] public AnimationCurve ForceCurve { get; set; }
+    [field: SerializeField] public float BlastDamage { get; set; } = 20f;
+    [field: SerializeField] public LayerMask DamageHitMask { get; set; }
+    [field: SerializeField] public AnimationCurve DamageCurve { get; set; }
     [field: SerializeField] public bool Continuous { get; set; } = false;
-    [field: SerializeField] LayerMask HitMask { get; set; }
     [field: SerializeField] public bool destroyOnDetonate { get; set; } = true;
     [SerializeField] public UnityEvent onDetonate;
     [SerializeField] public UnityEvent onUpdateContinuous;
@@ -31,7 +34,7 @@ public class ExplosionExecutor: MonoBehaviour {
             immediate = false;
             Detonate();
         } else if (RunningContinuous) {
-            ApplyExplosionForce();
+            ApplyExplosion();
             onUpdateContinuous.Invoke();
         }
     }
@@ -40,7 +43,7 @@ public class ExplosionExecutor: MonoBehaviour {
         if (Continuous) {
             RunningContinuous = true;
         } else {
-            ApplyExplosionForce();
+            ApplyExplosion();
         }
 
         onDetonate.Invoke();
@@ -56,8 +59,16 @@ public class ExplosionExecutor: MonoBehaviour {
         onDeactivateContinuous.Invoke();
     }
 
-    void ApplyExplosionForce() {
-        ExplosionForce2D.PerformCurvedExplosionForce((Vector2)transform.position + Offset, BlastRadius, BlastForce, HitMask, ForceCurve, ForceMode);
+    void ApplyExplosion() {
+        // No point in running extra code that will have no effect. 
+        if (BlastForce != 0f) {
+            ExplosionForce2D.PerformCurvedExplosionForce((Vector2)transform.position + Offset, BlastRadius, BlastForce, ForceHitMask, ForceCurve, ForceMode);    
+        }
+        
+        if (BlastDamage > 0f) {
+            // If continuous, Make it damage per seceond.
+            ExplosionForce2D.PerformCurvedExplosionDamage((Vector2)transform.position + Offset, BlastRadius, Continuous ? BlastDamage * Time.fixedDeltaTime :  BlastDamage, DamageHitMask, DamageCurve);    
+        }
     }
 
 #if UNITY_EDITOR

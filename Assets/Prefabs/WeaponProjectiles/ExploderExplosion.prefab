@@ -49,9 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionExecutor
   immediate: 1
   <Offset>k__BackingField: {x: 0, y: 0}
-  <BlastForce>k__BackingField: 0.5
   <BlastRadius>k__BackingField: 8
+  <BlastForce>k__BackingField: 0.5
   <ForceMode>k__BackingField: 1
+  <ForceHitMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 5065
   <ForceCurve>k__BackingField:
     serializedVersion: 2
     m_Curve:
@@ -85,10 +88,35 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  <Continuous>k__BackingField: 0
-  <HitMask>k__BackingField:
+  <BlastDamage>k__BackingField: 20
+  <DamageHitMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 968
+    m_Bits: 393
+  <DamageCurve>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <Continuous>k__BackingField: 0
   <destroyOnDetonate>k__BackingField: 0
   onDetonate:
     m_PersistentCalls:
@@ -187,7 +215,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9152500735142149930
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -244,3 +272,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
