@@ -147,7 +147,7 @@ MonoBehaviour:
   ammoRecoveryDelay: 1
   firePoint: {fileID: 621425954356170917}
   basicShotDamage: 10
-  superShotDamage: 20
+  superShotDamage: 30
   tractorBeamStunPerSecond: 20
   basicShotAmmoCost: 1
   superShotAmmoCost: 2
@@ -242,9 +242,9 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   basicForce: 25
-  superForce: 65
-  tractorStartForce: 50
-  tractorHoldForce: 25
+  superForce: 60
+  tractorStartForce: 55
+  tractorHoldForce: 45
   applyForcesAtImpactPoint: 1
   tractorBeamMinimumDistance: 1
   weaponState: 0

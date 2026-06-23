@@ -24,19 +24,12 @@ public partial class PatrolAction : Action {
     [SerializeReference] public BlackboardVariable<Vector2> outMoveTarget;
     [SerializeReference] public BlackboardVariable<float> outSpeedPercent;
 
-    // public enum PatrolMode {
-    //     Stop,
-    //     Move    
-    // }
-
-    // private PatrolMode patrolMode = PatrolMode.Move;
     private int targetNodeIndex = 0;
     private float stopTimer = 0f;
     private bool runBackwards = false;
 
     protected override Status OnStart() {
-        targetNodeIndex = 0;
-
+        targetNodeIndex = firstNodeIndex.Value;
         return Status.Running;
     }
 

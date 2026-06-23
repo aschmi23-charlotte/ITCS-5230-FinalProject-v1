@@ -17,6 +17,7 @@ public class ShockBlaster : WeaponBase {
 
         WeaponAnimator = mainSpriteRenderer.GetComponent<Animator>();
         Hit = GetComponent<Hitbox>();
+        Hit.enabled = false;
         DamageTrigger = GetComponent<BoxCollider2D>();
     }
 

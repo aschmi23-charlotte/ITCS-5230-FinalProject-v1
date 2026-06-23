@@ -73,9 +73,12 @@ public class KineticLaser : ProjectileWeaponBase {
     protected Collider2D wielderCollider;
     protected float secondaryShortoutTimer = 0.0f;
 
+    protected HostileTag wielderTag;
+
     protected override void Awake() {
         base.Awake();
         wielderCollider = GetComponentInParent<Collider2D>();
+        wielderTag = GetComponentInParent<HostileTag>();
     }
 
     protected override void Update() {
@@ -165,6 +168,8 @@ public class KineticLaser : ProjectileWeaponBase {
                 // End Secondary (User Input)
                 EndTractorBeam();
                 StartCooldown(basicSecondaryCooldownTime);
+            } else {
+                UpdateTractorBeam();
             }
 
         } else if (weaponState == WeaponState.SecondaryFireComboReady) {
@@ -180,6 +185,8 @@ public class KineticLaser : ProjectileWeaponBase {
                 EndTractorBeam();
                 StartSuperLaserShot();
                 ChangeWeaponState(WeaponState.ComboFire);
+            } else {
+                UpdateTractorBeam();
             }
 
         } else if (weaponState == WeaponState.ComboFire) {
@@ -256,6 +263,7 @@ public class KineticLaser : ProjectileWeaponBase {
         Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
         if (hurtbox != null) {
             hurtbox.RecieveDamageHit(basicShotDamage);
+            InformHostileDetector(hurtbox);
         }
     }
 
@@ -289,6 +297,7 @@ public class KineticLaser : ProjectileWeaponBase {
         Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
         if (hurtbox != null) {
             hurtbox.RecieveDamageHit(superShotDamage);
+            InformHostileDetector(hurtbox);
         }
 
     }
@@ -329,10 +338,8 @@ public class KineticLaser : ProjectileWeaponBase {
 
     }
 
-    protected void UpdateTractorBeamRendering() {
+    protected void UpdateTractorBeam() {
         int hitscan = Physics2D.Raycast((Vector2)firePoint.position, ParentWeaponSystem.AimDirection, impactFilter, impactResults);
-        laserVisual.transform.position = firePoint.position;
-        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
 
         if (ShouldTractorBeamPause()) {
             secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
@@ -351,8 +358,14 @@ public class KineticLaser : ProjectileWeaponBase {
         // This is being called by Update, so I probably need to move it... later.
         Hurtbox hurtbox = impactResults[1].collider.GetComponent<Hurtbox>();
         if (hurtbox != null) {
-            hurtbox.RecieveStunHit(tractorBeamStunPerSecond * Time.deltaTime, false);
+            hurtbox.RecieveStunHit(tractorBeamStunPerSecond * Time.fixedDeltaTime, false);
+            InformHostileDetector(hurtbox);
         }
+    }
+
+    protected void UpdateTractorBeamRendering() {
+        laserVisual.transform.position = firePoint.position;
+        laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
     }
 
     protected void EndTractorBeam() {
@@ -367,5 +380,12 @@ public class KineticLaser : ProjectileWeaponBase {
     private void ChangeWeaponState(WeaponState newState) {
         weaponState = newState;
         stateLifeTimer = 0f;
+    }
+
+    private void InformHostileDetector(Hurtbox hurtbox) {
+        HostileDetector detector = hurtbox.GetComponent<HostileDetector>();
+        if (detector != null) {
+            detector.InformOfTarget(wielderTag);
+        }
     }
 }

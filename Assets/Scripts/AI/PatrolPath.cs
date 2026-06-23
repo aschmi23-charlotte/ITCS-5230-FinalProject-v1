@@ -14,7 +14,7 @@ public class PatrolPath : MonoBehaviour {
     }
 
     [field: SerializeField] public FollowMode followMode { get; private set; } = FollowMode.OneWay;
-    [field: SerializeField] public List<PatrolPathNode> nodes { get; private set; }
+    [field: SerializeField] public List<PatrolPathNode> nodes { get; private set; } = new List<PatrolPathNode>();
 
     // Informing each node of it's index on startup.
     void Start() {
@@ -59,10 +59,10 @@ public class PatrolPath : MonoBehaviour {
             }
 
             if (nextNode != null) {
-                Gizmos.DrawLine(node.transform.position, nextNode.transform.position);
-                UnityEditor.Handles.Label(node.transform.position + Vector3.up * 0.2f, "Node " + i);
-            
+                Gizmos.DrawLine(node.transform.position, nextNode.transform.position);            
             }
+
+            UnityEditor.Handles.Label(node.transform.position + Vector3.up * 0.2f, "Node " + i);
             
         }
     }
