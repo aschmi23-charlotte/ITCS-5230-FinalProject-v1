@@ -21,6 +21,24 @@ public abstract class WeaponBase : MonoBehaviour {
     protected float ammoRecoveryTickTimer = 0f;
     protected float ammoRecoveryDelayTimer = 0f;
 
+    public WeaponSystem.InputStatus PrimaryInputStatus {
+        get {
+            return primaryInputStatus;
+        }
+        set {
+            primaryInputStatus = value;
+        }
+    }
+
+    public WeaponSystem.InputStatus SecondaryInputStatus {
+        get {
+            return secondaryInputStatus;
+        }
+        set {
+            secondaryInputStatus = value;
+        }
+    }
+
     protected virtual void Awake() {
         ParentWeaponSystem = GetComponentInParent<WeaponSystem>();
     }
@@ -39,14 +57,6 @@ public abstract class WeaponBase : MonoBehaviour {
             ammoCount += 1;
             ammoRecoveryTickTimer = 0f;
         }
-    }
-
-    public void SetPrimaryInputStatus(WeaponSystem.InputStatus status) {
-        primaryInputStatus = status;
-    }
-
-    public void SetSecondaryInputStatus(WeaponSystem.InputStatus status) {
-        secondaryInputStatus = status;
     }
 
     public bool IsActiveWeapon() {
@@ -78,7 +88,4 @@ public abstract class WeaponBase : MonoBehaviour {
         
         return true;
     }
-
-    // I'm not sure this will actually be used, but I'll hold out until health stuff is implemented.
-    public virtual void ForceStateReset() { }
 }

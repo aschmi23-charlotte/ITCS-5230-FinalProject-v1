@@ -29,14 +29,14 @@ public class HostileDetector : MonoBehaviour {
             switch (shape) {
                 case DetectionShape.Circle:
                 default:
-                    return (target.transform.position - host.transform.position).magnitude <= radius;
+                    return ((Vector3)target.GetWorldDetectionPosition() - host.transform.position).magnitude <= radius;
                 case DetectionShape.Arc:
                     // To far away. That's the easier calculation, so do that first.
-                    if ((target.transform.position - host.transform.position).magnitude > radius) {
+                    if (((Vector3)target.GetWorldDetectionPosition() - host.transform.position).magnitude > radius) {
                         return false;    
                     }
 
-                    float checkAngle = VectorMathHelpers.GetAngle(target.transform.position, host.transform.position);
+                    float checkAngle = VectorMathHelpers.GetAngle((Vector3)target.GetWorldDetectionPosition(), host.transform.position);
                     return angle - arc/2 < checkAngle && checkAngle < angle + arc/2;
             }
 
@@ -120,7 +120,7 @@ public class HostileDetector : MonoBehaviour {
                 ? hostile : CurrentTarget;
         }
 
-        TargetLastKnownLocation = CurrentTarget.transform.position;
+        TargetLastKnownLocation = CurrentTarget.GetWorldDetectionPosition();
         
         if (CurrentTarget == hostile) {
             targetEvents.onCurrentTargetUpdated.Invoke();

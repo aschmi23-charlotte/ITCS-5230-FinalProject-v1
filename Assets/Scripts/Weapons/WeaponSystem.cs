@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class WeaponSystem : MonoBehaviour {
     [System.Serializable]
@@ -11,7 +10,7 @@ public class WeaponSystem : MonoBehaviour {
 
     [System.Serializable]
     public enum InputStatus {
-        NoInput,
+        NoInput, // If we switch to this without having a release, assume that firing got interuppted.
         Pressed,
         Held,
         Released,
@@ -70,6 +69,24 @@ public class WeaponSystem : MonoBehaviour {
         }
     }
 
+    public InputStatus PrimaryInputStatus {
+        get {
+            return weapons[activeWeaponIndex].PrimaryInputStatus;
+        }
+        set {
+            weapons[activeWeaponIndex].PrimaryInputStatus = value;
+        }
+    }
+
+    public InputStatus SecondaryInputStatus {
+        get {
+            return weapons[activeWeaponIndex].SecondaryInputStatus;
+        }
+        set {
+            weapons[activeWeaponIndex].SecondaryInputStatus = value;
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         ResetWeapons();
@@ -109,13 +126,5 @@ public class WeaponSystem : MonoBehaviour {
 
         float angle = Mathf.Rad2Deg * Mathf.Atan2(AimDirection.y, AimDirection.x);
         aimOrigin.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    public void SetPrimaryInputStatus(InputStatus status) {
-        weapons[activeWeaponIndex].SetPrimaryInputStatus(status);
-    }
-
-    public void SetSecondaryInputStatus(InputStatus status) {
-        weapons[activeWeaponIndex].SetSecondaryInputStatus(status);
     }
 }

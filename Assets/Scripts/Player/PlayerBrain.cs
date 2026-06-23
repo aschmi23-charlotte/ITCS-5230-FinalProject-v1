@@ -114,37 +114,37 @@ public class PlayerBrain : MonoBehaviour {
 
         // Set Primary Firing Input:
         if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
-            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Pressed);
+            Weapons.PrimaryInputStatus = WeaponSystem.InputStatus.Pressed;
 
         } else if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Held)) {
-            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Held);
+            Weapons.PrimaryInputStatus = WeaponSystem.InputStatus.Held;
 
         } else if (InputReader.CheckPrimaryFireInput(PlayerInputReader.ButtonCheckType.Released)) {
-            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.Released);
+            Weapons.PrimaryInputStatus = WeaponSystem.InputStatus.Released;
 
         } else {
-            Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.NoInput);
+            Weapons.PrimaryInputStatus = WeaponSystem.InputStatus.NoInput;
 
         }
 
         // Set Secondary Firing Input:
         if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Pressed)) {
-            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Pressed);
+            Weapons.SecondaryInputStatus = WeaponSystem.InputStatus.Pressed;
 
         } else if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Held)) {
-            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Held);
+            Weapons.SecondaryInputStatus = WeaponSystem.InputStatus.Held;
 
         } else if (InputReader.CheckSecondaryFireInput(PlayerInputReader.ButtonCheckType.Released)) {
-            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.Released);
+            Weapons.SecondaryInputStatus = WeaponSystem.InputStatus.Released;
 
         } else {
-            Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.NoInput);
+            Weapons.SecondaryInputStatus = WeaponSystem.InputStatus.NoInput;
         }
     }
 
     public void UpdateWeaponsIgnoreInput() {
-        Weapons.SetPrimaryInputStatus(WeaponSystem.InputStatus.NoInput);
-        Weapons.SetSecondaryInputStatus(WeaponSystem.InputStatus.NoInput);
+        Weapons.PrimaryInputStatus = WeaponSystem.InputStatus.NoInput;
+        Weapons.SecondaryInputStatus = WeaponSystem.InputStatus.NoInput;
     }
 
     public Vector2 GetMovementDirection(bool considerFreeAim) {

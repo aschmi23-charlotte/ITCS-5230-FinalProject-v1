@@ -31,6 +31,11 @@ public class StunManager : MonoBehaviour {
         }
     }
 
+    void Awake() {
+        // Don't want to start stunned.
+        stunTimer = stunTime;
+    }
+
     void FixedUpdate() {
         // Update the Stun State
         if (IsStunned()) {
