@@ -1,7 +1,4 @@
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
 
 public class KineticLaser : ProjectileWeaponBase {
 
