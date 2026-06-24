@@ -13,15 +13,25 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
     [SerializeField] int secondaryAmmoCost = 3;
 
     // Fortunately, the IEA state management should be a LOT simpler than the Kinetic Laser.
-    [Header("IEA Visuals")]
+    [Header("IEA Presentation")]
     [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject primaryProjectilePrefab;
     [SerializeField] GameObject secondaryProjectilePrefab;
+    [SerializeField] AudioClip primaryFireClip;
+    [SerializeField] AudioClip secondaryFireClip;
+
+    [Header("IEA Behaviour")]
     [SerializeField] float primaryFireCooldown = 0.6f;
     [SerializeField] float secondaryFireCooldown = 5f;
 
     private float primaryFireCooldownTimer = 0f;
     private float secondaryireCooldownTimer = 0f;
+    protected AudioSource audio;
+
+    protected override void Awake() {
+        base.Awake();
+        audio = GetComponent<AudioSource>();
+    }
 
     // This one is a LOT simpler than the Kinetic Laser.
     // Also, a charge attack on this thing may be... too strong.
@@ -33,7 +43,7 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
         if (primaryFireCooldownTimer > 0f) {
             primaryFireCooldownTimer -= Time.fixedDeltaTime;
         } else if (primaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(primaryAmmoCost)) {
-            FireProjectile(primaryProjectilePrefab);
+            FireProjectile(primaryProjectilePrefab, primaryFireClip);
             primaryFireCooldownTimer = primaryFireCooldown;
         }
 
@@ -42,12 +52,12 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
             secondaryireCooldownTimer -= Time.fixedDeltaTime;
             return;
         } else if (secondaryInputStatus == WeaponSystem.InputStatus.Pressed && ConsumeAmmo(secondaryAmmoCost)) {
-            FireProjectile(secondaryProjectilePrefab);
+            FireProjectile(secondaryProjectilePrefab, secondaryFireClip);
             secondaryireCooldownTimer = secondaryFireCooldown;
         }
     }
 
-    private GameObject FireProjectile(GameObject projectilePrefab) {
+    private GameObject FireProjectile(GameObject projectilePrefab, AudioClip clip) {
         RaycastProjectile newProjectile = Instantiate(projectilePrefab).GetComponent<RaycastProjectile>();
         newProjectile.transform.position = firePoint.position;
         newProjectile.Direction = ParentWeaponSystem.AimDirection;
@@ -55,6 +65,8 @@ public class ImploderExploderAssembly : ProjectileWeaponBase {
         if (rb != null) {
             newProjectile.InheritedVelocity = rb.linearVelocity;
         }
+
+        audio.PlayOneShot(clip);
 
         return newProjectile.gameObject;
     }

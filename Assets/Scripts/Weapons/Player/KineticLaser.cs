@@ -47,11 +47,15 @@ public class KineticLaser : ProjectileWeaponBase {
     [SerializeField] float comboFireTime = 0.1f;
     [SerializeField] float comboCooldownTime = 1f;
 
-    [Header("Kinetic Laser Visuals")]
+    [Header("Kinetic Laser Presentation")]
     [SerializeField] WeaponColors weaponColors;
     [SerializeField] GameObject basicVisualPrefab;
     [SerializeField] GameObject superVisualPrefab;
     [SerializeField] GameObject tractorVisualPrefab;
+    [SerializeField] AudioClip basicFireClip;
+    [SerializeField] AudioClip superFireClip;
+    [SerializeField] AudioClip tractorBeamFireClip;
+
 
     [Header("Kinetic Laser Impacts")]
     [SerializeField] ContactFilter2D impactFilter;
@@ -71,6 +75,7 @@ public class KineticLaser : ProjectileWeaponBase {
     protected LineRenderer laserVisual = null;
     protected RaycastHit2D[] impactResults = new RaycastHit2D[5];
     protected Collider2D wielderCollider;
+    protected AudioSource audio;
     protected float secondaryShortoutTimer = 0.0f;
 
     protected HostileTag wielderTag;
@@ -79,6 +84,7 @@ public class KineticLaser : ProjectileWeaponBase {
         base.Awake();
         wielderCollider = GetComponentInParent<Collider2D>();
         wielderTag = GetComponentInParent<HostileTag>();
+        audio = GetComponentInParent<AudioSource>();
     }
 
     protected override void Update() {
@@ -252,6 +258,8 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.SetPosition(0, Vector2.zero);
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
 
+        audio.PlayOneShot(basicFireClip);
+
         if (impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
                 impactResults[1].rigidbody.AddForceAtPosition(ParentWeaponSystem.AimDirection * basicForce, impactResults[1].point, ForceMode2D.Impulse);
@@ -285,6 +293,9 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
+
+        audio.PlayOneShot(superFireClip);
+
 
         if (impactResults[1].rigidbody != null) {
             if (applyForcesAtImpactPoint) {
@@ -324,6 +335,10 @@ public class KineticLaser : ProjectileWeaponBase {
         laserVisual.positionCount = 2;
         laserVisual.SetPosition(0, Vector2.zero);
         laserVisual.SetPosition(1, impactResults[1].point - (Vector2)firePoint.position);
+        audio.generator = tractorBeamFireClip;
+        audio.loop = true;
+        audio.Play();
+
         if (ShouldTractorBeamPause()) {
             secondaryShortoutTimer = basicSecondaryCollisionPauseTime;
         }
@@ -369,6 +384,8 @@ public class KineticLaser : ProjectileWeaponBase {
     }
 
     protected void EndTractorBeam() {
+        audio.loop = true;
+        audio.Stop();
         Destroy(laserVisual.gameObject);
     }
 
