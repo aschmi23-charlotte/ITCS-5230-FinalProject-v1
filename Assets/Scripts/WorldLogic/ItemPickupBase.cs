@@ -15,7 +15,14 @@ public abstract class ItemPickupBase : MonoBehaviour {
     }
 
     public virtual void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Triggered");
+        RunPickupLogic(other);
+    }
+
+    public virtual void OnCollisionEnter2D(Collision2D collision) {
+        RunPickupLogic(collision.otherCollider);
+    }
+
+    public virtual void RunPickupLogic (Collider2D other) {
         PlayerBrain player = other.GetComponent<PlayerBrain>();
         // If this is not the player, ignore it.
         if (player == null) { return; }

@@ -12,6 +12,7 @@ public class HealthManager : MonoBehaviour {
         [SerializeField] public UnityEvent onTakeDamage;
         [SerializeField] public UnityEvent onNotDeadYet;
         [SerializeField] public UnityEvent onDeath;
+        [SerializeField] public UnityEvent onHealing;
     }
 
     [SerializeField] protected HealthEvents healthEvents;
@@ -60,5 +61,15 @@ public class HealthManager : MonoBehaviour {
         } else {
             healthEvents.onNotDeadYet.Invoke();
         }
+    }
+
+        public void RecieveHealing(float amount) {
+        if (amount <= 0f) {
+            Debug.LogFormat("Damage value {0} is less than or equal to zero. No effect.", amount);
+            return;
+        }
+
+        CurrentHealth += amount;
+        healthEvents.onHealing.Invoke();
     }
 }
